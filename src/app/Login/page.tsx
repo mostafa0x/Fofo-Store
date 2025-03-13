@@ -14,7 +14,7 @@ export default function Login() {
 
     let Router = useRouter();
     const Session = useSession();
-    const { setisLoading } = useContext(UserContext)
+    const { setisLoading, headers } = useContext(UserContext)
     const { TV, setTV } = useContext(MainContext)
     const Btn_Login = useRef<HTMLButtonElement>(null);
 
@@ -38,17 +38,21 @@ export default function Login() {
         }
     }
 
-    //     async function GetMyCart() {
-    // axios.post("url")
-    //     }
+    // async function GetMyCart() {
+    //     axios.get("http://localhost:3001/Cart", { headers }).then((x) => {
+    //         console.log(x);
+    //     }).catch((err) => {
+    //         console.log(err);
+    //     })
+    // }
 
 
     useEffect(() => {
         if (Session?.status === "authenticated") {
-            Router.replace("/")
+            // Router.replace("/")
             // GetMyCart()
         } else if (Session?.status === "unauthenticated") {
-            setisLoading(false)
+            // setisLoading(false)
 
         }
     }, [Session])

@@ -14,7 +14,7 @@ export default function ProtectRouting({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
-    let { UserToken, setUserToken, setisLoading } = useContext(UserContext)
+    let { UserToken, setUserToken, setisLoading, setheaders } = useContext(UserContext)
     const Path = usePathname()
     const Router = useRouter()
     const session = useSession()
@@ -26,16 +26,25 @@ export default function ProtectRouting({
             if (session.status === "unauthenticated") {
                 localStorage.removeItem("UserToken")
                 setUserToken(null)
-                toast.error("Login Frist !")
-                Router.replace("/Login")
-            } else if (session.status === "authenticated") {
-                console.log("yyy");
-                console.log(session.data.user);
-                console.log(session.data.token);
-                if (typeof session.data.token === 'string') {
-                    localStorage.setItem("UserToken", session?.data?.token || "")
-                    setUserToken(session?.data?.token)
+                if (Path !== "/Login") {
+                    toast.error("Login Frist !")
+                    Router.replace("/Login")
+                } else {
                     setisLoading(false)
+                }
+
+            } else if (session.status === "authenticated") {
+                if (typeof session.data.token === 'string') {
+                    localStorage.setItem("UserToken", session?.data?.token)
+                    setheaders({ Authorization: session?.data?.token });
+                    setUserToken(session?.data?.token)
+
+                    if (Path !== "/Login") {
+
+                    } else {
+                        Router.replace("/")
+
+                    }
                 } else {
                     signOut()
                 }

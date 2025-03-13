@@ -6,16 +6,25 @@ export const UserContext = createContext<TypesContexts>({
     UserToken: null,
     setUserToken: () => { },
     isLoading: true,
-    setisLoading: () => { }
+    setisLoading: () => { },
+    headers: { Authorization: "" },
+    setheaders: () => { }
 });
 
 export default function UserContextProvider({ children }: any) {
     const [UserToken, setUserToken] = useState<string | null>(null)
     const [isLoading, setisLoading] = useState(true)
+    const [headers, setheaders] = useState({
+        Authorization: UserToken,
+    });
 
 
+    useEffect(() => {
+        console.log(headers);
 
-    return <UserContext.Provider value={{ UserToken, setUserToken, isLoading, setisLoading }}>{
+    }, [headers])
+
+    return <UserContext.Provider value={{ UserToken, setUserToken, isLoading, setisLoading, headers, setheaders }}>{
         children
     }</UserContext.Provider>
 
