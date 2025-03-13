@@ -7,12 +7,14 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { MainContext } from '../_Contexts/MainContext';
 import { signOut } from 'next-auth/react';
+import { CartContext } from '../_Contexts/CartContext';
 
 
 
 export default function NavBar() {
     let { UserToken, setUserToken, isLoading }: TypesContexts = useContext(UserContext)
     let { SearchTXT, setSearchTXT, TV, setTV }: TypesContexts = useContext(MainContext)
+    const { MyCart } = useContext(CartContext)
     const [MaxSelectChrs, setMaxSelectChrs] = useState<number>(58)
     const [MaxInputChrs, setMaxInputChrs] = useState<number>(700)
     let Op = useRef<HTMLSelectElement | null>(null);
@@ -78,15 +80,15 @@ export default function NavBar() {
                         <div tabIndex={0} role="button" className="text-2xl  btn btn-ghost btn-circle">
                             <div className="indicator">
                                 <i className="fa-solid fa-cart-shopping"></i>
-                                <span className="badge badge-sm  indicator-item text-lg">8</span>
+                                <span className="badge badge-sm  indicator-item text-lg">{MyCart?.MyCart?.length || 0}</span>
                             </div>
                         </div>
                         <div
                             tabIndex={0}
                             className="card card-compact dropdown-content bg-base-100 z-[1] mt-3 w-52 shadow">
                             <div className="card-body">
-                                <span className="text-lg font-bold">8 Items</span>
-                                <span className="text-info">Subtotal: $999</span>
+                                <span className="text-lg font-bold">{MyCart?.MyCart?.length || 0} Items</span>
+                                <span className="text-info">Subtotal: ${MyCart?.Total || 0}</span>
                                 <div className="card-actions">
                                     <button className="btn btn-primary btn-block">View cart</button>
                                 </div>

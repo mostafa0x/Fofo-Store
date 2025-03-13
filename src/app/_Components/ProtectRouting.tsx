@@ -29,6 +29,7 @@ export default function ProtectRouting({
                 if (Path !== "/Login") {
                     toast.error("Login Frist !")
                     Router.replace("/Login")
+                    setisLoading(false)
                 } else {
                     setisLoading(false)
                 }
@@ -40,6 +41,7 @@ export default function ProtectRouting({
                     setUserToken(session?.data?.token)
 
                     if (Path !== "/Login") {
+                        setisLoading(false)
 
                     } else {
                         Router.replace("/")

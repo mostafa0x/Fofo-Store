@@ -6,20 +6,26 @@ import CategoriesBar from "./_Components/CategoriesBar";
 import MainSlider from "./_Components/MainSlider";
 import CategoriesSlider from "./_Components/CategoriesSlider";
 import useCart from "./_Hooks/useCart";
+import { array } from "yup";
+import { CartContext } from "./_Contexts/CartContext";
 
 
 
 export default function Home() {
   let { SearchTXT, setSearchTXT, Data, setData } = useContext(MainContext);
   const { data, isError, error, isLoading, refetch } = useCart()
+  const { MyCart, setMyCart } = useContext(CartContext)
 
   useEffect(() => {
+    console.log(data?.data?.Cart);
 
-    // console.log(Data);
+    if (Array.isArray(data?.data?.Cart?.MyCart)) {
+      setMyCart(data?.data?.Cart)
+    }
 
 
 
-  }, [Data])
+  }, [data])
 
   if (isLoading) {
     return <div className="flex justify-center pt-72" role="status">
