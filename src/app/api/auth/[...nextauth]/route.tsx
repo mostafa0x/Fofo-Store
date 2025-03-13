@@ -23,7 +23,7 @@ export const handler = NextAuth({
         async jwt({ token, account }) {
             if (account) {
 
-                token.access_token = account.access_token
+                token.access_token = account.id_token
             }
             return token;
         }
