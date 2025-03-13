@@ -19,4 +19,6 @@ export interface TypesContexts {
   setheaders?: any;
   MyCart?: { MyCart: string[]; Total: number };
   setMyCart?: any;
+  isLoadingCartIcon?: boolean;
+  setisLoadingCartIcon?: any;
 }

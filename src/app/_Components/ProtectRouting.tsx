@@ -22,7 +22,6 @@ export default function ProtectRouting({
     useEffect(() => {
 
         if (session.status !== "loading") {
-            console.log(session.status)
             if (session.status === "unauthenticated") {
                 localStorage.removeItem("UserToken")
                 setUserToken(null)

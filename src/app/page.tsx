@@ -6,25 +6,32 @@ import CategoriesBar from "./_Components/CategoriesBar";
 import MainSlider from "./_Components/MainSlider";
 import CategoriesSlider from "./_Components/CategoriesSlider";
 import useCart from "./_Hooks/useCart";
-import { array } from "yup";
 import { CartContext } from "./_Contexts/CartContext";
+import HooksTypes from "./_Interfaces/HooksType";
+import { signOut } from "next-auth/react";
+
 
 
 
 export default function Home() {
   let { SearchTXT, setSearchTXT, Data, setData } = useContext(MainContext);
-  const { data, isError, error, isLoading, refetch } = useCart()
-  const { MyCart, setMyCart } = useContext(CartContext)
+  const { data, isError, error, isLoading, refetch }: HooksTypes = useCart()
+  const { MyCart, setMyCart, setisLoadingCartIcon } = useContext(CartContext)
 
   useEffect(() => {
-    console.log(data?.data?.Cart);
+    setisLoadingCartIcon(isLoading)
+  }, [isLoading])
 
+  useEffect(() => {
+    if (error?.status === 401) {
+      signOut()
+    }
+  }, [error?.status])
+
+  useEffect(() => {
     if (Array.isArray(data?.data?.Cart?.MyCart)) {
       setMyCart(data?.data?.Cart)
     }
-
-
-
   }, [data])
 
   if (isLoading) {
@@ -38,7 +45,9 @@ export default function Home() {
   }
 
   if (isError) {
-    return <div><h1>{error.message}</h1></div>
+
+
+    return <div><h1>{error?.response?.data?.message}</h1></div>
   }
 
 
