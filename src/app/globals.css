@@ -1,0 +1,44 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --background: #ffffff;
+  --foreground: #171717;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #0a0a0a;
+    --foreground: #ededed;
+  }
+}
+
+body {
+  color: var(--foreground);
+  background: var(--background);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.txtdash {
+  padding-top: 5px;
+  font-size: x-large;
+}
+
+/* في ملف CSS الخاص بك */
+html,
+body {
+  height: 100%; /* تأكد أن الصفحة تستفيد من المساحة كاملة */
+  margin: 0; /* إزالة الهوامش الافتراضية */
+}
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* اجعل الطول على الأقل 100% من ارتفاع النافذة */
+}
+
+footer {
+  margin-top: auto; /* هذا يجعل الفوتر يلتصق بأسفل الصفحة */
+}
