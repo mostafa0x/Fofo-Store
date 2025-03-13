@@ -15,20 +15,23 @@ export const handler = NextAuth({
             clientSecret: process.env.ClientKey || "",
         }),
     ],
+    secret: process.env.NEXTAUTH_SECRET,
     pages: {
         signIn: '/Login',
     },
     callbacks: {
         async jwt({ token, account }) {
             if (account) {
-                token.accessToken = account.access_token
-            }
-            return token
-        },
-        async session({ session, token }) {
-            if (typeof token.accessToken === "string") {
-                session.token = token.accessToken;
 
+                token.access_token = account.access_token
+            }
+            return token;
+        }
+        ,
+        async session({ session, token }) {
+
+            if (typeof token.access_token === "string") {
+                session.token = token.access_token
             }
             return session
         }

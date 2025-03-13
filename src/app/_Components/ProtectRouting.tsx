@@ -3,7 +3,8 @@ import { usePathname, useRouter } from 'next/navigation';
 import React, { useEffect, useContext, useState } from 'react'
 import { UserContext } from '../_Contexts/UserContext';
 import toast from 'react-hot-toast';
-import { useSession } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
+
 
 
 
@@ -19,23 +20,28 @@ export default function ProtectRouting({
     const session = useSession()
 
     useEffect(() => {
-        if (session) {
-            if (session.status !== "loading") {
-                if (session?.data?.token === undefined || session?.data?.token === null) {
-                    localStorage.removeItem("UserToken")
-                    setUserToken(null)
-                    toast.error("Login Frist !")
-                    Router.replace("/Login")
-                } else {
+
+        if (session.status !== "loading") {
+            console.log(session.status)
+            if (session.status === "unauthenticated") {
+                localStorage.removeItem("UserToken")
+                setUserToken(null)
+                toast.error("Login Frist !")
+                Router.replace("/Login")
+            } else if (session.status === "authenticated") {
+                console.log("yyy");
+                console.log(session.data.user);
+                console.log(session.data.token);
+                if (typeof session.data.token === 'string') {
                     localStorage.setItem("UserToken", session?.data?.token || "")
                     setUserToken(session?.data?.token)
                     setisLoading(false)
+                } else {
+                    signOut()
                 }
 
             }
         }
-
-
 
     }, [session])
 

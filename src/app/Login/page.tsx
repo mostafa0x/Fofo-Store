@@ -38,10 +38,15 @@ export default function Login() {
         }
     }
 
+    //     async function GetMyCart() {
+    // axios.post("url")
+    //     }
+
 
     useEffect(() => {
         if (Session?.status === "authenticated") {
             Router.replace("/")
+            // GetMyCart()
         } else if (Session?.status === "unauthenticated") {
             setisLoading(false)
 
