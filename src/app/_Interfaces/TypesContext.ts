@@ -20,4 +20,6 @@ export interface TypesContexts {
   setMyCart?: any;
   isLoadingCartIcon?: boolean;
   setisLoadingCartIcon?: any;
+  Middleware?: any;
+  setMiddleware?: any;
 }

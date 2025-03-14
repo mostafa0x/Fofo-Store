@@ -4,6 +4,8 @@ import axios from 'axios';
 import React, { useContext } from 'react'
 import { UserContext } from '../_Contexts/UserContext';
 import { CartContext } from '../_Contexts/CartContext';
+import { MainContext } from '../_Contexts/MainContext';
+import { Hi } from "../_Contexts/MainContext"
 
 
 export default function useCart() {

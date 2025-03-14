@@ -33,15 +33,15 @@ export default function Home() {
     setisLoadingCartIcon(isLoading)
   }, [isLoading])
 
-  useEffect(() => {
-    console.log(data);
+  // useEffect(() => {
+  //   console.log(data);
 
-    if (error?.status === 401) {
-      signOut({ callbackUrl: "/Login" })
-    }
+  //   if (error?.status === 401) {
+  //     signOut({ callbackUrl: "/Login" })
+  //   }
 
 
-  }, [isError])
+  // }, [isError])
 
   // useEffect(() => {
   //   if (Array.isArray(data?.data?.Cart?.MyCart)) {

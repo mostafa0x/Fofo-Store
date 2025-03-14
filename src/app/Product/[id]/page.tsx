@@ -52,7 +52,7 @@ export default function ProductID() {
     }
 
     return (
-        <div className="mx-20 pt-52 row flex items-center">
+        <div className=" flex justify-center items-center mx-20 pt-52 row ">
             <div className="w-1/4 pr-4">
                 {ProductByID?.images?.length ?? 0 > 1 ? (
                     <Slider {...settingsSlick}>
@@ -76,14 +76,14 @@ export default function ProductID() {
                 )}
             </div>
             <div className="w-1/2">
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className=" text-2xl font-bold text-gray-900">
                     {ProductByID?.title}
                 </h1>
-                <p className="text-gray-700 font-light mt-4">
+                <p className=" text-gray-700 font-light mt-4">
                     {ProductByID?.description}
                 </p>
                 <div className="flex justify-between items-center mt-4">
-                    <p className=' text-center'>{ProductByID?.price} EGP</p>
+                    <p className=' text-center'>{ProductByID?.price} EGP  <i className="fa-solid fa-money-bill-wave"></i></p>
                     <button className="btn btn-ghost bg-green-600">Add Cart</button>
                 </div>
             </div>

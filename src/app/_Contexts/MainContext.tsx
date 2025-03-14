@@ -10,8 +10,13 @@ export const MainContext = createContext<TypesContexts>({
   Category: [],
   setCategory: () => { },
   TV: 1,
-  setTV: () => { },
+  Middleware: null, setMiddleware: () => { }
 });
+
+export function Hi(x: Number) {
+  console.log("hiiiiiiiiii ");
+
+}
 
 export default function MainContextProvider({
   children
@@ -20,6 +25,10 @@ export default function MainContextProvider({
   const [ItemFillters, setItemFillters] = useState([])
   const [Category, setCategory] = useState(["Pottery", "Woodware", "Wicker", "Bags", "Rugs & Kilim", "Arts & Nature"])
   const [TV, setTV] = useState(1)
-  return <MainContext.Provider value={{ SearchTXT, setSearchTXT, ItemFillters, setItemFillters, Category, setCategory, TV, setTV }}>{children}</MainContext.Provider>
+  const [Middleware, setMiddleware] = useState(null)
+
+
+
+  return <MainContext.Provider value={{ SearchTXT, setSearchTXT, ItemFillters, setItemFillters, Category, setCategory, TV, setTV, Middleware, setMiddleware }}>{children}</MainContext.Provider>
 
 }

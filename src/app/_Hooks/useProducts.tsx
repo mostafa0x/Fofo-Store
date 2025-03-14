@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { ProductsContext } from '../_Contexts/ProductsContext';
 import { UserContext } from '../_Contexts/UserContext';
+import { MainContext } from '../_Contexts/MainContext';
 
 export default function useProducts() {
     const { setProducts } = useContext(ProductsContext);
