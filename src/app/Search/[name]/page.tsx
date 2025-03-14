@@ -17,7 +17,7 @@ export default function Search() {
     let { Products } = useContext(ProductsContext)
     let Parms: Parms = useParams();
     const { isLoading, isError, error } = useProducts()
-    const { } = useCart();
+
 
 
     useEffect(() => {

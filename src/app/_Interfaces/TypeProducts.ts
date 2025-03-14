@@ -1,6 +1,7 @@
 export default interface TypeProducts {
+  id?: number;
   title?: string;
-  images?: string[] | undefined;
+  images?: string[];
   price?: number;
   description?: string;
   category?: { id?: number; name?: string; image?: string };

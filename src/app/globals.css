@@ -2,7 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -41,4 +40,32 @@ body {
 
 footer {
   margin-top: auto; /* هذا يجعل الفوتر يلتصق بأسفل الصفحة */
+}
+
+.u-section-1 .u-sheet-1 {
+  min-height: 520px;
+}
+
+@media (max-width: 1199px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 330px;
+  }
+}
+
+@media (max-width: 991px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 253px;
+  }
+}
+
+@media (max-width: 767px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 758px;
+  }
+}
+
+@media (max-width: 575px) {
+  .u-section-1 .u-sheet-1 {
+    min-height: 477px;
+  }
 }

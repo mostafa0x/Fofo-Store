@@ -4,10 +4,13 @@ import useProducts from '../_Hooks/useProducts'
 import HooksTypes from '../_Interfaces/HooksType'
 import { ProductsContext } from '../_Contexts/ProductsContext'
 import TypeProducts from '../_Interfaces/TypeProducts'
+import { useRouter } from 'next/navigation'
+
 
 export default function Products() {
     const { data, isError, error, isLoading, refetch }: HooksTypes = useProducts()
     const { Products } = useContext(ProductsContext)
+    const Router = useRouter();
 
     if (isLoading) {
         return <div className="flex justify-center pt-72" role="status">
@@ -30,27 +33,23 @@ export default function Products() {
             {Products?.length === 0 ? <div><h1>Loading Or Error</h1></div> :
                 <>
                     {Products?.map((product: TypeProducts, index: number) => {
-                        return <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                            <a href="#">
+                        return <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
+                            <div onClick={() => { Router.push(`/Product/${product.id}`) }} className='cursor-pointer'>
                                 <img
-                                    className="p-4 rounded-t-lg object-cover h-48 w-full" // Adjusted to set fixed height and width for the image
                                     src={product?.images?.[0]}
+                                    className="p-4 rounded-t-lg object-cover h-48 w-full"
                                     alt={product.title}
                                 />
-                            </a>
-                            <div className="px-5 py-5 flex justify-center">
-                                <a href="#">
+                                <div className="px-5 py-5 flex justify-center">
                                     <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
                                         {product.title?.split(" ").splice(0, 2).join(" ")}
                                     </h5>
-                                </a>
-
+                                </div>
                             </div>
-                            <div className="px-5 flex justify-between bt-10">
+
+                            <div className="px-5 flex justify-between bt-10s">
                                 <span className="text-3xl font-bold text-gray-900 dark:text-white">{"$" + product.price}</span>
-                                <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    Add to cart
-                                </a>
+                                <button className='btn btn-ghost bg-blue-700'>Add to cart</button>
                             </div>
                         </div>
                     })}

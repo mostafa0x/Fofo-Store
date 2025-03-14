@@ -8,6 +8,7 @@ import toast from 'react-hot-toast';
 import { MainContext } from '../_Contexts/MainContext';
 import { signOut } from 'next-auth/react';
 import { CartContext } from '../_Contexts/CartContext';
+import useCart from '../_Hooks/useCart';
 
 
 
@@ -23,6 +24,7 @@ export default function NavBar() {
     let SearchBar = useRef<HTMLInputElement | null>(null);
     let Router = useRouter();
     let Path = usePathname()
+    const { } = useCart();
 
     useEffect(() => {
         if (Path === "/") {
