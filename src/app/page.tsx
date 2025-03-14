@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
 
 export default function Home() {
   let { SearchTXT, setSearchTXT } = useContext(MainContext);
-  const { data, isError, error, isLoading, refetch }: HooksTypes = useCart()
+  const { status, data, isError, error, isLoading, refetch }: HooksTypes = useCart()
   const { MyCart, setMyCart, setisLoadingCartIcon } = useContext(CartContext)
   const [isLogOut, setisLogOut] = useState(false)
 
@@ -34,6 +34,7 @@ export default function Home() {
   }, [isLoading])
 
   useEffect(() => {
+    console.log(data);
 
     if (error?.status === 401) {
       signOut({ callbackUrl: "/Login" })
@@ -42,11 +43,11 @@ export default function Home() {
 
   }, [isError])
 
-  useEffect(() => {
-    if (Array.isArray(data?.data?.Cart?.MyCart)) {
-      setMyCart(data?.data?.Cart)
-    }
-  }, [data])
+  // useEffect(() => {
+  //   if (Array.isArray(data?.data?.Cart?.MyCart)) {
+  //     setMyCart(data?.data?.Cart)
+  //   }
+  // }, [data])
 
   if (isLoading) {
     return <div className="flex justify-center pt-72" role="status">

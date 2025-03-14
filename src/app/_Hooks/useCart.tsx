@@ -3,15 +3,26 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import React, { useContext } from 'react'
 import { UserContext } from '../_Contexts/UserContext';
+import { CartContext } from '../_Contexts/CartContext';
 
 
 export default function useCart() {
     const { headers } = useContext(UserContext)
+    const { setMyCart } = useContext(CartContext)
 
     async function GetMyCart() {
-        return await axios.get("http://localhost:3001/Cart", { headers })
+        return axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
+            setMyCart(obj?.data?.Cart)
+            return obj
+
+        }).catch((err) => {
+            console.log(err);
+            throw err
+
+        })
+
     }
 
-    const ResObj = useQuery({ queryKey: ['Cart'], queryFn: GetMyCart })
-    return ResObj;
+
+    return useQuery({ queryKey: ['Cart'], queryFn: GetMyCart })
 }
