@@ -8,21 +8,17 @@ import { CartContext } from '../_Contexts/CartContext';
 
 export default function useCart() {
     const { headers } = useContext(UserContext)
-    const { setMyCart } = useContext(CartContext)
+    const { setMyCart, setisLoadingCartIcon } = useContext(CartContext)
 
     async function GetMyCart() {
         return axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
             setMyCart(obj?.data?.Cart)
+            setisLoadingCartIcon(false)
             return obj
-
         }).catch((err) => {
             console.log(err);
             throw err
-
         })
-
     }
-
-
     return useQuery({ queryKey: ['Cart'], queryFn: GetMyCart })
 }

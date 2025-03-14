@@ -26,7 +26,7 @@ export default function ProtectRouting({
                 localStorage.removeItem("UserToken")
                 setUserToken(null)
                 if (Path !== "/Login") {
-                    toast.error("Login Frist !")
+                    toast.success("Logout -Ok")
                     Router.replace("/Login")
                     setisLoading(false)
                 } else {
@@ -44,6 +44,8 @@ export default function ProtectRouting({
 
                     } else {
                         Router.replace("/")
+                        setisLoading(false)
+                        toast.success("Login -OK")
 
                     }
                 } else {

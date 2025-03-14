@@ -4,6 +4,9 @@ import { useParams } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react';
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import TypeProducts from '@/app/_Interfaces/TypeProducts';
+import useProducts from '@/app/_Hooks/useProducts';
+import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
+import useCart from '@/app/_Hooks/useCart';
 
 type Parms = {
     name: string
@@ -13,6 +16,8 @@ export default function Search() {
     let { ItemFillters, setItemFillters, SearchTXT, setSearchTXT } = useContext(MainContext);
     let { Products } = useContext(ProductsContext)
     let Parms: Parms = useParams();
+    const { isLoading, isError, error } = useProducts()
+    const { } = useCart();
 
 
     useEffect(() => {
@@ -25,7 +30,7 @@ export default function Search() {
         }
 
 
-    }, [Parms?.name]);
+    }, [Products]);
 
     if (SearchTXT == null) {
         return <div className=' flex justify-center items-center min-h-screen p-24'>

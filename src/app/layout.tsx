@@ -14,6 +14,7 @@ import "slick-carousel/slick/slick-theme.css";
 import { SessionProvider } from "next-auth/react";
 import ProductsContextProvider from "./_Contexts/ProductsContext";
 import CartContextProvider from "./_Contexts/CartContext";
+import ErrorsPage from "./_Components/ErrorsPage";
 
 
 
@@ -29,28 +30,29 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <UserContextProvider>
-      <MainContextProvider>
-        <CartContextProvider>
-          <ProductsContextProvider>
-            <SessionProvider>
-              <html lang="en">
-                <body className="vsc-initialized">
-                  <ReactQuery>
-                    <ProtectRouting>
-                      <NavBar />
-                      {children}
-                      <Toaster />
-                      <Footer />
-                    </ProtectRouting>
-                  </ReactQuery>
-                </body>
-              </html>
-            </SessionProvider >
-          </ProductsContextProvider>
-        </CartContextProvider>
-      </MainContextProvider>
-    </UserContextProvider>
-
+    <ErrorsPage>
+      <UserContextProvider>
+        <MainContextProvider>
+          <CartContextProvider>
+            <ProductsContextProvider>
+              <SessionProvider>
+                <html lang="en">
+                  <body className="vsc-initialized">
+                    <ReactQuery>
+                      <ProtectRouting>
+                        <NavBar />
+                        {children}
+                        <Toaster />
+                        <Footer />
+                      </ProtectRouting>
+                    </ReactQuery>
+                  </body>
+                </html>
+              </SessionProvider >
+            </ProductsContextProvider>
+          </CartContextProvider>
+        </MainContextProvider>
+      </UserContextProvider>
+    </ErrorsPage>
   );
 }

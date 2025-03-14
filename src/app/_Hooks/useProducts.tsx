@@ -9,7 +9,7 @@ export default function useProducts() {
     const { setProducts } = useContext(ProductsContext);
     const { headers } = useContext(UserContext);
 
-    const GetProducts = () => {
+    function GetProducts() {
         return axios.get("http://localhost:3001/Products", { headers })
             .then((obj) => {
                 setProducts(obj?.data?.Products);

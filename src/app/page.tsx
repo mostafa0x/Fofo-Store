@@ -17,7 +17,7 @@ import { usePathname } from "next/navigation";
 
 export default function Home() {
   let { SearchTXT, setSearchTXT } = useContext(MainContext);
-  const { status, data, isError, error, isLoading, refetch }: HooksTypes = useCart()
+  const { data, isError, error, isLoading, refetch }: HooksTypes = useCart()
   const { MyCart, setMyCart, setisLoadingCartIcon } = useContext(CartContext)
   const [isLogOut, setisLogOut] = useState(false)
 
