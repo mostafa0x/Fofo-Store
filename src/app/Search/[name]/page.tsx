@@ -2,19 +2,24 @@
 import { MainContext } from '@/app/_Contexts/MainContext';
 import { useParams } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react';
-import { TypesContexts } from '@/app/_Interfaces/TypesContext';
+import { ProductsContext } from '@/app/_Contexts/ProductsContext';
+import TypeProducts from '@/app/_Interfaces/TypeProducts';
+
+type Parms = {
+    name: string
+}
 
 export default function Search() {
-    let { Data, ItemFillters, setItemFillters, SearchTXT, setSearchTXT }: TypesContexts = useContext(MainContext);
-    let Parms = useParams();
+    let { ItemFillters, setItemFillters, SearchTXT, setSearchTXT } = useContext(MainContext);
+    let { Products } = useContext(ProductsContext)
+    let Parms: Parms = useParams();
 
 
     useEffect(() => {
 
-        console.log(SearchTXT);
-        if (Data && Parms?.name) {
+        if (Products && Parms?.name) {
             const decodedName = decodeURIComponent(Parms?.name);
-            const FT = Data?.filter((item: string) => item.toLowerCase().includes(Parms?.name.toLowerCase()));
+            const FT = Products.filter((product: TypeProducts) => product?.title?.toLowerCase().includes(Parms?.name?.toLowerCase()));
             setItemFillters(FT);
             setSearchTXT(decodedName)
         }
@@ -32,10 +37,33 @@ export default function Search() {
     return (
         <div className=' p-24'>
             <h1 className=' text-2xl font-bold'>Search : {SearchTXT}</h1>
-            <div className='pt-8'>            {ItemFillters?.length > 0 ? ItemFillters?.map((item: string, index: number) => {
-                return <div key={index}><h1>{item}</h1></div>;
-            }) : <h1 >There are no search results</h1>}</div>
+            <div className='pt-8'>
+                <ul className="list bg-base-100 rounded-box shadow-md">
+                    {ItemFillters?.length > 0 ? ItemFillters?.map((item: TypeProducts, index: number) => {
+                        return (
+                            <li key={index} className="list-row mb-5 bg-gray-400 rounded-2xl p-5">
+                                <div className="flex items-center  space-x-4">
+                                    <img className="w-32 h-32 rounded-box" src={item?.images?.[0]} alt={item.title?.split(" ").splice(0, 2).join(" ")} />
+                                    <h1 className="text-center font-semibold text-2xl">{item.title?.split(" ").splice(0, 2).join(" ")}</h1>
+                                </div>
+                                <div className="flex flex-col mt-2">
+                                    <div className="text-xs uppercase font-semibold opacity-60">{item?.category?.name}</div>
+                                    <p className="text-xs">{item.description}</p>
+                                </div>
+                                <div className="flex justify-end mt-2">
+                                    <button className="px-10 btn btn-square btn-ghost bg-green-600">
+                                        {item.price + "$"}
+                                    </button>
+                                </div>
+                            </li>
+                        );
+                    })
+                        : <li>There are no search results</li>}
+                </ul>
 
-        </div>
+            </div>
+        </div >
     );
 }
+
+

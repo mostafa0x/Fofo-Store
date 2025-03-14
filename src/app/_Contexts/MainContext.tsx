@@ -23,17 +23,9 @@ export default function MainContextProvider({
   children
 }: any) {
   const [SearchTXT, setSearchTXT] = useState(null)
-  const [Data, setData] = useState([
-    'Apple',
-    'Banana',
-    'Orange',
-    'Mango',
-    'Grapes',
-    'Pineapple',
-  ])
   const [ItemFillters, setItemFillters] = useState([])
   const [Category, setCategory] = useState(["Pottery", "Woodware", "Wicker", "Bags", "Rugs & Kilim", "Arts & Nature"])
   const [TV, setTV] = useState(1)
-  return <MainContext.Provider value={{ SearchTXT, setSearchTXT, Data, setData, ItemFillters, setItemFillters, Category, setCategory, TV, setTV }}>{children}</MainContext.Provider>
+  return <MainContext.Provider value={{ SearchTXT, setSearchTXT, ItemFillters, setItemFillters, Category, setCategory, TV, setTV }}>{children}</MainContext.Provider>
 
 }

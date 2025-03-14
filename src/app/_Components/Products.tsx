@@ -27,32 +27,34 @@ export default function Products() {
 
     return (
         <div className='grid grid-cols-4 gap-4'>
-            {Products?.length == 0 ? <div><h1>Loading...</h1></div> : null}
-            {Products?.map((product: TypeProducts, index: number) => {
-                return <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
-                    <a href="#">
-                        <img
-                            className="p-4 rounded-t-lg object-cover h-48 w-full" // Adjusted to set fixed height and width for the image
-                            src={product?.images?.[0]}
-                            alt={product.title}
-                        />
-                    </a>
-                    <div className="px-5 pb-5">
-                        <a href="#">
-                            <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
-                                {product.title?.split(" ").splice(0, 3).join(" ")}
-                            </h5>
-                        </a>
-                        <div className="flex items-center justify-between bt-10">
-                            <span className="text-3xl font-bold text-gray-900 dark:text-white">$599</span>
-                            <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                Add to cart
+            {Products?.length === 0 ? <div><h1>Loading Or Error</h1></div> :
+                <>
+                    {Products?.map((product: TypeProducts, index: number) => {
+                        return <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700">
+                            <a href="#">
+                                <img
+                                    className="p-4 rounded-t-lg object-cover h-48 w-full" // Adjusted to set fixed height and width for the image
+                                    src={product?.images?.[0]}
+                                    alt={product.title}
+                                />
                             </a>
-                        </div>
-                    </div>
-                </div>
-            })}
+                            <div className="px-5 py-5 flex justify-center">
+                                <a href="#">
+                                    <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        {product.title?.split(" ").splice(0, 2).join(" ")}
+                                    </h5>
+                                </a>
 
+                            </div>
+                            <div className="px-5 flex justify-between bt-10">
+                                <span className="text-3xl font-bold text-gray-900 dark:text-white">{"$" + product.price}</span>
+                                <a href="#" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    Add to cart
+                                </a>
+                            </div>
+                        </div>
+                    })}
+                </>}
         </div>
     )
 }

@@ -16,10 +16,17 @@ import { usePathname } from "next/navigation";
 
 
 export default function Home() {
-  let { SearchTXT, setSearchTXT, Data, setData } = useContext(MainContext);
+  let { SearchTXT, setSearchTXT } = useContext(MainContext);
   const { data, isError, error, isLoading, refetch }: HooksTypes = useCart()
   const { MyCart, setMyCart, setisLoadingCartIcon } = useContext(CartContext)
   const [isLogOut, setisLogOut] = useState(false)
+
+  useEffect(() => {
+    console.log();
+
+    setSearchTXT(null)
+  }, [])
+
 
   useEffect(() => {
 
@@ -29,7 +36,7 @@ export default function Home() {
   useEffect(() => {
 
     if (error?.status === 401) {
-      signOut({callbackUrl:"/Login"})
+      signOut({ callbackUrl: "/Login" })
     }
 
 
@@ -66,7 +73,7 @@ export default function Home() {
       <div className=""> <CategoriesSlider /></div>
 
       <div className=" p-24 pt-6">
-        <h1 className=" pb-5 font-semibold">Home is Here</h1>
+        <h1 className='p-5 font-semibold text-2xl'>Products</h1>
         <Products />
       </div>
 

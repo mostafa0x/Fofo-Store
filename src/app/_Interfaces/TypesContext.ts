@@ -5,8 +5,6 @@ export interface TypesContexts {
   setUserToken?: any;
   SearchTXT?: string | null;
   setSearchTXT?: any;
-  Data?: string[];
-  setData?: any;
   ItemFillters?: any;
   setItemFillters?: any;
   Category?: string[];
