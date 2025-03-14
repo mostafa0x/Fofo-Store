@@ -5,12 +5,6 @@ import { TypesContexts } from "../_Interfaces/TypesContext"
 export const MainContext = createContext<TypesContexts>({
   SearchTXT: null,
   setSearchTXT: () => { },
-  Data: ['Apple',
-    'Banana',
-    'Orange',
-    'Mango',
-    'Grapes',
-    'Pineapple',],
   ItemFillters: [],
   setItemFillters: () => { },
   Category: [],

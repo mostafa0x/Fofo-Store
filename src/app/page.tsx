@@ -22,7 +22,7 @@ export default function Home() {
   const [isLogOut, setisLogOut] = useState(false)
 
   useEffect(() => {
-    console.log();
+
 
     setSearchTXT(null)
   }, [])

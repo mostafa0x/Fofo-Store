@@ -3,11 +3,12 @@ import Link from 'next/link';
 import React, { useContext, useEffect, useRef, useState } from 'react'
 import { UserContext } from '../_Contexts/UserContext';
 import { TypesContexts } from "../_Interfaces/TypesContext"
-import { useRouter } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { MainContext } from '../_Contexts/MainContext';
 import { signOut } from 'next-auth/react';
 import { CartContext } from '../_Contexts/CartContext';
+
 
 
 
@@ -21,6 +22,19 @@ export default function NavBar() {
     let Op = useRef<HTMLSelectElement | null>(null);
     let SearchBar = useRef<HTMLInputElement | null>(null);
     let Router = useRouter();
+    let Path = usePathname()
+
+    useEffect(() => {
+        if (Path === "/") {
+            if (SearchTXT !== "") {
+                if (SearchBar?.current) {
+                    SearchBar.current.value = "";
+                }
+                setSearchTXT("");
+            }
+        }
+
+    }, [Path]);
 
     function selectMax(SelectionSize: number) {
         console.log(SelectionSize);
