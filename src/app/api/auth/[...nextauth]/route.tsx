@@ -17,7 +17,7 @@ export const handler = NextAuth({
     ],
     secret: process.env.NEXTAUTH_SECRET,
     pages: {
-        signIn: '/Login',
+        signIn: '/Login', signOut: '/Login',
     },
     callbacks: {
         async jwt({ token, account }) {

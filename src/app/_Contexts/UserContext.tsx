@@ -19,11 +19,6 @@ export default function UserContextProvider({ children }: any) {
     });
 
 
-    useEffect(() => {
-        console.log(headers);
-
-    }, [headers])
-
     return <UserContext.Provider value={{ UserToken, setUserToken, isLoading, setisLoading, headers, setheaders }}>{
         children
     }</UserContext.Provider>

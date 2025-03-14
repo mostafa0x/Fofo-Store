@@ -1,7 +1,7 @@
-export interface TypeProducts {
-  name?: string;
-  image?: any;
+export default interface TypeProducts {
+  title?: string;
+  images?: string[] | undefined;
   price?: number;
   description?: string;
-  category?: string;
+  category?: { id?: number; name?: string; image?: string };
 }

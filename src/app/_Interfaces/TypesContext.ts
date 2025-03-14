@@ -1,3 +1,4 @@
+import TypeProducts from "./TypeProducts";
 export interface TypesContexts {
   UserToken?: string | null | undefined;
   isLoading?: boolean;
@@ -10,7 +11,7 @@ export interface TypesContexts {
   setItemFillters?: any;
   Category?: string[];
   setCategory?: any;
-  Products?: string[];
+  Products?: TypeProducts[];
   setProducts?: any;
   setisLoading?: any;
   TV?: number;

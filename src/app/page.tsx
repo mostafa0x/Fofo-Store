@@ -1,5 +1,5 @@
 "use client";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import { MainContext } from "./_Contexts/MainContext";
 import { TypesContexts } from "./_Interfaces/TypesContext";
 import CategoriesBar from "./_Components/CategoriesBar";
@@ -9,6 +9,8 @@ import useCart from "./_Hooks/useCart";
 import { CartContext } from "./_Contexts/CartContext";
 import HooksTypes from "./_Interfaces/HooksType";
 import { signOut } from "next-auth/react";
+import Products from "./_Components/Products";
+import { usePathname } from "next/navigation";
 
 
 
@@ -17,16 +19,21 @@ export default function Home() {
   let { SearchTXT, setSearchTXT, Data, setData } = useContext(MainContext);
   const { data, isError, error, isLoading, refetch }: HooksTypes = useCart()
   const { MyCart, setMyCart, setisLoadingCartIcon } = useContext(CartContext)
+  const [isLogOut, setisLogOut] = useState(false)
 
   useEffect(() => {
+
     setisLoadingCartIcon(isLoading)
   }, [isLoading])
 
   useEffect(() => {
+
     if (error?.status === 401) {
-      signOut()
+      signOut({callbackUrl:"/Login"})
     }
-  }, [error?.status])
+
+
+  }, [isError])
 
   useEffect(() => {
     if (Array.isArray(data?.data?.Cart?.MyCart)) {
@@ -47,7 +54,7 @@ export default function Home() {
   if (isError) {
 
 
-    return <div><h1>{error?.response?.data?.message}</h1></div>
+    return <div className=" flex justify-center pt-72" > <h1>{error?.response?.data?.message}</h1></div >
   }
 
 
@@ -59,10 +66,9 @@ export default function Home() {
       <div className=""> <CategoriesSlider /></div>
 
       <div className=" p-24 pt-6">
-        <h1>Home is Here</h1>
-        {Data?.map((items, index) => {
-          return <h1 key={index}>{items}</h1>
-        })}</div>
+        <h1 className=" pb-5 font-semibold">Home is Here</h1>
+        <Products />
+      </div>
 
     </div>
   );
