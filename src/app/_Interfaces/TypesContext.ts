@@ -1,7 +1,8 @@
 import TypeProducts from "./TypeProducts";
 export interface TypesContexts {
   UserToken?: string | null | undefined;
-  isLoading?: boolean;
+  isUserLoading?: boolean;
+  setisUserLoading?: any;
   setUserToken?: any;
   SearchTXT?: string | null;
   setSearchTXT?: any;

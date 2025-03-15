@@ -32,7 +32,7 @@ export default function AllFunContextProvider({ children }: any) {
 
                 if (Session.status !== 'loading') {
                     setOn(1)
-                    if (MiddlewareParams1 === 400 || MiddlewareParams1 === 401) {
+                    if (MiddlewareParams1 === 401) {
                         setMiddleware("")
                         if (Path !== "/Login") {
                             toast.error("Must be Login !")
@@ -41,15 +41,7 @@ export default function AllFunContextProvider({ children }: any) {
 
                         setOn(0)
                     }
-                    if (MiddlewareParams1 === 400 || MiddlewareParams1 === 401) {
-                        setMiddleware("")
-                        if (Path !== "/Login") {
-                            toast.error("Must be Login !")
-                            Router.replace("/Login")
-                        }
 
-                        setOn(0)
-                    }
                 }
             }
         }

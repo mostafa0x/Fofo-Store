@@ -14,7 +14,7 @@ export default function Login() {
 
     let Router = useRouter();
     const Session = useSession();
-    const { setUserToken, setisLoading, headers } = useContext(UserContext)
+    const { setUserToken, setisUserLoading, headers } = useContext(UserContext)
     const { TV, setTV } = useContext(MainContext)
     const Btn_Login = useRef<HTMLButtonElement>(null);
 
@@ -46,6 +46,7 @@ export default function Login() {
                 }
                 Session?.data?.token && localStorage.setItem("UserToken", Session?.data?.token)
                 setUserToken(Session?.data?.token)
+                setisUserLoading(false)
                 Router.replace("/")
             }
         }

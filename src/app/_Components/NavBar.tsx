@@ -6,7 +6,7 @@ import { TypesContexts } from "../_Interfaces/TypesContext"
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { MainContext } from '../_Contexts/MainContext';
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { CartContext } from '../_Contexts/CartContext';
 import useCart from '../_Hooks/useCart';
 
@@ -14,7 +14,7 @@ import useCart from '../_Hooks/useCart';
 
 
 export default function NavBar() {
-    let { UserToken, setUserToken, isLoading }: TypesContexts = useContext(UserContext)
+    let { UserToken, setUserToken, isUserLoading }: TypesContexts = useContext(UserContext)
     let { SearchTXT, setSearchTXT, TV, setTV }: TypesContexts = useContext(MainContext)
     let { isLoadingCartIcon } = useContext(CartContext);
     const { MyCart } = useContext(CartContext)
@@ -91,7 +91,7 @@ export default function NavBar() {
 
             </div>
 
-            {isLoading ? <i className="fa-solid fa-spinner fa-spin text-3xl mr-3"></i> : <>
+            {isUserLoading ? <i className="fa-solid fa-spinner fa-spin text-3xl mr-3"></i> : <>
                 {UserToken ? <div className="flex-none gap-2">
                     <div className="dropdown dropdown-end">
                         {isLoadingCartIcon ? <div role="status">
