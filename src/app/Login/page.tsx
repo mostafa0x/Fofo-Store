@@ -14,7 +14,7 @@ export default function Login() {
 
     let Router = useRouter();
     const Session = useSession();
-    const { setisLoading, headers } = useContext(UserContext)
+    const { setUserToken, setisLoading, headers } = useContext(UserContext)
     const { TV, setTV } = useContext(MainContext)
     const Btn_Login = useRef<HTMLButtonElement>(null);
 
@@ -37,6 +37,20 @@ export default function Login() {
             signIn("google")
         }
     }
+
+    useEffect(() => {
+        if (Session.status !== 'loading') {
+            if (Session.status === 'authenticated') {
+                if (!localStorage.getItem("UserToken")) {
+                    toast.success("Login-OK");
+                }
+                Session?.data?.token && localStorage.setItem("UserToken", Session?.data?.token)
+                setUserToken(Session?.data?.token)
+                Router.replace("/")
+            }
+        }
+
+    }, [Session])
 
     // async function GetMyCart() {
     //     axios.get("http://localhost:3001/Cart", { headers }).then((x) => {
