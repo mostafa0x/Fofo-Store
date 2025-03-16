@@ -18,7 +18,6 @@ import useCart from '@/app/_Hooks/useCart'
 export default function ProductID() {
     function GetProductByID() {
         return axios.get(`http://localhost:3001/Product/${Params?.id}`, { headers }).then((product) => {
-            console.log(product.data.Product);
             setProductByID(product.data.Product)
             return product
 
@@ -26,8 +25,8 @@ export default function ProductID() {
     }
     const { TV, setTV } = useContext(MainContext)
     const { setMyCart } = useContext(CartContext)
-    const { data, isError, error, isLoading }: HooksTypes = useQuery({ queryKey: ['ProdcutByID'], queryFn: GetProductByID })
-    const { refetch } = useCart()
+    const { data, isError, error, isLoading, refetch }: HooksTypes = useQuery({ queryKey: ['ProdcutByID'], queryFn: GetProductByID })
+    const HookCart = useCart()
     const { headers } = useContext(UserContext)
     const Params = useParams()
     const [ProductByID, setProductByID] = useState<TypeProducts>({})
@@ -41,6 +40,9 @@ export default function ProductID() {
         autoplaySpeed: 1000,
     };
 
+
+
+
     async function AddToCart(productID: number) {
         if (TV === -1) {
             if (productID !== -1) {
@@ -50,6 +52,7 @@ export default function ProductID() {
                     setMyCart(data.data.Cart)
                     toast.remove(tosatLoading)
                     toast.success(data.data.message)
+                    refetch()
                     setTV(-1)
                 }).catch((err) => {
                     toast.remove(tosatLoading)
@@ -63,7 +66,8 @@ export default function ProductID() {
         }
     }
     useEffect(() => {
-        refetch()
+        //  refetch()
+        HookCart.refetch()
     }, [headers])
 
 
