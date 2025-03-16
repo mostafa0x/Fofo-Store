@@ -12,8 +12,6 @@ export default function Cart() {
 
     useEffect(() => {
         refetch()
-        console.log(data);
-
     }, [headers])
 
     if (!data) {
@@ -27,22 +25,27 @@ export default function Cart() {
     } else {
         return (
             <div className='mt-10 px-16 py-20 ' >
-                <div className='flex justify-center items-center mb-20 '>
-                    <div className=' text-center'>
-                        <h1>MyCart</h1>
-                        <h1>Total Prices : ${MyCart?.Totalprice}</h1>
+                <div className='mb-20 '>
+                    <div className=' flex-row flex justify-between items-center  text-center  font-bold'>
+                        <h1 className='text-3xl opacity-40'>MyCart</h1>
+                        <h1 className='text-2xl'>Total Prices :{MyCart?.Totalprice} EGP</h1>
+                        <button className='btn btn-ghost text-xl bg-red-950 text-white font-normal'>Remove Cart</button>
                     </div>
                 </div>
                 {MyCart?.MyCart?.map((product, index: number) => {
-                    return <div>
+                    return <div className='py-10' key={index}>
                         <div className=' flex justify-between text-center items-center'>
-                            <div className='flex justify-between w-72 '>
-                                <img src="xx" alt="sasa" />
-                                <h1 className='pl-32'>{product.title}</h1>
+                            <div className='flex justify-between w-96 items-center '>
+                                <img
+                                    className='w-24 h-24 object-cover rounded-lg'
+                                    src={product?.images?.[0]}
+                                    alt={product.title?.split(" ").splice(0, 2).join(" ")}
+                                />
+                                <h1 className='pl-32 font-semibold'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
                             </div>
                             <div className='flex justify-between items-center w-52'>
                                 <button className='btn btn-circle bg-red-800'><i className="fa-solid fa-minus"></i></button>
-                                <h1 className=''>{product.count}</h1>
+                                <h1 className='font-bold'>{product.count}</h1>
                                 <button className='btn btn-circle bg-green-600'><i className="fa-solid fa-plus"></i></button>
                             </div>
                             <button className='btn btn-ghost text-3xl'><i className="fa-solid fa-trash"></i></button>

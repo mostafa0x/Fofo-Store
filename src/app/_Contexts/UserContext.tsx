@@ -31,6 +31,8 @@ export default function UserContextProvider({ children }: any) {
         if (localStorage.getItem("AuthLog")) {
             toast.error(localStorage.getItem("AuthLog"))
             localStorage.removeItem("AuthLog")
+            localStorage.removeItem("UserToken")
+            setUserToken(null)
         }
     }, [])
 
@@ -43,6 +45,12 @@ export default function UserContextProvider({ children }: any) {
                 }
                 localStorage.removeItem("UserToken")
                 setUserToken(null)
+
+                if (Path === "/Cart") {
+                    toast.error("You must log in first !")
+                    Router.replace("/Login")
+
+                }
             } else {
                 if (session?.token) {
                     localStorage.setItem("UserToken", session.token)
