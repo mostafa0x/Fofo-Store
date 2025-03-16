@@ -17,7 +17,7 @@ export interface TypesContexts {
   setTV?: any;
   headers?: { Authorization: string | null };
   setheaders?: any;
-  MyCart?: { MyCart?: string[]; Totalprice?: number };
+  MyCart?: { MyCart?: TypeProducts[]; Totalprice?: number };
   setMyCart?: any;
   isLoadingCartIcon?: boolean;
   setisLoadingCartIcon?: any;

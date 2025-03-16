@@ -6,4 +6,5 @@ export default interface TypeProducts {
   price?: number;
   description?: string;
   category?: { id?: number; name?: string; image?: string };
+  count?: number;
 }

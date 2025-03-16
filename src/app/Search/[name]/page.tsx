@@ -38,7 +38,7 @@ export default function Search() {
                     setTV(-1)
                 }).catch((err) => {
                     toast.remove(tosatLoading)
-                    //   toast.error(err.data.message)
+                    toast.error(err.response.data.message)
                     setTV(-1)
                     console.log(err);
                 })
