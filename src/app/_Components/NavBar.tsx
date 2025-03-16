@@ -52,7 +52,7 @@ export default function NavBar() {
 
     }
     function LogOut() {
-        if (TV === 1) {
+        if (TV === -1) {
             setTV(0)
             toast.dismiss()
             toast.loading("Waiting Logout...")

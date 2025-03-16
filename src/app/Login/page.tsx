@@ -19,7 +19,7 @@ export default function Login() {
     const Btn_Login = useRef<HTMLButtonElement>(null);
 
     function Log_in() {
-        if (TV === 1) {
+        if (TV === -1) {
             if (Btn_Login.current) {
                 Btn_Login.current.innerHTML = `
 <div role="status">
@@ -33,7 +33,7 @@ export default function Login() {
             }
             toast.dismiss()
             toast.loading("Waiting...")
-            setTV(0)
+            setTV(-10)
             signIn("google")
         }
     }

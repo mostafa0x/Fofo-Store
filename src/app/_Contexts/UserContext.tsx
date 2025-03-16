@@ -30,19 +30,19 @@ export default function UserContextProvider({ children }: any) {
         if (status !== 'loading') {
             setisUserLoading(false)
             if (!session) {
-                toast.error("Login Frist !")
+                if (Path === "/Login" && localStorage.getItem("UserToken")) {
+                    toast.success("You have been logged Out successfully")
+                }
                 localStorage.removeItem("UserToken")
                 setUserToken(null)
-
-                if (Path !== "/Login") {
-                    Router.replace("/Login")
-                }
-
-
             } else {
                 if (session?.token) {
                     localStorage.setItem("UserToken", session.token)
                     setUserToken(session?.token)
+                }
+                if (Path === "/Login") {
+                    toast.success("You have been logged in successfully")
+                    Router.replace("/")
                 }
 
             }

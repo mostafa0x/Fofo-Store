@@ -9,7 +9,7 @@ export const MainContext = createContext<TypesContexts>({
   setItemFillters: () => { },
   Category: [],
   setCategory: () => { },
-  TV: 1,
+  TV: -1,
 
 });
 
@@ -20,7 +20,7 @@ export default function MainContextProvider({
   const [SearchTXT, setSearchTXT] = useState(null)
   const [ItemFillters, setItemFillters] = useState([])
   const [Category, setCategory] = useState(["Pottery", "Woodware", "Wicker", "Bags", "Rugs & Kilim", "Arts & Nature"])
-  const [TV, setTV] = useState(1)
+  const [TV, setTV] = useState(-1)
 
 
 
