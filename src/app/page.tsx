@@ -11,6 +11,7 @@ import HooksTypes from "./_Interfaces/HooksType";
 import { signOut, useSession } from "next-auth/react";
 import Products from "./_Components/Products";
 import { usePathname } from "next/navigation";
+import { UserContext } from "./_Contexts/UserContext";
 
 
 
@@ -21,18 +22,23 @@ export default function Home() {
   const { data, isError, error, isLoading, refetch }: HooksTypes = useCart()
   const { MyCart, setMyCart, setisLoadingCartIcon } = useContext(CartContext)
   const [isLogOut, setisLogOut] = useState(false)
+  const { UserToken, headers } = useContext(UserContext)
 
 
   useEffect(() => {
-
-
+    window.scroll(0, 0)
     setSearchTXT(null)
   }, [])
 
+  useEffect(() => {
+    refetch()
+  }, [headers])
+
+
 
   useEffect(() => {
 
-    setisLoadingCartIcon(isLoading)
+    // setisLoadingCartIcon(isLoading)
   }, [isLoading])
 
   // useEffect(() => {

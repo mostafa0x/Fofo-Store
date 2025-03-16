@@ -15,7 +15,6 @@ import { SessionProvider } from "next-auth/react";
 import ProductsContextProvider from "./_Contexts/ProductsContext";
 import CartContextProvider from "./_Contexts/CartContext";
 import ErrorsPage from "./_Components/ErrorsPage";
-import AllFunContextProvider from "./_Contexts/AllFunContext";
 
 
 
@@ -35,28 +34,26 @@ export default function RootLayout({
   return (
     <SessionProvider>
       <ErrorsPage>
-        <AllFunContextProvider>
-          <UserContextProvider>
-            <MainContextProvider>
-              <CartContextProvider>
-                <ProductsContextProvider>
-                  <html lang="en">
-                    <body className="vsc-initialized">
-                      <ReactQuery>
-                        <ProtectRouting>
-                          <NavBar />
-                          {children}
-                          <Toaster />
-                          <Footer />
-                        </ProtectRouting>
-                      </ReactQuery>
-                    </body>
-                  </html>
-                </ProductsContextProvider>
-              </CartContextProvider>
-            </MainContextProvider>
-          </UserContextProvider>
-        </AllFunContextProvider>
+        <UserContextProvider>
+          <MainContextProvider>
+            <CartContextProvider>
+              <ProductsContextProvider>
+                <html lang="en">
+                  <body className="vsc-initialized">
+                    <ReactQuery>
+                      <ProtectRouting>
+                        <NavBar />
+                        {children}
+                        <Toaster />
+                        <Footer />
+                      </ProtectRouting>
+                    </ReactQuery>
+                  </body>
+                </html>
+              </ProductsContextProvider>
+            </CartContextProvider>
+          </MainContextProvider>
+        </UserContextProvider>
       </ErrorsPage>
     </SessionProvider >
   );

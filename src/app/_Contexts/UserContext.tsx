@@ -1,10 +1,11 @@
 "use client";
 import React, { createContext, useEffect, useState } from 'react'
 import { TypesContexts } from "../_Interfaces/TypesContext"
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import { Router } from 'next/router';
+
+
 
 export const UserContext = createContext<TypesContexts>({
     UserToken: null,
@@ -23,22 +24,40 @@ export default function UserContextProvider({ children }: any) {
     });
     const Path = usePathname();
     const Router = useRouter()
+    const { data: session, status } = useSession()
 
     useEffect(() => {
-        if (!localStorage.getItem("UserToken")) {
-            // if (Path !== "/Login") {
-            //     signOut({ callbackUrl: "/Login" })
-            // }
+        if (status !== 'loading') {
             setisUserLoading(false)
+            if (!session) {
+                toast.error("Login Frist !")
+                localStorage.removeItem("UserToken")
+                setUserToken(null)
 
-        } else if (localStorage.getItem("UserToken")) {
-            if (Path === "/Login") {
-                toast.success("Login Ok")
-                Router.replace("/")
+                if (Path !== "/Login") {
+                    Router.replace("/Login")
+                }
+
+
+            } else {
+                if (session?.token) {
+                    localStorage.setItem("UserToken", session.token)
+                    setUserToken(session?.token)
+                }
+
             }
-            setUserToken(localStorage.getItem("UserToken"))
+
         }
-    }, [])
+
+
+    }, [session])
+
+    useEffect(() => {
+        if (UserToken) {
+            setheaders({ Authorization: UserToken })
+        }
+    }, [UserToken])
+
 
     return <UserContext.Provider value={{ UserToken, setUserToken, isUserLoading, setisUserLoading, headers, setheaders }}>{
         children

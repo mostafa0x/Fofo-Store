@@ -1,6 +1,6 @@
 "use client"
 import { MainContext } from '@/app/_Contexts/MainContext';
-import { useParams } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react';
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import TypeProducts from '@/app/_Interfaces/TypeProducts';
@@ -17,7 +17,7 @@ export default function Search() {
     let { Products } = useContext(ProductsContext)
     let Parms: Parms = useParams();
     const { isLoading, isError, error } = useProducts()
-
+    const Router = useRouter()
 
 
     useEffect(() => {
@@ -46,14 +46,16 @@ export default function Search() {
                 <ul className="list bg-base-100 rounded-box shadow-md">
                     {ItemFillters?.length > 0 ? ItemFillters?.map((item: TypeProducts, index: number) => {
                         return (
-                            <li key={index} className="list-row mb-5 bg-gray-400 rounded-2xl p-5">
-                                <div className="flex items-center  space-x-4">
-                                    <img className="w-32 h-32 rounded-box" src={item?.images?.[0]} alt={item.title?.split(" ").splice(0, 2).join(" ")} />
-                                    <h1 className="text-center font-semibold text-2xl">{item.title?.split(" ").splice(0, 2).join(" ")}</h1>
-                                </div>
-                                <div className="flex flex-col mt-2">
-                                    <div className="text-xs uppercase font-semibold opacity-60">{item?.category?.name}</div>
-                                    <p className="text-xs">{item.description}</p>
+                            <li key={index} className="list-row mb-5 bg-gray-400 rounded-2xl p-5 ">
+                                <div onClick={() => { Router.push(`/Product/${item.id}`) }} className=' cursor-pointer' >
+                                    <div className="flex items-center  space-x-4">
+                                        <img className="w-32 h-32 rounded-box" src={item?.images?.[0]} alt={item.title?.split(" ").splice(0, 2).join(" ")} />
+                                        <h1 className="text-center font-semibold text-2xl">{item.title?.split(" ").splice(0, 2).join(" ")}</h1>
+                                    </div>
+                                    <div className="flex flex-col mt-2">
+                                        <div className="text-xs uppercase font-semibold opacity-60">{item?.category?.name}</div>
+                                        <p className="text-xs">{item.description}</p>
+                                    </div>
                                 </div>
                                 <div className="flex justify-end mt-2">
                                     <button className="px-10 btn btn-square btn-ghost bg-green-600">

@@ -1,4 +1,5 @@
 export default interface TypeProducts {
+  _id?: number;
   id?: number;
   title?: string;
   images?: string[];

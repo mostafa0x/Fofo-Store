@@ -54,7 +54,7 @@ export default function ProductID() {
     return (
         <div className=" flex justify-center items-center mx-20 pt-52 row ">
             <div className="w-1/4 pr-4">
-                {ProductByID?.images?.length ?? 0 > 1 ? (
+                {(ProductByID?.images?.length ?? 0) > 1 ? (
                     <Slider {...settingsSlick}>
                         {ProductByID?.images?.map((scr, index) => (
                             <img

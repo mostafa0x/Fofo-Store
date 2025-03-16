@@ -38,39 +38,6 @@ export default function Login() {
         }
     }
 
-    useEffect(() => {
-        if (Session.status !== 'loading') {
-            if (Session.status === 'authenticated') {
-                if (!localStorage.getItem("UserToken")) {
-                    toast.success("Login-OK");
-                }
-                Session?.data?.token && localStorage.setItem("UserToken", Session?.data?.token)
-                setUserToken(Session?.data?.token)
-                setisUserLoading(false)
-                Router.replace("/")
-            }
-        }
-
-    }, [Session])
-
-    // async function GetMyCart() {
-    //     axios.get("http://localhost:3001/Cart", { headers }).then((x) => {
-    //         console.log(x);
-    //     }).catch((err) => {
-    //         console.log(err);
-    //     })
-    // }
-
-
-    useEffect(() => {
-        if (Session?.status === "authenticated") {
-            // Router.replace("/")
-            // GetMyCart()
-        } else if (Session?.status === "unauthenticated") {
-            // setisLoading(false)
-
-        }
-    }, [Session])
 
 
     if (Session) {

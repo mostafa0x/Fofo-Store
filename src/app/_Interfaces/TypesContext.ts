@@ -17,12 +17,10 @@ export interface TypesContexts {
   setTV?: any;
   headers?: { Authorization: string | null };
   setheaders?: any;
-  MyCart?: { MyCart: string[]; Total: number };
+  MyCart?: { MyCart?: string[]; Totalprice?: number };
   setMyCart?: any;
   isLoadingCartIcon?: boolean;
   setisLoadingCartIcon?: any;
-  Middleware?: string | null;
-  setMiddleware?: any;
   On?: number;
   setOn?: any;
 }
