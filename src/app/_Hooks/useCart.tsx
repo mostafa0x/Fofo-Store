@@ -4,7 +4,7 @@ import axios from 'axios';
 import React, { useContext } from 'react'
 import { UserContext } from '../_Contexts/UserContext';
 import { CartContext } from '../_Contexts/CartContext';
-import { useSession } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 
 
 export default function useCart() {
@@ -20,6 +20,11 @@ export default function useCart() {
                 return obj
             }).catch((err) => {
                 console.log(err);
+                if (err.status === 401) {
+                    localStorage.setItem("AuthLog", "The session has ended")
+                    signOut({ callbackUrl: "/Login" })
+                }
+
                 throw err
             })
         } else {

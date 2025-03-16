@@ -5,6 +5,7 @@ import { useContext } from 'react';
 import { ProductsContext } from '../_Contexts/ProductsContext';
 import { UserContext } from '../_Contexts/UserContext';
 import { MainContext } from '../_Contexts/MainContext';
+import { signOut } from 'next-auth/react';
 
 export default function useProducts() {
     const { setProducts } = useContext(ProductsContext);
@@ -20,6 +21,10 @@ export default function useProducts() {
             })
             .catch((err) => {
                 console.log(err);
+                if (err.status === 401) {
+                    localStorage.setItem("AuthLog", "The session has ended")
+                    signOut({ callbackUrl: "/Login" })
+                }
                 throw err;
             });
     };

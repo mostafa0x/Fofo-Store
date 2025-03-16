@@ -12,6 +12,8 @@ import { signOut, useSession } from "next-auth/react";
 import Products from "./_Components/Products";
 import { usePathname } from "next/navigation";
 import { UserContext } from "./_Contexts/UserContext";
+import Head from "next/head";
+
 
 
 
@@ -34,29 +36,6 @@ export default function Home() {
     refetch()
   }, [headers])
 
-
-
-  useEffect(() => {
-
-    // setisLoadingCartIcon(isLoading)
-  }, [isLoading])
-
-  // useEffect(() => {
-  //   console.log(data);
-
-  //   if (error?.status === 401) {
-  //     signOut({ callbackUrl: "/Login" })
-  //   }
-
-
-  // }, [isError])
-
-  // useEffect(() => {
-  //   if (Array.isArray(data?.data?.Cart?.MyCart)) {
-  //     setMyCart(data?.data?.Cart)
-  //   }
-  // }, [data])
-
   if (isLoading) {
     return <div className="flex justify-center pt-72" role="status">
       <svg aria-hidden="true" className="w-28 h-28 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -75,17 +54,17 @@ export default function Home() {
 
 
   return (
+    <>
+      <div >
+        <div className="pt-20"><CategoriesBar /></div>
+        <div className=""> <MainSlider /></div>
+        <div className=""> <CategoriesSlider /></div>
 
-    <div >
-      <div className="pt-20"><CategoriesBar /></div>
-      <div className=""> <MainSlider /></div>
-      <div className=""> <CategoriesSlider /></div>
+        <div className=" p-24 pt-6">
+          <h1 className='p-5 font-semibold text-2xl'>Products</h1>
+          <Products />
+        </div>
 
-      <div className=" p-24 pt-6">
-        <h1 className='p-5 font-semibold text-2xl'>Products</h1>
-        <Products />
       </div>
-
-    </div>
-  );
+    </>);
 }

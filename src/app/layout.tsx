@@ -15,7 +15,7 @@ import { SessionProvider } from "next-auth/react";
 import ProductsContextProvider from "./_Contexts/ProductsContext";
 import CartContextProvider from "./_Contexts/CartContext";
 import ErrorsPage from "./_Components/ErrorsPage";
-
+import Head from 'next/head';
 
 
 
@@ -32,6 +32,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+
     <SessionProvider>
       <ErrorsPage>
         <UserContextProvider>
@@ -39,6 +40,10 @@ export default function RootLayout({
             <CartContextProvider>
               <ProductsContextProvider>
                 <html lang="en">
+                  <head>
+                    <title>Fofo Store</title>
+                    <meta name="description" content="Shoping" />
+                  </head>
                   <body className="vsc-initialized">
                     <ReactQuery>
                       <ProtectRouting>
@@ -58,3 +63,4 @@ export default function RootLayout({
     </SessionProvider >
   );
 }
+

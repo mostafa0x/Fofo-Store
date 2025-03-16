@@ -26,6 +26,14 @@ export default function UserContextProvider({ children }: any) {
     const Router = useRouter()
     const { data: session, status } = useSession()
 
+
+    useEffect(() => {
+        if (localStorage.getItem("AuthLog")) {
+            toast.error(localStorage.getItem("AuthLog"))
+            localStorage.removeItem("AuthLog")
+        }
+    }, [])
+
     useEffect(() => {
         if (status !== 'loading') {
             setisUserLoading(false)
@@ -44,12 +52,8 @@ export default function UserContextProvider({ children }: any) {
                     toast.success("You have been logged in successfully")
                     Router.replace("/")
                 }
-
             }
-
         }
-
-
     }, [session])
 
     useEffect(() => {
