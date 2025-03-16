@@ -4,15 +4,22 @@ import useCart from '../_Hooks/useCart'
 import { UserContext } from '../_Contexts/UserContext'
 import { CartContext } from '../_Contexts/CartContext'
 import TypeProducts from '../_Interfaces/TypeProducts'
+import HooksTypes from '../_Interfaces/HooksType'
 
 export default function Cart() {
-    const { data, refetch, isLoading } = useCart()
+    const { data, refetch, isError, error }: HooksTypes = useCart()
     const { headers } = useContext(UserContext)
     const { MyCart } = useContext(CartContext)
 
     useEffect(() => {
         refetch()
     }, [headers])
+
+    if (isError) {
+        return <div className="flex justify-center pt-72" role="status">
+            <h1>{error?.response?.data.message}</h1>
+        </div>
+    }
 
     if (!data) {
         return <div className="flex justify-center pt-72" role="status">

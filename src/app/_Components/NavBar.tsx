@@ -25,6 +25,7 @@ export default function NavBar() {
     let Router = useRouter();
     let Path = usePathname()
     const { } = useCart();
+    const { data: session, status } = useSession()
 
     useEffect(() => {
         if (Path === "/") {
@@ -78,7 +79,7 @@ export default function NavBar() {
                         style={{ width: `${MaxSelectChrs}px` }}>
                         <option>All</option>
                         <option>Btata</option>
-                        <option>Sasssssssssssssss sssssssssssssJ sssssssssssssssssssssssssssssssssssssssssa</option>
+                        <option>test</option>
                     </select>
 
                         <button onKeyDown={(e) => { if (e.key == "Enter") { Search(SearchBar?.current?.value ?? "") } }} onClick={() => Search(SearchBar?.current?.value ?? "")} type="button" className=" font-semibold text-sm text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300  rounded-lg  px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">Search</button>
@@ -113,7 +114,7 @@ export default function NavBar() {
                                 <span className="text-lg font-bold">{MyCart?.MyCart?.length || 0} Items</span>
                                 <span className="text-info">Subtotal: ${MyCart?.Totalprice || 0}</span>
                                 <div className="card-actions">
-                                    <button className="btn btn-primary btn-block">View cart</button>
+                                    <Link href={"/Cart"}><button className="btn btn-primary btn-block">View cart</button></Link>
                                 </div>
                             </div>
                         </div>
@@ -122,8 +123,8 @@ export default function NavBar() {
                         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
                             <div className="w-10 rounded-full">
                                 <img
-                                    alt="Tailwind CSS Navbar component"
-                                    src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                                    alt="Icon Profile"
+                                    src={session?.user?.image ?? "Empty"} />
                             </div>
                         </div>
                         <ul
