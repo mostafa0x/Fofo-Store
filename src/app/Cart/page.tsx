@@ -31,7 +31,7 @@ export default function Cart() {
             </svg>
             <span className="sr-only">Loading...</span>
         </div>
-    } else if (data?.message === "Login Frist") {
+    } else if (!data?.message) {
         return (
             <div className='mt-10 px-16 py-20 ' >
                 <div className='mb-20 '>
