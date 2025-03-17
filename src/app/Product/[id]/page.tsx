@@ -4,7 +4,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import HooksTypes from '@/app/_Interfaces/HooksType'
 import axios from 'axios'
 import { UserContext } from '@/app/_Contexts/UserContext'
-import { useParams } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import TypeProducts from '@/app/_Interfaces/TypeProducts'
 import Slider from 'react-slick';
 import Link from 'next/link'
@@ -12,6 +12,7 @@ import toast from 'react-hot-toast'
 import { MainContext } from '@/app/_Contexts/MainContext'
 import { CartContext } from '@/app/_Contexts/CartContext'
 import useCart from '@/app/_Hooks/useCart'
+import { useSession } from 'next-auth/react'
 
 
 
@@ -25,13 +26,14 @@ export default function ProductID() {
     }
     const { TV, setTV } = useContext(MainContext)
     const { setMyCart } = useContext(CartContext)
+    const Session = useSession()
     const { data, isError, error, isLoading, refetch }: HooksTypes = useQuery({ queryKey: ['ProdcutByID'], queryFn: GetProductByID })
-    const HookCart = useCart()
+    const HookCart = Session.status === 'authenticated' ? useCart() : null
     const { headers } = useContext(UserContext)
     const Params = useParams()
     const [ProductByID, setProductByID] = useState<TypeProducts>({})
     let settingsSlick = {
-        dots: true,
+        dots: false,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
@@ -39,6 +41,7 @@ export default function ProductID() {
         autoplay: true,
         autoplaySpeed: 1000,
     };
+    const Router = useRouter()
 
 
 
@@ -57,8 +60,10 @@ export default function ProductID() {
                 }).catch((err) => {
                     toast.remove(tosatLoading)
                     toast.error(err.response.data.message)
+                    if (err?.response?.status === 400) {
+                        Router.push("/Login")
+                    }
                     setTV(-1)
-                    console.log(err);
                 })
             }
         } else {
@@ -67,7 +72,7 @@ export default function ProductID() {
     }
     useEffect(() => {
         //  refetch()
-        HookCart.refetch()
+        HookCart?.refetch()
     }, [headers])
 
 

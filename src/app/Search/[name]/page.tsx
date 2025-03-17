@@ -5,12 +5,12 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import TypeProducts from '@/app/_Interfaces/TypeProducts';
 import useProducts from '@/app/_Hooks/useProducts';
-import { ErrorBoundary } from 'next/dist/client/components/error-boundary';
 import useCart from '@/app/_Hooks/useCart';
 import toast from 'react-hot-toast';
 import axios from 'axios';
 import { UserContext } from '@/app/_Contexts/UserContext';
 import { CartContext } from '@/app/_Contexts/CartContext';
+import { useSession } from 'next-auth/react';
 
 type Parms = {
     name: string
@@ -23,7 +23,8 @@ export default function Search() {
     const { Products } = useContext(ProductsContext)
     let Parms: Parms = useParams();
     const { isLoading, isError, error } = useProducts()
-    const { refetch } = useCart()
+    const session = useSession()
+    const HookCart = session.status === "authenticated" ? useCart() : null
     const Router = useRouter()
 
     async function AddToCart(productID: number) {
@@ -62,7 +63,7 @@ export default function Search() {
     }, [Products]);
 
     useEffect(() => {
-        refetch()
+        HookCart?.refetch
     }, [headers])
 
     if (SearchTXT == null) {

@@ -52,8 +52,6 @@ export default function Products() {
     }
 
     if (isError) {
-
-
         return <div className='"flex justify-center pt-72"'><h1>{error?.response?.data?.message}</h1></div>
     }
 
