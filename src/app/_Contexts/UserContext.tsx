@@ -4,7 +4,7 @@ import { TypesContexts } from "../_Interfaces/TypesContext"
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import UserContextType from '../_Interfaces/UseContextType';
+import UserContextType from '../_Interfaces/Contexts/UserContextType';
 
 
 export const UserContext = createContext<UserContextType>({

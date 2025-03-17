@@ -1,14 +1,14 @@
 'use client'
-import React, { createContext, useContext, useEffect, useState } from 'react'
-import { TypesContexts } from "../_Interfaces/TypesContext"
+import React, { createContext, useContext, useState } from 'react'
 import { UserContext } from './UserContext'
 import { MainContext } from './MainContext'
 import { usePathname, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import axios, { AxiosResponse } from 'axios'
+import axios from 'axios'
+import CartContextTypes from '../_Interfaces/Contexts/CartContext'
 
 
-export const CartContext = createContext<TypesContexts>({
+export const CartContext = createContext<CartContextTypes>({
     MyCart: { MyCart: [], Totalprice: 0 },
     setMyCart: () => { },
     isLoadingCartIcon: true,
@@ -17,7 +17,7 @@ export const CartContext = createContext<TypesContexts>({
 })
 
 export default function CartContextProvider({ children }: any) {
-    const [MyCart, setMyCart] = useState({ MyCart: [], Total: 0 })
+    const [MyCart, setMyCart] = useState<{ MyCart: string[], Totalprice: number }>({ MyCart: [], Totalprice: 0 })
     const [isLoadingCartIcon, setisLoadingCartIcon] = useState(true)
     const Router = useRouter()
     const Path = usePathname()
