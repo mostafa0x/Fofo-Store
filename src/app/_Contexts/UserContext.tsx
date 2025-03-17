@@ -4,6 +4,7 @@ import { TypesContexts } from "../_Interfaces/TypesContext"
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
+import useCart from '../_Hooks/useCart';
 
 
 
@@ -49,8 +50,8 @@ export default function UserContextProvider({ children }: any) {
                 setUserToken(null)
 
                 if (Path === "/Cart") {
-                    // toast.error("You must log in first !")
-                    //   Router.replace("/Login")
+                    toast.error("You must log in first !")
+                    Router.replace("/Login")
 
                 }
             } else {

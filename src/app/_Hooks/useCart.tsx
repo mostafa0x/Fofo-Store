@@ -14,31 +14,39 @@ export default function useCart() {
     const { setMyCart, setisLoadingCartIcon } = useContext(CartContext)
     const Path = usePathname()
 
+
     async function GetMyCart() {
-        return await axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
-            setMyCart(obj?.data?.Cart)
-            setisLoadingCartIcon(false)
-            return obj
-        }).catch((err) => {
-            console.log(err);
-            if (err?.response?.status === 401) {
-                localStorage.setItem("AuthLog", "The session has ended")
-                if (Path !== "/Login") {
-                    signOut({ callbackUrl: "/Login" })
-                }
-            } else if (err?.response?.status === 400) {
-                localStorage.setItem("AuthLog", "You must log in first !")
-                if (Session.status === 'unauthenticated') {
+
+        if (Session.status === 'authenticated') {
+            return axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
+                setMyCart(obj?.data?.Cart)
+                setisLoadingCartIcon(false)
+                return obj
+            }).catch((err) => {
+                console.log(err);
+                if (err?.response?.status === 401) {
+                    localStorage.setItem("AuthLog", "The session has ended")
                     if (Path !== "/Login") {
                         signOut({ callbackUrl: "/Login" })
                     }
+                } else if (err?.response?.status === 400) {
+
+                    // if (Session.status === 'unauthenticated') {
+                    //     if (Path !== "/Login") {
+                    //         if (Path === "/Cart") {
+                    //             localStorage.setItem("AuthLog", "You must log in first !")
+                    //             signOut({ callbackUrl: "/Login" })
+                    //         }
+                    //     }
+                    // }
                 }
-            }
-
-            throw err
-        })
+                throw err
+            })
 
 
+        } else {
+            return { message: "Login Frist" }
+        }
     }
     return useQuery({ queryKey: ['Cart'], queryFn: GetMyCart })
 }

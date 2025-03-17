@@ -25,7 +25,8 @@ export default function NavBar() {
     let SearchBar = useRef<HTMLInputElement | null>(null);
     const Router = useRouter();
     const Path = usePathname()
-    //const HookCart = status === 'authenticated' && useCart()
+    const HookCart = useCart()
+
 
 
     useEffect(() => {
@@ -39,6 +40,13 @@ export default function NavBar() {
         }
 
     }, [Path]);
+
+    useEffect(() => {
+        HookCart.refetch()
+
+
+    }, [session])
+
 
     function selectMax(SelectionSize: number) {
         console.log(SelectionSize);
