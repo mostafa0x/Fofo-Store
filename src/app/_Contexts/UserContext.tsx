@@ -27,6 +27,7 @@ export default function UserContextProvider({ children }: any) {
     const { data: session, status } = useSession()
 
 
+
     useEffect(() => {
         if (localStorage.getItem("AuthLog")) {
             toast.error(localStorage.getItem("AuthLog"))

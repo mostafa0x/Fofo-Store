@@ -24,8 +24,8 @@ export default function NavBar() {
     let SearchBar = useRef<HTMLInputElement | null>(null);
     let Router = useRouter();
     let Path = usePathname()
-    const { } = useCart();
     const { data: session, status } = useSession()
+    const HookCart = status === 'authenticated' ? useCart() : null
 
     useEffect(() => {
         if (Path === "/") {
@@ -36,6 +36,7 @@ export default function NavBar() {
                 setSearchTXT("");
             }
         }
+        console.log(HookCart);
 
     }, [Path]);
 
