@@ -17,7 +17,7 @@ export default function Products() {
     const { Products } = useContext(ProductsContext)
     const Router = useRouter();
     const { TV, setTV } = useContext(MainContext)
-    const { headers } = useContext(UserContext)
+    const { headers, UserToken } = useContext(UserContext)
     const { MyCart, setMyCart } = useContext(CartContext)
 
     async function AddToCart(productID: number) {
@@ -28,6 +28,8 @@ export default function Products() {
                 await axios.post("http://localhost:3001/Cart", { productID }, { headers }).then((data) => {
                     setMyCart(data.data.Cart)
                     toast.remove(tosatLoading)
+                    console.log(UserToken);
+                    console.log(headers);
                     toast.success(data.data.message)
                     setTV(-1)
                 }).catch((err) => {

@@ -9,13 +9,13 @@ import { usePathname } from 'next/navigation';
 
 
 export default function useCart() {
+    const Session = useSession()
     const { headers } = useContext(UserContext)
     const { setMyCart, setisLoadingCartIcon } = useContext(CartContext)
-    const Session = useSession()
     const Path = usePathname()
 
     async function GetMyCart() {
-        return axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
+        return await axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
             setMyCart(obj?.data?.Cart)
             setisLoadingCartIcon(false)
             return obj

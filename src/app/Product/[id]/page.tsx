@@ -55,7 +55,7 @@ export default function ProductID() {
                     setMyCart(data.data.Cart)
                     toast.remove(tosatLoading)
                     toast.success(data.data.message)
-                    refetch()
+                    typeof refetch !== 'undefined' ? refetch() : null
                     setTV(-1)
                 }).catch((err) => {
                     toast.remove(tosatLoading)

@@ -30,6 +30,7 @@ export default function UserContextProvider({ children }: any) {
 
     useEffect(() => {
         if (localStorage.getItem("AuthLog")) {
+
             toast.error(localStorage.getItem("AuthLog"))
             localStorage.removeItem("AuthLog")
             localStorage.removeItem("UserToken")
@@ -48,8 +49,8 @@ export default function UserContextProvider({ children }: any) {
                 setUserToken(null)
 
                 if (Path === "/Cart") {
-                    toast.error("You must log in first !")
-                    Router.replace("/Login")
+                    // toast.error("You must log in first !")
+                    //   Router.replace("/Login")
 
                 }
             } else {
@@ -66,9 +67,7 @@ export default function UserContextProvider({ children }: any) {
     }, [session])
 
     useEffect(() => {
-        if (UserToken) {
-            setheaders({ Authorization: UserToken })
-        }
+        setheaders({ Authorization: UserToken })
     }, [UserToken])
 
 

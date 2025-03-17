@@ -14,18 +14,19 @@ import useCart from '../_Hooks/useCart';
 
 
 export default function NavBar() {
-    let { UserToken, setUserToken, isUserLoading }: TypesContexts = useContext(UserContext)
-    let { SearchTXT, setSearchTXT, TV, setTV }: TypesContexts = useContext(MainContext)
-    let { isLoadingCartIcon } = useContext(CartContext);
+    const { data: session, status } = useSession()
+    const { UserToken, setUserToken, isUserLoading }: TypesContexts = useContext(UserContext)
+    const { SearchTXT, setSearchTXT, TV, setTV }: TypesContexts = useContext(MainContext)
+    const { isLoadingCartIcon } = useContext(CartContext);
     const { MyCart } = useContext(CartContext)
     const [MaxSelectChrs, setMaxSelectChrs] = useState<number>(58)
     const [MaxInputChrs, setMaxInputChrs] = useState<number>(700)
     let Op = useRef<HTMLSelectElement | null>(null);
     let SearchBar = useRef<HTMLInputElement | null>(null);
-    let Router = useRouter();
-    let Path = usePathname()
-    const { data: session, status } = useSession()
-    const HookCart = status === 'authenticated' ? useCart() : null
+    const Router = useRouter();
+    const Path = usePathname()
+    //const HookCart = status === 'authenticated' && useCart()
+
 
     useEffect(() => {
         if (Path === "/") {
@@ -36,7 +37,6 @@ export default function NavBar() {
                 setSearchTXT("");
             }
         }
-        console.log(HookCart);
 
     }, [Path]);
 
