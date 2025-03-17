@@ -6,11 +6,13 @@ import { CartContext } from '../_Contexts/CartContext'
 import TypeProducts from '../_Interfaces/TypeProducts'
 import HooksTypes from '../_Interfaces/HooksType'
 import { useSession } from 'next-auth/react'
+import { MainContext } from '../_Contexts/MainContext'
 
 export default function Cart() {
     const { data, refetch, isError, error }: HooksTypes = useCart()
     const { headers } = useContext(UserContext)
     const { MyCart, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart, DeleteAllCart } = useContext(CartContext)
+    const { TV } = useContext(MainContext)
     const Session = useSession()
     const DeleteCart = useRef(null)
 
@@ -57,9 +59,9 @@ export default function Cart() {
                                     <h1 className='pl-32 font-semibold'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
                                 </div>
                                 <div className='flex justify-between items-center w-52'>
-                                    <button onClick={() => RemoveProductFormCart(product?.id)} className='btn btn-circle bg-red-800'><i className="fa-solid fa-minus"></i></button>
+                                    <button onClick={() => RemoveProductFormCart(product?.id)} className='btn btn-circle bg-red-800'>{TV == (product?.id ?? 0) - 1000 ? <i className="fa-duotone fa-solid fa-spinner fa-spin text-2xl"></i> : <i className="fa-solid fa-minus text-2xl"></i>}</button>
                                     <h1 className='font-bold'>{product.count}</h1>
-                                    <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'><i className="fa-solid fa-plus"></i></button>
+                                    <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'>{TV === (product?.id ?? 0) - 100 ? <i className="fa-duotone fa-solid fa-spinner fa-spin text-2xl"></i> : <i className="fa-solid fa-plus text-2xl"></i>}</button>
                                 </div>
                                 <button onClick={() => DeleteProductFromCart(product?.id)} className='btn btn-ghost text-3xl'><i className="fa-solid fa-trash"></i></button>
                             </div>

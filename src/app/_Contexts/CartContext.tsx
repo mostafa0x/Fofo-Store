@@ -8,7 +8,6 @@ import toast from 'react-hot-toast'
 import axios, { AxiosResponse } from 'axios'
 
 
-
 export const CartContext = createContext<TypesContexts>({
     MyCart: { MyCart: [], Totalprice: 0 },
     setMyCart: () => { },
@@ -30,25 +29,26 @@ export default function CartContextProvider({ children }: any) {
     async function AddProductToCart(productID: (number | null)) {
         if (TV === -1) {
             if (productID !== null) {
-                setTV(productID)
+                setTV(productID - 100)
                 const tosatLoading = toast.loading("Waiting...")
-                await axios.post("http://localhost:3001/Cart", { productID }, { headers }).then((data) => {
-                    setMyCart(data.data.Cart)
-                    toast.remove(tosatLoading)
-                    toast.success(data.data.message)
+                try {
+                    const Data = await axios.post("http://localhost:3001/Cart", { productID }, { headers })
+                    setMyCart(Data.data.Cart)
+                    toast.success(Data.data.message)
                     setTV(-1)
-                }).catch((err) => {
-                    toast.remove(tosatLoading)
+                } catch (err: any) {
                     toast.error(err.response.data.message)
                     if (err?.response?.status === 400) {
                         if (Path !== "/") {
                             Router.push("/Login")
                         }
                     }
-                    setTV(-1)
-                })
+                }
+                toast.remove(tosatLoading)
+                setTV(-1)
             }
         } else {
+            toast.dismiss()
             toast.error("Your request is in progress !")
         }
 
@@ -58,16 +58,20 @@ export default function CartContextProvider({ children }: any) {
 
     async function RemoveProductFormCart(productID: (number | null)) {
         if (TV === -1 && productID) {
-            setTV(productID)
+            setTV(productID - 1000)
             const tosatLoading = toast.loading("Waiting...")
-            await axios.patch("http://localhost:3001/Cart", { productID }, { headers }).then((data) => {
-                setMyCart(data.data.Cart)
-                toast.success(data.data.message)
-            }).catch((err) => {
+            try {
+                const Data = await axios.patch("http://localhost:3001/Cart", { productID }, { headers })
+                setMyCart(Data.data.Cart)
+                toast.success(Data.data.message)
+            } catch (err: any) {
                 toast.error(err.response.data.message)
-            })
+            }
             toast.remove(tosatLoading)
             setTV(-1)
+        } else {
+            toast.dismiss()
+            toast.error("Your request is in progress !")
         }
 
     }
@@ -76,16 +80,20 @@ export default function CartContextProvider({ children }: any) {
         if (TV === -1 && productID) {
             setTV(productID)
             const tosatLoading = toast.loading("Waiting...")
-            await axios.delete(`http://localhost:3001/Cart/${productID}`, { headers }).then((data) => {
-                setMyCart(data.data.Cart)
-                toast.success(data.data.message)
-            }).catch((err) => {
+            try {
+                const Data = await axios.delete(`http://localhost:3001/Cart/${productID}`, { headers })
+                setMyCart(Data.data.Cart)
+                toast.success(Data.data.message)
+            } catch (err: any) {
                 toast.error(err.response.data.message)
-            })
+            }
             toast.remove(tosatLoading)
             setTV(-1)
-
+        } else {
+            toast.dismiss()
+            toast.error("Your request is in progress !")
         }
+
 
     }
 
@@ -106,6 +114,8 @@ export default function CartContextProvider({ children }: any) {
             }
             toast.remove(tosatLoading)
             setTV(-1)
+        } else {
+            toast.error("Your request is in progress !")
         }
     }
 
