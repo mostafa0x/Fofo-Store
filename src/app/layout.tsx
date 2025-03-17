@@ -20,7 +20,6 @@ import Head from 'next/head';
 
 
 
-
 const metadata: Metadata = {
   title: "Fofo Store",
   description: "Shoping",

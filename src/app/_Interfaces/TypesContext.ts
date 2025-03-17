@@ -23,4 +23,5 @@ export interface TypesContexts {
   setisLoadingCartIcon?: any;
   On?: number;
   setOn?: any;
+  AddProductToCart?: any;
 }
