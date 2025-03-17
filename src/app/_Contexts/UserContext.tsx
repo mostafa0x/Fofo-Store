@@ -4,11 +4,10 @@ import { TypesContexts } from "../_Interfaces/TypesContext"
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
-import useCart from '../_Hooks/useCart';
+import UserContextType from '../_Interfaces/UseContextType';
 
 
-
-export const UserContext = createContext<TypesContexts>({
+export const UserContext = createContext<UserContextType>({
     UserToken: null,
     setUserToken: () => { },
     isUserLoading: true,

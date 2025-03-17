@@ -1,9 +1,5 @@
 import TypeProducts from "./TypeProducts";
 export interface TypesContexts {
-  UserToken?: string | null | undefined;
-  isUserLoading?: boolean;
-  setisUserLoading?: any;
-  setUserToken?: any;
   SearchTXT?: string | null;
   setSearchTXT?: any;
   ItemFillters?: any;
@@ -15,8 +11,6 @@ export interface TypesContexts {
   setisLoading?: any;
   TV?: number;
   setTV?: any;
-  headers?: { Authorization: string | null };
-  setheaders?: any;
   MyCart?: { MyCart?: TypeProducts[]; Totalprice?: number };
   setMyCart?: any;
   isLoadingCartIcon?: boolean;
