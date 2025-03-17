@@ -24,14 +24,15 @@ export default function Search() {
     let Parms: Parms = useParams();
     const { isLoading, isError, error } = useProducts()
     const session = useSession()
-    const HookCart = session.status === "authenticated" ? useCart() : null
+    const HookCart = useCart()
     const Router = useRouter()
 
     useEffect(() => {
 
         if (Products && Parms?.name) {
             const decodedName = decodeURIComponent(Parms?.name);
-            const FT = Products.filter((product: TypeProducts) => product?.title?.toLowerCase().includes(Parms?.name?.toLowerCase()));
+            const FT = Products.filter((product: TypeProducts) => product?.title?.toLowerCase().includes(decodedName.toLowerCase()));
+            console.log(decodedName);
             setItemFillters(FT);
             setSearchTXT(decodedName)
         }
@@ -39,7 +40,7 @@ export default function Search() {
     }, [Products]);
 
     useEffect(() => {
-        HookCart?.refetch
+        HookCart?.refetch()
     }, [headers])
 
     if (SearchTXT == null) {

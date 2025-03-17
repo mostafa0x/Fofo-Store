@@ -29,7 +29,7 @@ export default function CartContextProvider({ children }: any) {
     async function AddProductToCart(productID: (number | null)) {
         if (TV === -1) {
             if (productID !== null) {
-                setTV(productID - 100)
+                setTV(productID - 10000)
                 const tosatLoading = toast.loading("Waiting...")
                 try {
                     const Data = await axios.post("http://localhost:3001/Cart", { productID }, { headers })
@@ -58,7 +58,7 @@ export default function CartContextProvider({ children }: any) {
 
     async function RemoveProductFormCart(productID: (number | null)) {
         if (TV === -1 && productID) {
-            setTV(productID - 1000)
+            setTV(productID - 100000)
             const tosatLoading = toast.loading("Waiting...")
             try {
                 const Data = await axios.patch("http://localhost:3001/Cart", { productID }, { headers })
@@ -78,7 +78,7 @@ export default function CartContextProvider({ children }: any) {
 
     async function DeleteProductFromCart(productID: (number | null)) {
         if (TV === -1 && productID) {
-            setTV(productID)
+            setTV(productID - 1000000)
             const tosatLoading = toast.loading("Waiting...")
             try {
                 const Data = await axios.delete(`http://localhost:3001/Cart/${productID}`, { headers })
@@ -99,9 +99,7 @@ export default function CartContextProvider({ children }: any) {
 
     async function DeleteAllCart(index: any) {
         if (TV === -1) {
-            console.log(index);
-
-            setTV(-10)
+            setTV(index)
             const tosatLoading = toast.loading("Waiting...")
             try {
                 const data = await axios.delete(`http://localhost:3001/AllCart`, { headers })
