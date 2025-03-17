@@ -5,7 +5,7 @@ import { UserContext } from './UserContext'
 import { MainContext } from './MainContext'
 import { usePathname, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 
 
 
@@ -13,7 +13,8 @@ export const CartContext = createContext<TypesContexts>({
     MyCart: { MyCart: [], Totalprice: 0 },
     setMyCart: () => { },
     isLoadingCartIcon: true,
-    setisLoadingCartIcon: () => { }, AddProductToCart: () => { }, RemoveProductFormCart: () => { }, DeleteProductFromCart: () => { }
+    setisLoadingCartIcon: () => { }, AddProductToCart: () => { }, RemoveProductFormCart: () => { }, DeleteProductFromCart: () => { },
+    DeleteAllCart: () => { }
 })
 
 export default function CartContextProvider({ children }: any) {
@@ -88,5 +89,25 @@ export default function CartContextProvider({ children }: any) {
 
     }
 
-    return <CartContext.Provider value={{ MyCart, setMyCart, isLoadingCartIcon, setisLoadingCartIcon, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart }}>{children}</CartContext.Provider>
+    async function DeleteAllCart(index: any) {
+        if (TV === -1) {
+            console.log(index);
+
+            setTV(-10)
+            const tosatLoading = toast.loading("Waiting...")
+            try {
+                const data = await axios.delete(`http://localhost:3001/AllCart`, { headers })
+                console.log(data);
+
+                setMyCart(data.data.Cart)
+                toast.success(data.data.message)
+            } catch (err: any) {
+                toast.error(err.response.data.message)
+            }
+            toast.remove(tosatLoading)
+            setTV(-1)
+        }
+    }
+
+    return <CartContext.Provider value={{ MyCart, setMyCart, isLoadingCartIcon, setisLoadingCartIcon, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart, DeleteAllCart }}>{children}</CartContext.Provider>
 }

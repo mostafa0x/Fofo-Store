@@ -1,5 +1,5 @@
 'use client'
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useRef } from 'react'
 import useCart from '../_Hooks/useCart'
 import { UserContext } from '../_Contexts/UserContext'
 import { CartContext } from '../_Contexts/CartContext'
@@ -10,8 +10,9 @@ import { useSession } from 'next-auth/react'
 export default function Cart() {
     const { data, refetch, isError, error }: HooksTypes = useCart()
     const { headers } = useContext(UserContext)
-    const { MyCart, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart } = useContext(CartContext)
+    const { MyCart, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart, DeleteAllCart } = useContext(CartContext)
     const Session = useSession()
+    const DeleteCart = useRef(null)
 
     useEffect(() => {
         refetch()
@@ -37,31 +38,35 @@ export default function Cart() {
                 <div className='mb-20 '>
                     <div className=' flex-row flex justify-between items-center  text-center  font-bold'>
                         <h1 className='text-3xl opacity-40'>MyCart</h1>
-                        <h1 className='text-2xl'>Total Prices :{MyCart?.Totalprice} EGP</h1>
-                        <button className='btn btn-ghost text-xl bg-red-950 text-white font-normal'>Remove Cart</button>
+                        {MyCart?.MyCart?.length ?? 0 > 0 ? <>
+                            <h1 className='text-2xl'>Total Prices :{MyCart?.Totalprice} EGP</h1>
+                            <button ref={DeleteCart} onClick={() => DeleteAllCart(DeleteCart)} className='btn btn-ghost text-xl bg-red-950 text-white font-normal'>Remove Cart</button>
+                        </> : null}
                     </div>
                 </div>
-                {MyCart?.MyCart?.map((product, index: number) => {
-                    return <div className='py-10' key={index}>
-                        <div className=' flex justify-between text-center items-center'>
-                            <div className='flex justify-between w-96 items-center '>
-                                <img
-                                    className='w-24 h-24 object-cover rounded-lg'
-                                    src={product?.images?.[0]}
-                                    alt={product.title?.split(" ").splice(0, 2).join(" ")}
-                                />
-                                <h1 className='pl-32 font-semibold'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
+                {MyCart?.MyCart?.length ?? 0 > 0 ?
+                    MyCart?.MyCart?.map((product, index: number) => {
+                        return <div className='py-10' key={index}>
+                            <div className=' flex justify-between text-center items-center'>
+                                <div className='flex justify-between w-96 items-center '>
+                                    <img
+                                        className='w-24 h-24 object-cover rounded-lg'
+                                        src={product?.images?.[0]}
+                                        alt={product.title?.split(" ").splice(0, 2).join(" ")}
+                                    />
+                                    <h1 className='pl-32 font-semibold'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
+                                </div>
+                                <div className='flex justify-between items-center w-52'>
+                                    <button onClick={() => RemoveProductFormCart(product?.id)} className='btn btn-circle bg-red-800'><i className="fa-solid fa-minus"></i></button>
+                                    <h1 className='font-bold'>{product.count}</h1>
+                                    <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'><i className="fa-solid fa-plus"></i></button>
+                                </div>
+                                <button onClick={() => DeleteProductFromCart(product?.id)} className='btn btn-ghost text-3xl'><i className="fa-solid fa-trash"></i></button>
                             </div>
-                            <div className='flex justify-between items-center w-52'>
-                                <button onClick={() => RemoveProductFormCart(product?.id)} className='btn btn-circle bg-red-800'><i className="fa-solid fa-minus"></i></button>
-                                <h1 className='font-bold'>{product.count}</h1>
-                                <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'><i className="fa-solid fa-plus"></i></button>
-                            </div>
-                            <button onClick={() => DeleteProductFromCart(product?.id)} className='btn btn-ghost text-3xl'><i className="fa-solid fa-trash"></i></button>
-                        </div>
 
-                    </div>
-                })}
+                        </div>
+                    })
+                    : <div className='flex justify-center text-3xl opacity-55'><h1>Empty</h1></div>}
             </div>
         )
 
