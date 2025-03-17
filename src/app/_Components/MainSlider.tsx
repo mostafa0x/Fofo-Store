@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
 import Slider from "react-slick";
-import { MainContext } from '../_Contexts/MainContext';
+import { CategoriesContext } from '../_Contexts/CategoriesContext';
 
 
 export default function MainSlider() {
-    let { Category } = useContext(MainContext);
+    const { Categories } = useContext(CategoriesContext)
     var settings = {
         dots: false,
         infinite: false,

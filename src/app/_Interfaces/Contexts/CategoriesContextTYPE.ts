@@ -1,3 +1,6 @@
+import CategoryType from "../CategoryType";
+
 export default interface CategoriesContextType {
-    Categories: string[], setCategories: any
+  Categories: CategoryType[];
+  setCategories: any;
 }

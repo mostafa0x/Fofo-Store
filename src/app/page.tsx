@@ -1,7 +1,6 @@
 "use client";
 import { useContext, useEffect, useState } from "react";
 import { MainContext } from "./_Contexts/MainContext";
-import { TypesContexts } from "./_Interfaces/TypesContext";
 import CategoriesBar from "./_Components/CategoriesBar";
 import MainSlider from "./_Components/MainSlider";
 import CategoriesSlider from "./_Components/CategoriesSlider";

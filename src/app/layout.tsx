@@ -15,8 +15,7 @@ import { SessionProvider } from "next-auth/react";
 import ProductsContextProvider from "./_Contexts/ProductsContext";
 import CartContextProvider from "./_Contexts/CartContext";
 import ErrorsPage from "./_Components/ErrorsPage";
-import Head from 'next/head';
-
+import CategoriesContextProvider from "./_Contexts/CategoriesContext";
 
 
 
@@ -38,22 +37,24 @@ export default function RootLayout({
           <MainContextProvider>
             <CartContextProvider>
               <ProductsContextProvider>
-                <html lang="en">
-                  <head>
-                    <title>Fofo Store</title>
-                    <meta name="description" content="Shoping" />
-                  </head>
-                  <body className="vsc-initialized">
-                    <ReactQuery>
-                      <ProtectRouting>
-                        <NavBar />
-                        {children}
-                        <Toaster />
-                        <Footer />
-                      </ProtectRouting>
-                    </ReactQuery>
-                  </body>
-                </html>
+                <CategoriesContextProvider>
+                  <html lang="en">
+                    <head>
+                      <title>Fofo Store</title>
+                      <meta name="description" content="Shoping" />
+                    </head>
+                    <body className="vsc-initialized">
+                      <ReactQuery>
+                        <ProtectRouting>
+                          <NavBar />
+                          {children}
+                          <Toaster />
+                          <Footer />
+                        </ProtectRouting>
+                      </ReactQuery>
+                    </body>
+                  </html>
+                </CategoriesContextProvider>
               </ProductsContextProvider>
             </CartContextProvider>
           </MainContextProvider>
