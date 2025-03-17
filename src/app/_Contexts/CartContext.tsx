@@ -13,7 +13,7 @@ export const CartContext = createContext<TypesContexts>({
     MyCart: { MyCart: [], Totalprice: 0 },
     setMyCart: () => { },
     isLoadingCartIcon: true,
-    setisLoadingCartIcon: () => { }, AddProductToCart: () => { }, RemoveProductFormCart: () => { }
+    setisLoadingCartIcon: () => { }, AddProductToCart: () => { }, RemoveProductFormCart: () => { }, DeleteProductFromCart: () => { }
 })
 
 export default function CartContextProvider({ children }: any) {
@@ -61,18 +61,32 @@ export default function CartContextProvider({ children }: any) {
             const tosatLoading = toast.loading("Waiting...")
             await axios.patch("http://localhost:3001/Cart", { productID }, { headers }).then((data) => {
                 setMyCart(data.data.Cart)
-                toast.remove(tosatLoading)
                 toast.success(data.data.message)
             }).catch((err) => {
-                toast.remove(tosatLoading)
                 toast.error(err.response.data.message)
             })
+            toast.remove(tosatLoading)
             setTV(-1)
         }
 
     }
 
+    async function DeleteProductFromCart(productID: (number | null)) {
+        if (TV === -1 && productID) {
+            setTV(productID)
+            const tosatLoading = toast.loading("Waiting...")
+            await axios.delete(`http://localhost:3001/Cart/${productID}`, { headers }).then((data) => {
+                setMyCart(data.data.Cart)
+                toast.success(data.data.message)
+            }).catch((err) => {
+                toast.error(err.response.data.message)
+            })
+            toast.remove(tosatLoading)
+            setTV(-1)
 
+        }
 
-    return <CartContext.Provider value={{ MyCart, setMyCart, isLoadingCartIcon, setisLoadingCartIcon, AddProductToCart, RemoveProductFormCart }}>{children}</CartContext.Provider>
+    }
+
+    return <CartContext.Provider value={{ MyCart, setMyCart, isLoadingCartIcon, setisLoadingCartIcon, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart }}>{children}</CartContext.Provider>
 }

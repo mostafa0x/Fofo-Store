@@ -10,7 +10,7 @@ import { useSession } from 'next-auth/react'
 export default function Cart() {
     const { data, refetch, isError, error }: HooksTypes = useCart()
     const { headers } = useContext(UserContext)
-    const { MyCart, AddProductToCart, RemoveProductFormCart } = useContext(CartContext)
+    const { MyCart, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart } = useContext(CartContext)
     const Session = useSession()
 
     useEffect(() => {
@@ -57,7 +57,7 @@ export default function Cart() {
                                 <h1 className='font-bold'>{product.count}</h1>
                                 <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'><i className="fa-solid fa-plus"></i></button>
                             </div>
-                            <button className='btn btn-ghost text-3xl'><i className="fa-solid fa-trash"></i></button>
+                            <button onClick={() => DeleteProductFromCart(product?.id)} className='btn btn-ghost text-3xl'><i className="fa-solid fa-trash"></i></button>
                         </div>
 
                     </div>

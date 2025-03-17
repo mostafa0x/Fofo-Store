@@ -25,4 +25,5 @@ export interface TypesContexts {
   setOn?: any;
   AddProductToCart?: any;
   RemoveProductFormCart: any;
+  DeleteProductFromCart:any;
 }
