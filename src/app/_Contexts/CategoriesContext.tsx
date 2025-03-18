@@ -8,9 +8,5 @@ export const CategoriesContext = createContext<CategoriesContextType>({
 export default function CategoriesContextProvider({ children }: any) {
     const [Categories, setCategories] = useState([])
 
-
-    useEffect(() => {
-        console.log(Categories);
-    }, [Categories])
     return <CategoriesContext.Provider value={{ Categories, setCategories }}>{children}</CategoriesContext.Provider>
 }

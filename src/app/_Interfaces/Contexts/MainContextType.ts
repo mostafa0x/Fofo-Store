@@ -1,11 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
+import TypeProducts from "../TypeProducts";
 
 export default interface MainContextTypes {
   SearchTXT: string | null;
-  ItemFillters: string[];
+  ItemFillters: TypeProducts[];
   TV: number;
 
   setSearchTXT: Dispatch<SetStateAction<string | null>>;
-  setItemFillters: Dispatch<SetStateAction<string[]>>;
+  setItemFillters: Dispatch<SetStateAction<TypeProducts[]>>;
   setTV: Dispatch<SetStateAction<number>>;
 }

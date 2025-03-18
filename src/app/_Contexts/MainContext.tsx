@@ -1,6 +1,7 @@
 "use client";
 import React, { createContext, useState } from 'react'
 import MainContextTypes from '../_Interfaces/Contexts/MainContextType';
+import TypeProducts from '../_Interfaces/TypeProducts';
 
 export const MainContext = createContext<MainContextTypes>({
   SearchTXT: null,
@@ -16,7 +17,7 @@ export default function MainContextProvider({
   children
 }: any) {
   const [SearchTXT, setSearchTXT] = useState<string | null>(null)
-  const [ItemFillters, setItemFillters] = useState<string[]>([])
+  const [ItemFillters, setItemFillters] = useState<TypeProducts[]>([])
   const [TV, setTV] = useState<number>(-1)
 
 
