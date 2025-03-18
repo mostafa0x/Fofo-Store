@@ -19,7 +19,7 @@ export default function ProductsContextProvider({ children }: any) {
     const { CategoryName } = useParams()
 
     useEffect(() => {
-        if (Products.length > 0) {
+        if (Products.length > 0 && CategoryName) {
             const FilterProduct = Products.filter((product) => {
                 return product.category?.name == CategoryName
             })
