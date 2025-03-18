@@ -7,7 +7,6 @@ import TypeProducts from '../_Interfaces/TypeProducts'
 import { useParams, useRouter } from 'next/navigation'
 import { MainContext } from '../_Contexts/MainContext'
 import { CartContext } from '../_Contexts/CartContext'
-import { CategoriesContext } from '../_Contexts/CategoriesContext'
 import useCategories from '../_Hooks/useCategories'
 
 
@@ -17,7 +16,6 @@ export default function ProductsFillter() {
     const { Products, ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading } = useContext(ProductsContext)
     const { TV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
-    const { Categories, CurrentCategory, setCurrentCategory } = useContext(CategoriesContext)
     const Router = useRouter();
     const { CategoryName } = useParams()
     //Will destroyed 
@@ -25,7 +23,6 @@ export default function ProductsFillter() {
 
         return () => {
             setProdutcsByCategory(null)
-            setCurrentCategory(undefined)
             setPageCategoryLoading(true)
         }
     }, [])

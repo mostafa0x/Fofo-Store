@@ -17,7 +17,7 @@ export default function NavBar() {
     const { data: session, status } = useSession()
     const { UserToken, setUserToken, isUserLoading } = useContext(UserContext)
     const { SearchTXT, setSearchTXT, TV, setTV } = useContext(MainContext)
-    const { LoadingIconOptions, Categories } = useContext(CategoriesContext)
+    const { LoadingIconOptions, Categories, CurrentCategory } = useContext(CategoriesContext)
     const { isLoadingCartIcon } = useContext(CartContext);
     const { MyCart } = useContext(CartContext)
     const [MaxSelectChrs, setMaxSelectChrs] = useState<number>(58)
@@ -75,7 +75,7 @@ export default function NavBar() {
             toast.error("Enter Text to Search bar")
         } else {
             setSearchTXT(SecTXT)
-            Router.push(`/Search/${SecTXT}`)
+            Router.push(`/Search/${CurrentCategory?.name}/${SecTXT}`)
         }
     }
 
@@ -95,7 +95,6 @@ export default function NavBar() {
                         </div>
                         : <div className=' flex flex-row'> <select onClick={() => selectMax(Op?.current?.value?.length ?? 0)} ref={Op} className='outline-none'
                             style={{ width: `${MaxSelectChrs}px` }}>
-                            <option>All</option>
                             {Categories.map((category, index: number) => {
                                 return <option key={index}>{category.name}</option>
 

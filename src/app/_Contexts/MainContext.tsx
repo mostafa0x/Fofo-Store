@@ -20,11 +20,6 @@ export default function MainContextProvider({
   const [ItemFillters, setItemFillters] = useState<TypeProducts[]>([])
   const [TV, setTV] = useState<number>(-1)
 
-  useEffect(() => {
-    console.log(ItemFillters);
-
-  }, [ItemFillters])
-
 
   return <MainContext.Provider value={{ SearchTXT, setSearchTXT, ItemFillters, setItemFillters, TV, setTV }}>{children}</MainContext.Provider>
 

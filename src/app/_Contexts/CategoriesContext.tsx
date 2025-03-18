@@ -24,7 +24,7 @@ export default function CategoriesContextProvider({ children }: any) {
             const CurrCategory = Categories.find((Category) => {
                 return Category.name == CategoryName
             })
-            CurrCategory ? setCurrentCategory(CurrCategory) : setCurrentCategory({ name: "All", id: 0, image: "" })
+            // CurrCategory ? setCurrentCategory(CurrCategory) : setCurrentCategory({ name: "All", id: 0, image: "" })
             setLoadingIconOptions(false)
         }
     }, [Categories])

@@ -4,6 +4,11 @@ import ProductsContextTypes from '../_Interfaces/Contexts/ProductsContextType'
 import TypeProducts from '../_Interfaces/TypeProducts'
 import { useParams } from 'next/navigation'
 
+type Parms = {
+    name: string,
+    CategoryName: string
+}
+
 export const ProductsContext = createContext<ProductsContextTypes>({
     Products: [],
     setProducts: () => { [] },
@@ -16,14 +21,22 @@ export default function ProductsContextProvider({ children }: any) {
     const [Products, setProducts] = useState<TypeProducts[]>([])
     const [ProdutcsByCategory, setProdutcsByCategory] = useState<TypeProducts[] | null>(null)
     const [PageCategoryLoading, setPageCategoryLoading] = useState<boolean>(true)
-    const { CategoryName } = useParams()
+    const { CategoryName, name } = useParams<Parms>()
 
     useEffect(() => {
+        const namedecode = decodeURIComponent(name)
         if (Products.length > 0 && CategoryName) {
-            const FilterProduct = Products.filter((product) => {
+            const FilterProduct = CategoryName !== "All" ? Products.filter((product) => {
                 return product.category?.name == CategoryName
-            })
-            setProdutcsByCategory(FilterProduct)
+            }) : Products
+            if (name) {
+                const Filterx2 = FilterProduct.filter((product) => {
+                    return product.title?.toLowerCase().includes(namedecode.toLowerCase())
+                })
+                setProdutcsByCategory(Filterx2)
+            } else {
+                setProdutcsByCategory(FilterProduct)
+            }
         }
     }, [Products])
 
