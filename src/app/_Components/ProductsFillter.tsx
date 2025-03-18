@@ -14,44 +14,24 @@ import useCategories from '../_Hooks/useCategories'
 export default function ProductsFillter() {
     const { data, isError, error, isLoading }: HooksTypes = useProducts()
     const HookCategory = useCategories()
-    const { Products, ProdutcsByCategory, setProdutcsByCategory } = useContext(ProductsContext)
+    const { Products, ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading } = useContext(ProductsContext)
     const { TV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
     const { Categories, CurrentCategory, setCurrentCategory } = useContext(CategoriesContext)
     const Router = useRouter();
-    const [PageLoading, setPageLoading] = useState<boolean>(true)
     const { CategoryName } = useParams()
     //Will destroyed 
     useEffect(() => {
+
         return () => {
-            setProdutcsByCategory([])
+            setProdutcsByCategory(null)
             setCurrentCategory(undefined)
-            setPageLoading(true)
+            setPageCategoryLoading(true)
         }
     }, [])
 
 
 
-    useEffect(() => {
-        if (Categories.length > 0) {
-            const CurrCategory = Categories.find((Category) => {
-                return Category.name == CategoryName
-            })
-            setCurrentCategory(CurrCategory)
-        }
-    }, [HookCategory.data])
-
-    useEffect(() => {
-        if (CurrentCategory) {
-            if (Products.length > 0) {
-                const FT = Products.filter((product) => product?.category?.name == CurrentCategory.name
-                )
-                setProdutcsByCategory(FT)
-                setPageLoading(false)
-            }
-        }
-
-    }, [data, CurrentCategory, setCurrentCategory])
 
     if (isLoading) {
         return <div className="flex justify-center mt-10" role="status">
@@ -67,7 +47,7 @@ export default function ProductsFillter() {
         return <div className='"flex justify-center pt-72"'><h1>{error?.response?.data?.message}</h1></div>
     }
 
-    if (PageLoading) {
+    if (PageCategoryLoading) {
         return <div className="flex justify-center mt-10 " role="status">
             <svg aria-hidden="true" className="w-28 h-28 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -80,7 +60,7 @@ export default function ProductsFillter() {
         <div className='mx-5 mt-5'>
             <h1 className='flex flex-row gap-2  py-10  text-2xl '>Sort by <p className='font-semibold'>{CategoryName}</p> category</h1>
 
-            {ProdutcsByCategory?.length === 0 ? <div><h1 className='flex justify-center mt-10 text-3xl'>Empty</h1></div> :
+            {ProdutcsByCategory?.length == 0 ? <div><h1 className='flex justify-center mt-10 text-3xl'>Empty</h1></div> :
                 <div className='grid grid-cols-4 gap-4'>
                     {ProdutcsByCategory?.map((product: TypeProducts, index: number) => {
                         return <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">

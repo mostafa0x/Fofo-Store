@@ -11,6 +11,8 @@ import axios from 'axios';
 import { UserContext } from '@/app/_Contexts/UserContext';
 import { CartContext } from '@/app/_Contexts/CartContext';
 import { useSession } from 'next-auth/react';
+import useCategories from '@/app/_Hooks/useCategories';
+import { CategoriesContext } from '@/app/_Contexts/CategoriesContext';
 
 type Parms = {
     name: string
@@ -21,21 +23,37 @@ export default function Search() {
     const { headers } = useContext(UserContext)
     const { setMyCart, AddProductToCart } = useContext(CartContext)
     const { Products } = useContext(ProductsContext)
-    let Parms: Parms = useParams();
+    let { name } = useParams<Parms>();
     const { isLoading, isError, error } = useProducts()
     const session = useSession()
     const HookCart = useCart()
+    const HookCategory = useCategories()
     const Router = useRouter()
+    const { CurrentCategory } = useContext(CategoriesContext)
 
     useEffect(() => {
+        if (Products.length > 0) {
+            if (Products && name) {
+                const decodedName = decodeURIComponent(name);
+                if (CurrentCategory?.name == "All") {
+                    const FilterOnAll = Products.filter((product: TypeProducts) => product?.title?.toLowerCase().includes(decodedName.toLowerCase()));
+                    setItemFillters(FilterOnAll);
+                } else {
+                    const FilterOnCategory = Products.filter((product) => { return product.category?.name == CurrentCategory?.name && product?.title?.toLowerCase().includes(decodedName.toLowerCase()) })
+                    console.log(FilterOnCategory);
 
-        if (Products && Parms?.name) {
-            const decodedName = decodeURIComponent(Parms?.name);
-            const FT = Products.filter((product: TypeProducts) => product?.title?.toLowerCase().includes(decodedName.toLowerCase()));
-            console.log(decodedName);
-            setItemFillters(FT);
-            setSearchTXT(decodedName)
+                    setItemFillters(FilterOnCategory);
+                }
+                //  setItemFillters(FT);
+                setSearchTXT(decodedName)
+            }
         }
+        // if (Products && Parms?.name) {
+        //     const decodedName = decodeURIComponent(Parms?.name);
+        //     const FT = Products.filter((product: TypeProducts) => product?.title?.toLowerCase().includes(decodedName.toLowerCase()));
+        //     setItemFillters(FT);
+        //     setSearchTXT(decodedName)
+        // }
 
     }, [Products]);
 

@@ -1,16 +1,34 @@
 'use client'
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 import CategoriesContextType from '../_Interfaces/Contexts/CategoriesContextTYPE'
 import CategoryType from '../_Interfaces/CategoryType'
+import { useParams } from 'next/navigation'
+import { ProductsContext } from './ProductsContext'
 
 export const CategoriesContext = createContext<CategoriesContextType>({
     Categories: [], setCategories: () => { },
-    CurrentCategory: undefined, setCurrentCategory: () => { }
+    CurrentCategory: undefined, setCurrentCategory: () => { },
+    LoadingIconOptions: true, setLoadingIconOptions: () => { }
 })
 
 export default function CategoriesContextProvider({ children }: any) {
     const [Categories, setCategories] = useState<CategoryType[]>([])
     const [CurrentCategory, setCurrentCategory] = useState<CategoryType | undefined>(undefined)
+    const [LoadingIconOptions, setLoadingIconOptions] = useState<boolean>(true)
+    const { CategoryName } = useParams()
+    const { } = useContext(ProductsContext)
 
-    return <CategoriesContext.Provider value={{ Categories, setCategories, CurrentCategory, setCurrentCategory }}>{children}</CategoriesContext.Provider>
+
+    useEffect(() => {
+        if (Categories.length > 0) {
+            const CurrCategory = Categories.find((Category) => {
+                return Category.name == CategoryName
+            })
+            CurrCategory ? setCurrentCategory(CurrCategory) : setCurrentCategory({ name: "All", id: 0, image: "" })
+            setLoadingIconOptions(false)
+        }
+    }, [Categories])
+
+
+    return <CategoriesContext.Provider value={{ Categories, setCategories, CurrentCategory, setCurrentCategory, LoadingIconOptions, setLoadingIconOptions }}>{children}</CategoriesContext.Provider>
 }
