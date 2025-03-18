@@ -30,7 +30,7 @@ export default function CategoriesSlider() {
         <h1 className=' p-5 pl-24 font-semibold text-2xl'>Shop by categories</h1>
         <div className='z-[0] px-24 pt-4 pb-6 flex justify-between gap-4 '>
 
-            {Categories?.map((Category: CategoryType, index: number) => {
+            {Categories?.slice(1).map((Category: CategoryType, index: number) => {
                 return <div key={index} className=' bg-white border border-black border-opacity-25 p-3 pl-10 pr-10  text-black items-center text-center cursor-pointer rounded-2xl'>
                     <Link href={`/Category/${Category.name}`}>
                         <img src={Category.image} alt={Category.name} />

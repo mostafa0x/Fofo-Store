@@ -2,7 +2,7 @@
 import React, { createContext, useContext, useEffect, useState } from 'react'
 import CategoriesContextType from '../_Interfaces/Contexts/CategoriesContextTYPE'
 import CategoryType from '../_Interfaces/CategoryType'
-import { useParams } from 'next/navigation'
+import { useParams, usePathname } from 'next/navigation'
 import { ProductsContext } from './ProductsContext'
 
 export const CategoriesContext = createContext<CategoriesContextType>({
@@ -17,6 +17,7 @@ export default function CategoriesContextProvider({ children }: any) {
     const [LoadingIconOptions, setLoadingIconOptions] = useState<boolean>(true)
     const { CategoryName } = useParams()
     const { } = useContext(ProductsContext)
+    const Path = usePathname()
 
 
     useEffect(() => {
@@ -24,15 +25,26 @@ export default function CategoriesContextProvider({ children }: any) {
             const CurrCategory = Categories.find((Category) => {
                 return Category.name == CategoryName
             })
-            setCurrentCategory(CurrCategory)
+            const selectedCategory = CurrCategory ? CurrCategory : Categories[0]
+            setCurrentCategory(selectedCategory)
+
+            const Selector = document.getElementById("mySelect") as HTMLSelectElement
+            if (Selector) {
+                const selectedIndex = Categories.findIndex(category => category.name === selectedCategory.name)
+                Selector.selectedIndex = selectedIndex
+            }
             setLoadingIconOptions(false)
         }
-    }, [Categories])
+    }, [Categories, CategoryName, Path])
 
     useEffect(() => {
-        console.log(CurrentCategory);
 
-    }, [CurrentCategory])
+        const Selector = document.getElementById("mySelect") as HTMLSelectElement
+        if (Selector) {
+            const selectedIndex = Categories.findIndex(category => category.name === CategoryName)
+            Selector.selectedIndex = selectedIndex
+        }
+    }, [])
 
 
 
