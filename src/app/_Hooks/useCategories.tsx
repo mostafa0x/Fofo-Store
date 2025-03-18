@@ -11,7 +11,6 @@ export default function useCategories() {
 
         try {
             const Data = await axios.get("http://localhost:3001/Categories")
-            console.log(Data);
             setCategories(Data.data.categories)
             return Data
         }

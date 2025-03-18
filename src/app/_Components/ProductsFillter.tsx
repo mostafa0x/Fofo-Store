@@ -1,32 +1,52 @@
-"use clietn"
+"use client"
 import React, { useContext, useEffect, useState } from 'react'
 import useProducts from '../_Hooks/useProducts'
 import HooksTypes from '../_Interfaces/HooksType'
 import { ProductsContext } from '../_Contexts/ProductsContext'
 import TypeProducts from '../_Interfaces/TypeProducts'
-import { useRouter } from 'next/navigation'
+import { useParams, useRouter } from 'next/navigation'
 import { MainContext } from '../_Contexts/MainContext'
 import { UserContext } from '../_Contexts/UserContext'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { CartContext } from '../_Contexts/CartContext'
 import { CategoriesContext } from '../_Contexts/CategoriesContext'
+import useCategories from '../_Hooks/useCategories'
 
 
 export default function ProductsFillter() {
     const { data, isError, error, isLoading, refetch }: HooksTypes = useProducts()
-    const { Products } = useContext(ProductsContext)
+    const HookCategory = useCategories()
+    const { Products, ProdutcsByCategory, setProdutcsByCategory } = useContext(ProductsContext)
     const { TV, setTV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
-    const { Categories } = useContext(CategoriesContext)
+    const { Categories, CurrentCategory, setCurrentCategory } = useContext(CategoriesContext)
     const Router = useRouter();
     const [PageLoading, setPageLoading] = useState<boolean>(true)
+    const { CategoryName } = useParams()
 
 
     useEffect(() => {
+        if (Categories.length > 0) {
+            const CurrCategory = Categories.find((Category) => {
+                return Category.name == CategoryName
+            })
+            console.log(CurrCategory?.name);
+            setCurrentCategory(CurrCategory)
+        }
+    }, [HookCategory.data])
 
+    useEffect(() => {
+        if (CurrentCategory) {
+            if (Products.length > 0) {
+                const FT = Products.filter((product) => product?.category?.name == CurrentCategory.name
+                )
+                setProdutcsByCategory(FT)
+                setPageLoading(false)
+            }
+        }
 
-    }, [Products])
+    }, [data])
 
     if (isLoading) {
         return <div className="flex justify-center " role="status">
@@ -53,9 +73,9 @@ export default function ProductsFillter() {
     }
     return (
         <div className='grid grid-cols-4 gap-4'>
-            {Products?.length === 0 ? <div><h1>Loading Or Error</h1></div> :
+            {ProdutcsByCategory?.length === 0 ? <div><h1 className='flex justify-center text-3xl'>Empty</h1></div> :
                 <>
-                    {Products?.map((product: TypeProducts, index: number) => {
+                    {ProdutcsByCategory?.map((product: TypeProducts, index: number) => {
                         return <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 ">
                             <div onClick={() => { Router.push(`/Product/${product.id}`) }} className='cursor-pointer'>
                                 <img
