@@ -17,7 +17,7 @@ export default function NavBar() {
     const { data: session, status } = useSession()
     const { UserToken, setUserToken, isUserLoading } = useContext(UserContext)
     const { SearchTXT, setSearchTXT, TV, setTV } = useContext(MainContext)
-    const { LoadingIconOptions, Categories, CurrentCategory } = useContext(CategoriesContext)
+    const { LoadingIconOptions, Categories, CurrentCategory, setCurrentCategory } = useContext(CategoriesContext)
     const { isLoadingCartIcon } = useContext(CartContext);
     const { MyCart } = useContext(CartContext)
     const [MaxSelectChrs, setMaxSelectChrs] = useState<number>(58)
@@ -49,8 +49,11 @@ export default function NavBar() {
     }, [session])
 
 
-    function selectMax(SelectionSize: number) {
-        console.log(SelectionSize);
+    function selectMax(SelectionSize: number, Option: string) {
+        const WillBeCategoty = Categories.find((category) => {
+            return category.name == Option
+        })
+        setCurrentCategory(WillBeCategoty)
         if (SelectionSize <= 9) {
             setMaxSelectChrs(100)
             setMaxInputChrs(700)
@@ -75,6 +78,7 @@ export default function NavBar() {
             toast.error("Enter Text to Search bar")
         } else {
             setSearchTXT(SecTXT)
+
             Router.push(`/Search/${CurrentCategory?.name}/${SecTXT}`)
         }
     }
@@ -93,7 +97,7 @@ export default function NavBar() {
                             </svg>
                             <span className="sr-only">Loading...</span>
                         </div>
-                        : <div className=' flex flex-row'> <select onClick={() => selectMax(Op?.current?.value?.length ?? 0)} ref={Op} className='outline-none'
+                        : <div className=' flex flex-row'> <select onClick={() => selectMax(Op?.current?.value?.length ?? 0, (Op?.current?.value ?? "All"))} ref={Op} className='outline-none'
                             style={{ width: `${MaxSelectChrs}px` }}>
                             {Categories.map((category, index: number) => {
                                 return <option key={index}>{category.name}</option>

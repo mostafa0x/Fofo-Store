@@ -63,7 +63,7 @@ export default function Search() {
 
     return (
         <div className=' p-24'>
-            <h1 className=' text-2xl font-bold'>Search : {name}</h1>
+            <h1 className=' text-2xl font-bold'>Search : {decodeURIComponent(name)}</h1>
             <div className='pt-8'>
                 <ul className="list bg-base-100 rounded-box shadow-md">
                     {(ProdutcsByCategory?.length ?? 0) > 0 ? ProdutcsByCategory?.map((item: TypeProducts, index: number) => {

@@ -24,10 +24,16 @@ export default function CategoriesContextProvider({ children }: any) {
             const CurrCategory = Categories.find((Category) => {
                 return Category.name == CategoryName
             })
-            // CurrCategory ? setCurrentCategory(CurrCategory) : setCurrentCategory({ name: "All", id: 0, image: "" })
+            setCurrentCategory(CurrCategory)
             setLoadingIconOptions(false)
         }
     }, [Categories])
+
+    useEffect(() => {
+        console.log(CurrentCategory);
+
+    }, [CurrentCategory])
+
 
 
     return <CategoriesContext.Provider value={{ Categories, setCategories, CurrentCategory, setCurrentCategory, LoadingIconOptions, setLoadingIconOptions }}>{children}</CategoriesContext.Provider>
