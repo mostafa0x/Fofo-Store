@@ -54,11 +54,15 @@ export default function NavBar() {
             return category.name == Option
         })
         setCurrentCategory(WillBeCategoty)
-        if (SelectionSize <= 9) {
+        if (SelectionSize <= 4) {
+            setMaxSelectChrs(58)
+            setMaxInputChrs(700)
+        }
+        else if (SelectionSize <= 9) {
             setMaxSelectChrs(100)
             setMaxInputChrs(700)
         } else if (SelectionSize >= 10) {
-            setMaxSelectChrs(160)
+            setMaxSelectChrs(130)
             setMaxInputChrs(650)
         }
 

@@ -13,11 +13,12 @@ import useCategories from '../_Hooks/useCategories'
 export default function ProductsFillter() {
     const { data, isError, error, isLoading }: HooksTypes = useProducts()
     const HookCategory = useCategories()
-    const { Products, ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading } = useContext(ProductsContext)
+    const { ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading } = useContext(ProductsContext)
     const { TV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
     const Router = useRouter();
     const { CategoryName } = useParams()
+
     //Will destroyed 
     useEffect(() => {
 

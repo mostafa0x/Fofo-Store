@@ -18,21 +18,20 @@ type Parms = {
 }
 
 export default function Search() {
-    const { ItemFillters, setItemFillters, SearchTXT, setSearchTXT, TV, setTV } = useContext(MainContext);
+    const { TV, setTV } = useContext(MainContext);
     const { headers } = useContext(UserContext)
     const { setMyCart, AddProductToCart } = useContext(CartContext)
-    const { Products, ProdutcsByCategory, PageCategoryLoading, setProdutcsByCategory, setPageCategoryLoading } = useContext(ProductsContext)
+    const { ProdutcsByCategory, PageCategoryLoading, setProdutcsByCategory, setPageCategoryLoading } = useContext(ProductsContext)
     let { name, CategoryName } = useParams<Parms>();
     const { isLoading, isError, error } = useProducts()
     const session = useSession()
     const HookCart = useCart()
     const HookCategory = useCategories()
     const Router = useRouter()
-    const { CurrentCategory } = useContext(CategoriesContext)
 
     useEffect(() => {
 
-
+        // will destroy
         return () => {
             setProdutcsByCategory(null)
             setPageCategoryLoading(true)
@@ -44,12 +43,6 @@ export default function Search() {
         HookCart?.refetch()
     }, [headers])
 
-    // if (SearchTXT == null) {
-    //     return <div className=' flex justify-center items-center min-h-screen p-24'>
-    //         <span className="loading loading-spinner loading-lg transform scale-150"></span>
-
-    //     </div>
-    // }
 
     if (PageCategoryLoading) {
         return <div className="flex justify-center mt-10 " role="status">

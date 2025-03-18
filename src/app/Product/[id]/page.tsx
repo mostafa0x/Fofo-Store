@@ -7,8 +7,6 @@ import { UserContext } from '@/app/_Contexts/UserContext'
 import { useParams, useRouter } from 'next/navigation'
 import TypeProducts from '@/app/_Interfaces/TypeProducts'
 import Slider from 'react-slick';
-import Link from 'next/link'
-import toast from 'react-hot-toast'
 import { MainContext } from '@/app/_Contexts/MainContext'
 import { CartContext } from '@/app/_Contexts/CartContext'
 import useCart from '@/app/_Hooks/useCart'
@@ -33,13 +31,14 @@ export default function ProductID() {
     const Params = useParams()
     const [ProductByID, setProductByID] = useState<TypeProducts>({})
     let settingsSlick = {
-        dots: false,
+        dots: true,
         infinite: true,
         speed: 500,
         slidesToShow: 1,
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 1000,
+        arrows: false
     };
     const Router = useRouter()
 
