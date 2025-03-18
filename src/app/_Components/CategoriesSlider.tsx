@@ -1,12 +1,5 @@
 'use client'
 import React, { useContext } from 'react'
-import { MainContext } from '../_Contexts/MainContext';
-import Pottery from "../../img/Pottery.png"
-import Woodware from "../../img/Woodware.png"
-import Wicker from "../../img/Wicker.png"
-import Bags from "../../img/bags.png"
-import RugsKilim from "../../img/Rugs & Kilim.png"
-import ArtsNature from "../../img/Arts & Nature.png"
 import { CategoriesContext } from '../_Contexts/CategoriesContext';
 import CategoryType from '../_Interfaces/CategoryType';
 import useCategories from '../_Hooks/useCategories';
