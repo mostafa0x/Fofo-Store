@@ -6,28 +6,23 @@ import { ProductsContext } from '../_Contexts/ProductsContext'
 import TypeProducts from '../_Interfaces/TypeProducts'
 import { useParams, useRouter } from 'next/navigation'
 import { MainContext } from '../_Contexts/MainContext'
-import { UserContext } from '../_Contexts/UserContext'
-import axios from 'axios'
-import toast from 'react-hot-toast'
 import { CartContext } from '../_Contexts/CartContext'
 import { CategoriesContext } from '../_Contexts/CategoriesContext'
 import useCategories from '../_Hooks/useCategories'
 
 
 export default function ProductsFillter() {
-    const { data, isError, error, isLoading, refetch }: HooksTypes = useProducts()
+    const { data, isError, error, isLoading }: HooksTypes = useProducts()
     const HookCategory = useCategories()
     const { Products, ProdutcsByCategory, setProdutcsByCategory } = useContext(ProductsContext)
-    const { TV, setTV } = useContext(MainContext)
+    const { TV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
     const { Categories, CurrentCategory, setCurrentCategory } = useContext(CategoriesContext)
     const Router = useRouter();
     const [PageLoading, setPageLoading] = useState<boolean>(true)
     const { CategoryName } = useParams()
-
+    //Will destroyed 
     useEffect(() => {
-
-
         return () => {
             setProdutcsByCategory([])
             setCurrentCategory(undefined)
@@ -56,7 +51,7 @@ export default function ProductsFillter() {
             }
         }
 
-    }, [data, setCurrentCategory])
+    }, [data, CurrentCategory, setCurrentCategory])
 
     if (isLoading) {
         return <div className="flex justify-center mt-10" role="status">
@@ -82,7 +77,9 @@ export default function ProductsFillter() {
         </div>
     }
     return (
-        <div className=''>
+        <div className='mx-5 mt-5'>
+            <h1 className='flex flex-row gap-2  py-10  text-2xl '>Sort by <p className='font-semibold'>{CategoryName}</p> category</h1>
+
             {ProdutcsByCategory?.length === 0 ? <div><h1 className='flex justify-center mt-10 text-3xl'>Empty</h1></div> :
                 <div className='grid grid-cols-4 gap-4'>
                     {ProdutcsByCategory?.map((product: TypeProducts, index: number) => {
