@@ -10,11 +10,12 @@ import ArtsNature from "../../img/Arts & Nature.png"
 import { CategoriesContext } from '../_Contexts/CategoriesContext';
 import CategoryType from '../_Interfaces/CategoryType';
 import useCategories from '../_Hooks/useCategories';
+import Link from 'next/link';
 
 export default function CategoriesSlider() {
     const { Categories } = useContext(CategoriesContext)
     const { isLoading, isError, error } = useCategories()
-    
+
     var settings = {
         dots: false,
         infinite: false,
@@ -31,8 +32,10 @@ export default function CategoriesSlider() {
 
             {Categories?.map((Category: CategoryType, index: number) => {
                 return <div key={index} className=' bg-white border border-black border-opacity-25 p-3 pl-10 pr-10  text-black items-center text-center cursor-pointer rounded-2xl'>
-                    <img src={Category.image} alt={Category.name} />
-                    <h1 className=' font-semibold'>{Category.name}</h1>
+                    <Link href={`/Category/${Category.name}`}>
+                        <img src={Category.image} alt={Category.name} />
+                        <h1 className=' font-semibold'>{Category.name}</h1>
+                    </Link>
                 </div>
             })}
         </div></div>
