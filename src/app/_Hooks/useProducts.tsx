@@ -6,26 +6,35 @@ import { ProductsContext } from '../_Contexts/ProductsContext';
 import { UserContext } from '../_Contexts/UserContext';
 import { MainContext } from '../_Contexts/MainContext';
 import { signOut } from 'next-auth/react';
+import TypeProducts from '../_Interfaces/TypeProducts';
+type Data = { data: { Products: TypeProducts[] } }
 
 export default function useProducts() {
     const { setProducts } = useContext(ProductsContext);
     const { headers } = useContext(UserContext);
 
 
-    function GetProducts() {
-        return axios.get("http://localhost:3001/Products", { headers })
-            .then((obj) => {
-                setProducts(obj?.data?.Products);
-                return obj;
+    async function GetProducts() {
+        try {
+            const Data: Data = await axios.get("http://localhost:3001/Products", { headers })
+            const New = Data?.data?.Products.map((product) => {
+                product.PriceAfterDis = product.PriceAfterDis = product.price && product.DisPercentage
+                    ? (product.price - (product.price * (product.DisPercentage / 100)))
+                    : product.price
+                return product
             })
-            .catch((err) => {
-                console.log(err);
-                if (err.status === 401) {
-                    localStorage.setItem("AuthLog", "The session has ended")
-                    signOut({ callbackUrl: "/Login" })
-                }
-                throw err;
-            });
+            setProducts(New);
+            return Data
+        } catch (err: any) {
+            console.log(err);
+            if (err.status === 401) {
+                localStorage.setItem("AuthLog", "The session has ended")
+                signOut({ callbackUrl: "/Login" })
+            }
+            throw err;
+        }
+
+
     };
 
 

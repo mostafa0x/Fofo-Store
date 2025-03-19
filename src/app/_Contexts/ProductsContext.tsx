@@ -31,16 +31,6 @@ export default function ProductsContextProvider({ children }: any) {
     useEffect(() => {
         const namedecode = decodeURIComponent(name)
         if (Products) {
-            if (!Products[0].PriceAfterDis) {
-                const x = Products?.map((product) => {
-                    product.PriceAfterDis = product.price && product.DisPercentage
-                        ? (product.price - (product.price * (product.DisPercentage / 100)))
-                        : product.price
-                })
-                setPageProduct(false)
-            }
-
-
             if (Products.length > 0 && CategoryName) {
                 const FilterProduct = CategoryName !== "All" ? Products.filter((product) => {
                     return product.category?.name == CategoryName
@@ -54,8 +44,10 @@ export default function ProductsContextProvider({ children }: any) {
                     setProdutcsByCategory(FilterProduct)
                 }
             }
+            setPageProduct(false)
+
         }
-    }, [Products])
+    }, [Products, setProducts])
 
     useEffect(() => {
         if (ProdutcsByCategory) {
