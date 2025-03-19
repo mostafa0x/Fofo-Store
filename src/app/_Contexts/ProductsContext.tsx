@@ -15,13 +15,15 @@ export const ProductsContext = createContext<ProductsContextTypes>({
     ProdutcsByCategory: null,
     setProdutcsByCategory: () => null,
     PageCategoryLoading: true, setPageCategoryLoading: () => null,
-    ProductByID: null, setProductByID: () => null
+    ProductByID: null, setProductByID: () => null,
+    PageProduct: true, setPageProduct: () => null
 })
 
 export default function ProductsContextProvider({ children }: any) {
     const [Products, setProducts] = useState<TypeProducts[] | null>(null)
     const [ProdutcsByCategory, setProdutcsByCategory] = useState<TypeProducts[] | null>(null)
     const [ProductByID, setProductByID] = useState<TypeProducts | null>({})
+    const [PageProduct, setPageProduct] = useState<boolean>(true)
 
     const [PageCategoryLoading, setPageCategoryLoading] = useState<boolean>(true)
     const { CategoryName, name } = useParams<Parms>()
@@ -29,9 +31,16 @@ export default function ProductsContextProvider({ children }: any) {
     useEffect(() => {
         const namedecode = decodeURIComponent(name)
         if (Products) {
-            Products?.map((product => product.PriceAfterDis = product.price && product.DisPercentage
-                ? (product.price - (product.price * (product.DisPercentage / 100)))
-                : product.price))
+            if (!Products[0].PriceAfterDis) {
+                const x = Products?.map((product) => {
+                    product.PriceAfterDis = product.price && product.DisPercentage
+                        ? (product.price - (product.price * (product.DisPercentage / 100)))
+                        : product.price
+                })
+                setPageProduct(false)
+            }
+
+
             if (Products.length > 0 && CategoryName) {
                 const FilterProduct = CategoryName !== "All" ? Products.filter((product) => {
                     return product.category?.name == CategoryName
@@ -62,6 +71,7 @@ export default function ProductsContextProvider({ children }: any) {
 
     useEffect(() => {
         if (ProductByID) {
+
             ProductByID.PriceAfterDis = ProductByID.price && ProductByID.DisPercentage
                 ? (ProductByID.price - (ProductByID.price * (ProductByID.DisPercentage / 100)))
                 : ProductByID.price
@@ -71,6 +81,6 @@ export default function ProductsContextProvider({ children }: any) {
 
 
 
-    return <ProductsContext.Provider value={{ Products, setProducts, ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading, ProductByID, setProductByID }}>{children}</ProductsContext.Provider>
+    return <ProductsContext.Provider value={{ Products, setProducts, ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading, ProductByID, setProductByID, PageProduct, setPageProduct }}>{children}</ProductsContext.Provider>
 
 }

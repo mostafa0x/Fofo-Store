@@ -6,9 +6,11 @@ export default interface ProductsContextTypes {
   ProdutcsByCategory: TypeProducts[] | null;
   PageCategoryLoading: boolean;
   ProductByID: TypeProducts | null;
+  PageProduct: boolean;
 
   setProducts: Dispatch<SetStateAction<TypeProducts[] | null>>;
   setProdutcsByCategory: Dispatch<SetStateAction<TypeProducts[] | null>>;
   setPageCategoryLoading: Dispatch<SetStateAction<boolean>>;
   setProductByID: Dispatch<SetStateAction<TypeProducts | null>>;
+  setPageProduct: Dispatch<SetStateAction<boolean>>;
 }
