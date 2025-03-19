@@ -60,7 +60,14 @@ export default function Products() {
                             </div>
 
                             <div className="px-5 flex justify-between bt-10s items-center">
-                                <span className="flex flex-col text-2xl font-semibold text-gray-900 dark:text-white">{DisPrice}EGP {product?.DisPercentage ?? 0 > 0 ? <span className="line-through text-base font-normal">{product.price}EGP</span> : null}</span>
+                                <span className="text-xl font-medium text-gray-900 dark:text-white ">{DisPrice} EGP{product?.DisPercentage ?? 0 > 0 ? <>
+                                    <i className='text-xs align-top'>
+                                        <span> {product.DisPercentage} </span>
+                                        <i className="fa-solid fa-percent"> </i>
+                                    </i>
+
+                                    <span className="flex flex-col line-through text-base font-normal">{product.price}EGP</span>
+                                </> : null}</span>
 
                                 {product.stock === 0 ? <span>Out of Stock</span> : <button onClick={() => AddProductToCart(product.id)} className={`btn btn-ghost ${TV === (product.id ?? 0) - 10000 ? `bg-blue-700 hover:bg-blue-700` : `bg-green-700`}`}>{TV === (product.id ?? 0) - 10000 ? <div className='flex justify-between items-center' role="status" >  <svg aria-hidden="true" className="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
@@ -72,6 +79,6 @@ export default function Products() {
                         </div>
                     })}
                 </>}
-        </div>
+        </div >
     )
 }

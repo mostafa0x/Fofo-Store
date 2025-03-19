@@ -53,6 +53,10 @@ export default function Cart() {
                 </div>
                 {MyCart?.MyCart?.length ?? 0 > 0 ?
                     MyCart?.MyCart?.map((product, index: number) => {
+                        const DisPrice = product.price && product.DisPercentage && product.count
+                            ? (product.price - (product.price * (product.DisPercentage / 100))) * product.count
+                            : product.price ?? 0 * (product.count ?? 1);
+
                         return <div className='py-10' key={index}>
                             <div className=' flex justify-between text-center items-center'>
                                 <div className='flex justify-between w-96 items-center '>
@@ -68,7 +72,7 @@ export default function Cart() {
                                     <h1 className='font-bold'>{product.count}</h1>
                                     <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'>{TV === (product?.id ?? 0) - 10000 ? <i className="fa-duotone fa-solid fa-spinner fa-spin text-2xl"></i> : <i className="fa-solid fa-plus text-2xl"></i>}</button>
                                 </div>
-                                <h1 className=' text-xl font-semibold'>{`Price : ${(product.price ?? 0) * (product.count ?? 0)}`}</h1>
+                                <h1 className=' text-xl font-semibold'>{`Price : ${DisPrice ?? 0}`}</h1>
                                 <button onClick={() => DeleteProductFromCart(product?.id)} className='btn btn-ghost text-3xl'>{TV == (product.id ?? 0) - 1000000 ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-trash"></i>}</button>
                             </div>
 
