@@ -10,7 +10,7 @@ type Parms = {
 }
 
 export const ProductsContext = createContext<ProductsContextTypes>({
-    Products: [],
+    Products: null,
     setProducts: () => { [] },
     ProdutcsByCategory: null,
     setProdutcsByCategory: () => null,
@@ -18,24 +18,26 @@ export const ProductsContext = createContext<ProductsContextTypes>({
 })
 
 export default function ProductsContextProvider({ children }: any) {
-    const [Products, setProducts] = useState<TypeProducts[]>([])
+    const [Products, setProducts] = useState<TypeProducts[] | null>(null)
     const [ProdutcsByCategory, setProdutcsByCategory] = useState<TypeProducts[] | null>(null)
     const [PageCategoryLoading, setPageCategoryLoading] = useState<boolean>(true)
     const { CategoryName, name } = useParams<Parms>()
 
     useEffect(() => {
         const namedecode = decodeURIComponent(name)
-        if (Products.length > 0 && CategoryName) {
-            const FilterProduct = CategoryName !== "All" ? Products.filter((product) => {
-                return product.category?.name == CategoryName
-            }) : Products
-            if (name) {
-                const Filterx2 = FilterProduct.filter((product) => {
-                    return product.title?.toLowerCase().includes(namedecode.toLowerCase())
-                })
-                setProdutcsByCategory(Filterx2)
-            } else {
-                setProdutcsByCategory(FilterProduct)
+        if (Products) {
+            if (Products.length > 0 && CategoryName) {
+                const FilterProduct = CategoryName !== "All" ? Products.filter((product) => {
+                    return product.category?.name == CategoryName
+                }) : Products
+                if (name) {
+                    const Filterx2 = FilterProduct.filter((product) => {
+                        return product.title?.toLowerCase().includes(namedecode.toLowerCase())
+                    })
+                    setProdutcsByCategory(Filterx2)
+                } else {
+                    setProdutcsByCategory(FilterProduct)
+                }
             }
         }
     }, [Products])

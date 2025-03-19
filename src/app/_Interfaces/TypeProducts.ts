@@ -7,4 +7,6 @@ export default interface TypeProducts {
   description?: string;
   category?: { id?: number; name?: string; image?: string };
   count?: number;
+  stock?: number;
+  DisPercentage?: number;
 }

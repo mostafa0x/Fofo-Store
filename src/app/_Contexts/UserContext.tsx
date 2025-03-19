@@ -1,6 +1,5 @@
 "use client";
 import React, { createContext, useEffect, useState } from 'react'
-import { TypesContexts } from "../_Interfaces/TypesContext"
 import { signOut, useSession } from 'next-auth/react';
 import { usePathname, useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
