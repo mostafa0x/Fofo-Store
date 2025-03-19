@@ -72,7 +72,7 @@ export default function Cart() {
                                     <h1 className='font-bold'>{product.count}</h1>
                                     <button onClick={() => AddProductToCart(product?.id)} className='btn btn-circle bg-green-600'>{TV === (product?.id ?? 0) - 10000 ? <i className="fa-duotone fa-solid fa-spinner fa-spin text-2xl"></i> : <i className="fa-solid fa-plus text-2xl"></i>}</button>
                                 </div>
-                                <h1 className=' text-xl font-semibold'>{`Price : ${DisPrice ?? 0}`}</h1>
+                                <h1 className=' text-xl font-semibold'>{`Price : ${(DisPrice) ?? 0}`}</h1>
                                 <button onClick={() => DeleteProductFromCart(product?.id)} className='btn btn-ghost text-3xl'>{TV == (product.id ?? 0) - 1000000 ? <i className="fa-solid fa-spinner fa-spin"></i> : <i className="fa-solid fa-trash"></i>}</button>
                             </div>
 

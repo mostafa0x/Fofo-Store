@@ -9,4 +9,5 @@ export default interface TypeProducts {
   count?: number;
   stock?: number;
   DisPercentage?: number;
+  PriceAfterDis?: number;
 }
