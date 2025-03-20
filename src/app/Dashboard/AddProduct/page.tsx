@@ -1,10 +1,12 @@
 "use client";
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios'
 import * as Yup from "yup"
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
+import useCategories from '@/app/_Hooks/useCategories';
+import { CategoriesContext } from '@/app/_Contexts/CategoriesContext';
 
 
 export default function AddProduct() {
@@ -18,7 +20,11 @@ export default function AddProduct() {
     const [ApiError, setApiError] = useState(null);
     const [isLoading, setisLoading] = useState(false);
     const [PageLoading, setPageLoading] = useState(true);
+    const { } = useCategories()
+    const { Categories } = useContext(CategoriesContext)
     let Router = useRouter();
+    //  let selector = useRef<HTMLSelectElement | null>(null)
+    const [SelectedCategory, setSelectedCategory] = useState<string | null>(null)
 
 
 
@@ -31,18 +37,20 @@ export default function AddProduct() {
         formData.append("price", formvalues.price)
         formData.append("category", formvalues.category)
         formData.append("image", formvalues.image)
-        await axios.post("https://google-auth-project-xi.vercel.app/products", formData).then((data) => {
-            console.log(data);
-            setisLoading(false);
-            toast.success("sucess upload ")
-            setPageLoading(true);
-            Router.push("/Dashboard/Products")
+        console.log(formData);
 
-        }).catch((error) => {
-            console.log(error);
-            setisLoading(false);
-            setApiError(error.message)
-        })
+        // await axios.post("https://google-auth-project-xi.vercel.app/products", formData).then((data) => {
+        //     console.log(data);
+        //     setisLoading(false);
+        //     toast.success("sucess upload ")
+        //     setPageLoading(true);
+        //     Router.push("/Dashboard/Products")
+
+        // }).catch((error) => {
+        //     console.log(error);
+        //     setisLoading(false);
+        //     setApiError(error.message)
+        // })
     }
     let formik = useFormik({
         initialValues: {
@@ -60,6 +68,12 @@ export default function AddProduct() {
 
 
     }, [])
+
+    useEffect(() => {
+        SelectedCategory && formik.setFieldValue('category', SelectedCategory)
+
+    }, [SelectedCategory])
+
 
     if (PageLoading) {
         return <div className=' flex justify-center items-center min-h-screen p-24'>
@@ -114,7 +128,13 @@ export default function AddProduct() {
                         </div>
                     ) : null}
                     <span className='txtdash'> Categories</span>
-                    <input id='category' name='category' value={formik.values.category} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' placeholder='Enter Your Category' />
+                    <select onChange={(e) => setSelectedCategory(e.currentTarget.value)}>
+                        {Categories.map((category, index: number) => {
+                            return category.name !== "All" && <option key={index}>{category.name}</option>
+                        })}
+
+                    </select>
+                    {/* <input id='category' name='category' value={formik.values.category} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' placeholder='Enter Your Category' /> */}
                     {formik.errors.category && formik.touched.category ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
