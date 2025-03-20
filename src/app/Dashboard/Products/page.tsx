@@ -3,22 +3,15 @@ import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import useProducts from '@/app/_Hooks/useProducts'
 import axios from 'axios';
 import React, { useContext, useEffect, useState } from 'react'
-import { TypeProducts } from '@/app/_Interfaces/TypeProducts';
 import toast from 'react-hot-toast';
 
 
 export default function Products() {
-    let { data, isLoading, isError, error } = useProducts();
-    let { Products, setProducts } = useContext(ProductsContext)
+    let { isLoading, isError, error } = useProducts();
     const [UserScrollY, setUserScrollY] = useState(0)
-
-    useEffect(() => {
-        console.log(data);
-        setProducts(data?.data)
-        //  console.log(Products);
+    const { Products } = useContext(ProductsContext)
 
 
-    }, [data])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -69,20 +62,20 @@ export default function Products() {
                         <div key={index} className="card bg-base-100 w-full max-w-xs shadow-xl cursor-pointer">
                             <figure>
                                 <img
-                                    src={product.imageUrl}
-                                    alt={product.name}
+                                    src={product?.images?.[0]}
+                                    alt={product?.title}
                                     className="w-full h-32 object-contain"
                                 />
                             </figure>
                             <div className="card-body">
                                 <h2 className="card-title">
-                                    {product.name.split(` `).slice(0, 2).join(` `)}
+                                    {product?.title?.split(` `).slice(0, 2).join(` `)}
                                     <div className="badge badge-secondary">NEW</div>
                                 </h2>
-                                <p>{product.description.split(` `).slice(0, 2).join(` `)}</p>
+                                <p>{product?.description?.split(` `).slice(0, 2).join(` `)}</p>
                                 <div className="card-actions justify-between">
-                                    <div className="font-semibold">{product.price} EPG</div>
-                                    <div className="badge badge-outline">{product.category}</div>
+                                    <div className="font-semibold">{product?.PriceAfterDis} EPG</div>
+                                    <div className="badge badge-outline">{product?.category?.name}</div>
                                 </div>
                             </div>
                         </div>
