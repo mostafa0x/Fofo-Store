@@ -30,6 +30,7 @@ export default function AddProduct() {
 
 
     async function handlePostProducts(formvalues: any) {
+        setApiError(null)
         setisLoading(true);
 
         const formData = new FormData();
@@ -39,9 +40,14 @@ export default function AddProduct() {
         formData.append("description", formvalues.description)
         formData.append("price", formvalues.price)
         formData.append("category", JSON.stringify(formvalues.category))
-        formData.append("image", formvalues.image)
+        // formData.append("image", formvalues.image)
         formData.append("stock", formvalues.stock)
         formData.append("DisPercentage", formvalues.DisPercentage)
+        Array.from(formvalues.image).forEach((file: any) => {
+            formData.append("image", file)
+
+        })
+
 
 
         try {
@@ -49,23 +55,15 @@ export default function AddProduct() {
             setisLoading(false);
             toast.success(Data.data.message)
             Router.push("/Dashboard/Products")
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
+            setApiError(err.response.data.message)
+            toast.error(err.response.data.message)
+            setisLoading(false);
+
 
         }
 
-        // await axios.post("https://google-auth-project-xi.vercel.app/products", formData).then((data) => {
-        //     console.log(data);
-        //     setisLoading(false);
-        //     toast.success("sucess upload ")
-        //     setPageLoading(true);
-        //     Router.push("/Dashboard/Products")
-
-        // }).catch((error) => {
-        //     console.log(error);
-        //     setisLoading(false);
-        //     setApiError(error.message)
-        // })
     }
     let formik = useFormik({
         initialValues: {
@@ -118,7 +116,7 @@ export default function AddProduct() {
 
                 <div className=' flex justify-center items-center flex-col gap-6'>
                     <span className='txtdash'> image Product</span>
-                    <input id='image' name='image' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('image', event?.currentTarget?.files?.[0])} className='border border-black rounded-lg' required />
+                    <input id='image' multiple name='image' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('image', event?.currentTarget?.files)} className='border border-black rounded-lg' required />
                     {formik.errors.image && formik.touched.image ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
