@@ -1,8 +1,10 @@
 "use client"
+import { MainContext } from '@/app/_Contexts/MainContext';
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import useProducts from '@/app/_Hooks/useProducts'
 import axios from 'axios';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -11,8 +13,16 @@ export default function Products() {
     let { isLoading, isError, error } = useProducts();
     const [UserScrollY, setUserScrollY] = useState(0)
     const { Products } = useContext(ProductsContext)
+    const { setEditMode } = useContext(MainContext)
+    const Router = useRouter()
 
+    function ChangeToEditMode(id: number | null | undefined) {
+        if (id) {
+            setEditMode(id)
+            Router.push("/Dashboard/AddProduct")
+        }
 
+    }
 
     useEffect(() => {
         const handleScroll = () => {
@@ -61,7 +71,7 @@ export default function Products() {
             <div className='max-w-full overflow-x-hidden z-0'>
                 <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 justify-center'>
                     {Products?.map((product, index: number) => (
-                        <div key={index} className="card bg-base-100 w-full max-w-xs shadow-xl cursor-pointer">
+                        <div onClick={() => ChangeToEditMode(product?.id)} key={index} className="card bg-base-100 w-full max-w-xs shadow-xl cursor-pointer">
                             <figure>
                                 <img
                                     src={product?.images?.[0]}

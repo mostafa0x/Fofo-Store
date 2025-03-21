@@ -7,6 +7,9 @@ import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
 import useCategories from '@/app/_Hooks/useCategories';
 import { CategoriesContext } from '@/app/_Contexts/CategoriesContext';
+import { MainContext } from '@/app/_Contexts/MainContext';
+import TypeProducts from '@/app/_Interfaces/TypeProducts';
+
 
 
 export default function AddProduct() {
@@ -26,7 +29,8 @@ export default function AddProduct() {
     const { Categories } = useContext(CategoriesContext)
     let Router = useRouter();
     const [SelectedCategory, setSelectedCategory] = useState<any | null>(null)
-
+    const { TV, setTV, EditMode, setEditMode } = useContext(MainContext)
+    const [ProdcutById, setProdcutById] = useState<TypeProducts | null>(null)
 
 
     async function handlePostProducts(formvalues: any) {
@@ -43,7 +47,7 @@ export default function AddProduct() {
         formData.append("stock", formvalues.stock)
         formData.append("DisPercentage", formvalues.DisPercentage)
         Array.from(formvalues.image).forEach((file: any) => {
-            formData.append("image", file)
+            formData.append("images", file)
 
         })
 
@@ -62,27 +66,60 @@ export default function AddProduct() {
         }
 
     }
-    let formik = useFormik({
+    let formik = useFormik<TypeProducts>({
         initialValues: {
             title: "",
             description: "",
-            price: "",
-            category: "",
-            image: "",
-            stock: "",
-            DisPercentage: "",
+            price: 0,
+            category: { name: "", id: 0, image: "" },
+            images: [],
+            stock: 0,
+            DisPercentage: 0,
 
         }, validationSchema: Vyup, onSubmit: handlePostProducts
     })
+
+
+    async function GetProdcutByID() {
+        try {
+            const Data = await axios.get(`http://localhost:3001/Product/${EditMode}`)
+            setProdcutById(Data.data.Product)
+            console.log(Data);
+            formik.setValues({
+                id: ProdcutById?.id,
+                title: ProdcutById?.title,
+                price: ProdcutById?.price,
+                description: ProdcutById?.description,
+                stock: ProdcutById?.stock,
+                DisPercentage: ProdcutById?.DisPercentage,
+                //  category: ProdcutById?.category
+            })
+            setPageLoading(false)
+            console.log(formik.values);
+
+
+        } catch (err) {
+            console.log(err);
+            throw err
+
+        }
+    }
     useEffect(() => {
         window.scroll(0, 0);
-        setPageLoading(false)
 
+        if (!ProdcutById && EditMode) {
+            GetProdcutByID()
+        }
+        if (!EditMode) {
+            setPageLoading(false)
+
+        }
         return () => {
             setisLoading(false)
             setApiError(null)
             setSelectedCategory(null)
             setPageLoading(true)
+            setTV(-1)
         }
 
     }, [])
@@ -107,16 +144,28 @@ export default function AddProduct() {
         <form onSubmit={formik.handleSubmit}>
 
             <div className=' p-24'>
-
+                {EditMode ? <h1>Update Product</h1> : <h1>Post Product</h1>}
                 <div className=' flex justify-center items-center flex-col gap-6'>
                     <span className='txtdash'> image Product</span>
-                    <input id='image' multiple name='image' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('image', event?.currentTarget?.files)} className='border border-black rounded-lg' required />
-                    {formik.errors.image && formik.touched.image ? (
+                    <div className='flex flex-row gap-4'>
+                        {!EditMode ? null : ProdcutById?.images?.map((x, index) => (
+                            <img
+                                key={index}
+                                src={x}
+                                className='w-20 h-20 object-fill'
+                                alt={`Product image ${index}`}
+                            />
+                        ))}
+                    </div>
+
+
+                    <input id='images' multiple name='images' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('images', event?.currentTarget?.files)} className='border border-black rounded-lg' required />
+                    {formik.errors.images && formik.touched.images ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                             role="alert"
                         >
-                            {formik.errors.image}
+                            {formik.errors.images}
                         </div>
                     ) : null}
                     <span className='txtdash'> title Product</span>
