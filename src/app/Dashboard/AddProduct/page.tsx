@@ -10,18 +10,19 @@ import { CategoriesContext } from '@/app/_Contexts/CategoriesContext';
 import { MainContext } from '@/app/_Contexts/MainContext';
 import TypeProducts from '@/app/_Interfaces/TypeProducts';
 
-
+type TypeForimk = {
+    id?: number | undefined,
+    title: string | undefined,
+    description: string | undefined
+    price: number | undefined,
+    category: { name?: string, id?: number, image?: string } | undefined,
+    images?: string | string[]
+    stock: number | undefined,
+    DisPercentage: number | undefined,
+}
 
 export default function AddProduct() {
-    let Vyup = Yup.object().shape({
-        image: Yup.string().required("Enter image !"),
-        title: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
-        price: Yup.number().moreThan(9, "Enter number bigger than 9").required("Enter Price !"),
-        description: Yup.string().min(8, "min 8 chr").required("Enter description !"),
-        category: Yup.object().required("Enter category !"),
-        stock: Yup.number().moreThan(-1, "0 or >>").required("Enter Stock"),
-        DisPercentage: Yup.number().moreThan(-1, "0 or >>").max(100, "Max 100").required("Enter Discount Percentage")
-    })
+
     const [ApiError, setApiError] = useState(null);
     const [isLoading, setisLoading] = useState(false);
     const [PageLoading, setPageLoading] = useState(true);
@@ -32,47 +33,72 @@ export default function AddProduct() {
     const { TV, setTV, EditMode, setEditMode } = useContext(MainContext)
     const [ProdcutById, setProdcutById] = useState<TypeProducts | null>(null)
 
+    let Vyup = Yup.object().shape({
+        images: EditMode ? Yup.string() : Yup.string().required("Enter image !"),
+        title: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
+        price: Yup.number().moreThan(9, "Enter number bigger than 9").required("Enter Price !"),
+        description: Yup.string().min(8, "min 8 chr").required("Enter description !"),
+        category: Yup.object().required("Enter category !"),
+        stock: Yup.number().moreThan(-1, "0 or >>").required("Enter Stock"),
+        DisPercentage: Yup.number().moreThan(-1, "0 or >>").max(100, "Max 100").required("Enter Discount Percentage")
+    })
+
 
     async function handlePostProducts(formvalues: any) {
         setApiError(null)
         setisLoading(true);
-
         const formData = new FormData();
         console.log(formvalues);
-
         formData.append("title", formvalues.title)
         formData.append("description", formvalues.description)
         formData.append("price", formvalues.price)
         formData.append("category", JSON.stringify(formvalues.category))
         formData.append("stock", formvalues.stock)
         formData.append("DisPercentage", formvalues.DisPercentage)
-        Array.from(formvalues.image).forEach((file: any) => {
+        Array.from(formvalues.images).forEach((file: any) => {
             formData.append("images", file)
 
         })
 
+        if (EditMode) {
+            try {
+                formData.append("_id", ProdcutById?._id)
+                const Data = await axios.patch("http://localhost:3001/admin/product", formData)
+                setisLoading(false);
+                toast.success(Data.data.message)
+                setEditMode(null)
+                Router.push("/Dashboard/Products")
+            } catch (err: any) {
+                console.log(err);
+                setApiError(err.response.data.message)
+                toast.error(err.response.data.message)
+                setisLoading(false);
+            }
 
-
-        try {
-            const Data = await axios.post("http://localhost:3001/admin/product", formData)
-            setisLoading(false);
-            toast.success(Data.data.message)
-            Router.push("/Dashboard/Products")
-        } catch (err: any) {
-            console.log(err);
-            setApiError(err.response.data.message)
-            toast.error(err.response.data.message)
-            setisLoading(false);
+        } else {
+            try {
+                const Data = await axios.post("http://localhost:3001/admin/product", formData)
+                setisLoading(false);
+                toast.success(Data.data.message)
+                Router.push("/Dashboard/Products")
+            } catch (err: any) {
+                console.log(err);
+                setApiError(err.response.data.message)
+                toast.error(err.response.data.message)
+                setisLoading(false);
+            }
         }
 
+
+
     }
-    let formik = useFormik<TypeProducts>({
+    let formik = useFormik<TypeForimk>({
         initialValues: {
             title: "",
             description: "",
             price: 0,
             category: { name: "", id: 0, image: "" },
-            images: [],
+            images: "",
             stock: 0,
             DisPercentage: 0,
 
@@ -80,7 +106,7 @@ export default function AddProduct() {
     })
 
     useEffect(() => {
-        if (ProdcutById) {
+        if (ProdcutById && EditMode) {
 
             formik.setValues({
                 id: ProdcutById?.id,
@@ -89,7 +115,9 @@ export default function AddProduct() {
                 description: ProdcutById?.description,
                 stock: ProdcutById?.stock,
                 DisPercentage: ProdcutById?.DisPercentage,
-                category: ProdcutById?.category
+                category: ProdcutById?.category,
+                images: ProdcutById.images
+
             })
 
             setPageLoading(false)
@@ -102,7 +130,7 @@ export default function AddProduct() {
                 Selector.selectedIndex = CurrIndex
             }
         }
-    }, [ProdcutById])
+    }, [ProdcutById, Categories])
 
     async function GetProdcutByID() {
         try {
@@ -138,6 +166,13 @@ export default function AddProduct() {
         if (Categories.length > 0) {
             formik.setFieldValue('category', Categories[1])
         }
+        const Selector = document.getElementById("selector") as HTMLSelectElement
+        if (Selector && EditMode && ProdcutById) {
+            const CurrIndex = Categories.findIndex((cagetory) => {
+                return cagetory.name == ProdcutById?.category?.name
+            })
+            Selector.selectedIndex = CurrIndex
+        }
     }, [Categories])
 
     useEffect(() => {
@@ -170,7 +205,7 @@ export default function AddProduct() {
                     </div>
 
 
-                    <input id='images' multiple name='images' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('images', event?.currentTarget?.files)} className='border border-black rounded-lg' required />
+                    <input id='images' multiple name='images' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('images', event?.currentTarget?.files)} className='border border-black rounded-lg' />
                     {formik.errors.images && formik.touched.images ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -248,7 +283,7 @@ export default function AddProduct() {
                         </div>
                     ) : null}
                     {isLoading ? <i className="fa-duotone fa-solid fa-spinner fa-spin text-3xl"></i> : <div className=' p-10 w-54 h-44'>
-                        <button type='submit' className="btn btn-success text-center text-lg  px-12">Success</button>
+                        <button type='submit' className="btn btn-success text-center text-lg  px-12">{!EditMode ? "Post Product" : "Update"}</button>
                     </div>}
                     {ApiError ? (
                         <div
