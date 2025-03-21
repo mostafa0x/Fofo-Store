@@ -12,10 +12,11 @@ import { CategoriesContext } from '@/app/_Contexts/CategoriesContext';
 export default function AddProduct() {
     let Vyup = Yup.object().shape({
         image: Yup.string().required("Enter image !"),
-        name: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
+        title: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
         price: Yup.number().moreThan(9, "Enter number bigger than 9").required("Enter Price !"),
         description: Yup.string().min(8, "min 8 chr").required("Enter description !"),
-        category: Yup.string().min(4, "min 4 chr").required("Enter category !")
+        stock: Yup.number().required("Enter Stock"),
+        DisPercentage: Yup.number().max(100, "Max 100").required("Enter Discount Percentage")
     })
     const [ApiError, setApiError] = useState(null);
     const [isLoading, setisLoading] = useState(false);
@@ -23,21 +24,34 @@ export default function AddProduct() {
     const { } = useCategories()
     const { Categories } = useContext(CategoriesContext)
     let Router = useRouter();
-    //  let selector = useRef<HTMLSelectElement | null>(null)
-    const [SelectedCategory, setSelectedCategory] = useState<string | null>(null)
+    const [SelectedCategory, setSelectedCategory] = useState<any | null>(null)
 
 
 
     async function handlePostProducts(formvalues: any) {
-        setisLoading(true);
+        //  setisLoading(true);
+
         const formData = new FormData();
         console.log(formvalues);
-        formData.append("name", formvalues.name)
+
+        formData.append("title", formvalues.title)
         formData.append("description", formvalues.description)
         formData.append("price", formvalues.price)
-        formData.append("category", formvalues.category)
+        formData.append("category", JSON.stringify(formvalues.category))
         formData.append("image", formvalues.image)
-        console.log(formData);
+        formData.append("stock", formvalues.stock)
+        formData.append("DisPercentage", formvalues.DisPercentage)
+
+
+        try {
+            const Data = await axios.post("http://localhost:3001/admin/product", formData)
+            console.log(Data);
+            setisLoading(false);
+
+        } catch (err) {
+            console.log(err);
+
+        }
 
         // await axios.post("https://google-auth-project-xi.vercel.app/products", formData).then((data) => {
         //     console.log(data);
@@ -54,11 +68,13 @@ export default function AddProduct() {
     }
     let formik = useFormik({
         initialValues: {
-            name: "",
+            title: "",
             description: "",
             price: "",
             category: "",
             image: "",
+            stock: "",
+            DisPercentage: "",
 
         }, validationSchema: Vyup, onSubmit: handlePostProducts
     })
@@ -66,10 +82,17 @@ export default function AddProduct() {
         window.scroll(0, 0);
         setPageLoading(false)
 
+        return () => {
+            setisLoading(false)
+            setApiError(null)
+            setSelectedCategory(null)
+            setPageLoading(true)
+        }
 
     }, [])
 
     useEffect(() => {
+
         SelectedCategory && formik.setFieldValue('category', SelectedCategory)
 
     }, [SelectedCategory])
@@ -97,14 +120,14 @@ export default function AddProduct() {
                             {formik.errors.image}
                         </div>
                     ) : null}
-                    <span className='txtdash'> Name Item</span>
-                    <input id='name' name='name' value={formik.values.name} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg' type="text" placeholder='Enter Name item' />
-                    {formik.errors.name && formik.touched.name ? (
+                    <span className='txtdash'> title Item</span>
+                    <input id='title' name='title' value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg' type="text" placeholder='Enter Name item' />
+                    {formik.errors.title && formik.touched.title ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                             role="alert"
                         >
-                            {formik.errors.name}
+                            {formik.errors.title}
                         </div>
                     ) : null}
                     <span className='txtdash'> Price Item</span>
@@ -115,6 +138,26 @@ export default function AddProduct() {
                             role="alert"
                         >
                             {formik.errors.price}
+                        </div>
+                    ) : null}
+                    <span className='txtdash'> Stock Item</span>
+                    <input id='stock' name='stock' value={formik.values.stock} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter stock item' />
+                    {formik.errors.stock && formik.touched.stock ? (
+                        <div
+                            className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                            role="alert"
+                        >
+                            {formik.errors.stock}
+                        </div>
+                    ) : null}
+                    <span className='txtdash'> DisPercentage Item</span>
+                    <input id='DisPercentage' name='DisPercentage' value={formik.values.DisPercentage} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter Discount Percentage item' />
+                    {formik.errors.price && formik.touched.price ? (
+                        <div
+                            className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+                            role="alert"
+                        >
+                            {formik.errors.DisPercentage}
                         </div>
                     ) : null}
                     <span className='txtdash'> description Item</span>
@@ -128,7 +171,10 @@ export default function AddProduct() {
                         </div>
                     ) : null}
                     <span className='txtdash'> Categories</span>
-                    <select onChange={(e) => setSelectedCategory(e.currentTarget.value)}>
+                    <select onChange={(e) => {
+                        const selectedCategory = Categories.find(category => category.name === e.currentTarget.value);
+                        setSelectedCategory(selectedCategory)
+                    }}>
                         {Categories.map((category, index: number) => {
                             return category.name !== "All" && <option key={index}>{category.name}</option>
                         })}
