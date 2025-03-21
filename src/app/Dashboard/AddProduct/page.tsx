@@ -79,12 +79,9 @@ export default function AddProduct() {
         }, validationSchema: Vyup, onSubmit: handlePostProducts
     })
 
+    useEffect(() => {
+        if (ProdcutById) {
 
-    async function GetProdcutByID() {
-        try {
-            const Data = await axios.get(`http://localhost:3001/Product/${EditMode}`)
-            setProdcutById(Data.data.Product)
-            console.log(Data);
             formik.setValues({
                 id: ProdcutById?.id,
                 title: ProdcutById?.title,
@@ -92,12 +89,26 @@ export default function AddProduct() {
                 description: ProdcutById?.description,
                 stock: ProdcutById?.stock,
                 DisPercentage: ProdcutById?.DisPercentage,
-                //  category: ProdcutById?.category
+                category: ProdcutById?.category
             })
+
             setPageLoading(false)
             console.log(formik.values);
+            const Selector = document.getElementById("selector") as HTMLSelectElement
+            if (Selector) {
+                const CurrIndex = Categories.findIndex((cagetory) => {
+                    return cagetory.name == ProdcutById.category?.name
+                })
+                Selector.selectedIndex = CurrIndex
+            }
+        }
+    }, [ProdcutById])
 
-
+    async function GetProdcutByID() {
+        try {
+            const Data = await axios.get(`http://localhost:3001/Product/${EditMode}`)
+            setProdcutById(Data.data.Product)
+            console.log(Data);
         } catch (err) {
             console.log(err);
             throw err
@@ -219,7 +230,7 @@ export default function AddProduct() {
                         </div>
                     ) : null}
                     <span className='txtdash'> Categories</span>
-                    <select onChange={(e) => {
+                    <select id='selector' onChange={(e) => {
                         const selectedCategory = Categories.find(category => category.name === e.currentTarget.value);
                         setSelectedCategory(selectedCategory)
                     }}>
