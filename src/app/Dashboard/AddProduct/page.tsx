@@ -15,8 +15,9 @@ export default function AddProduct() {
         title: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
         price: Yup.number().moreThan(9, "Enter number bigger than 9").required("Enter Price !"),
         description: Yup.string().min(8, "min 8 chr").required("Enter description !"),
-        stock: Yup.number().required("Enter Stock"),
-        DisPercentage: Yup.number().max(100, "Max 100").required("Enter Discount Percentage")
+        category: Yup.object().required("Enter category !"),
+        stock: Yup.number().moreThan(-1, "0 or >>").required("Enter Stock"),
+        DisPercentage: Yup.number().moreThan(-1, "0 or >>").max(100, "Max 100").required("Enter Discount Percentage")
     })
     const [ApiError, setApiError] = useState(null);
     const [isLoading, setisLoading] = useState(false);
@@ -29,7 +30,7 @@ export default function AddProduct() {
 
 
     async function handlePostProducts(formvalues: any) {
-        //  setisLoading(true);
+        setisLoading(true);
 
         const formData = new FormData();
         console.log(formvalues);
@@ -45,9 +46,9 @@ export default function AddProduct() {
 
         try {
             const Data = await axios.post("http://localhost:3001/admin/product", formData)
-            console.log(Data);
             setisLoading(false);
-
+            toast.success(Data.data.message)
+            Router.push("/Dashboard/Products")
         } catch (err) {
             console.log(err);
 
@@ -90,6 +91,12 @@ export default function AddProduct() {
         }
 
     }, [])
+    useEffect(() => {
+
+        if (Categories.length > 0) {
+            formik.setFieldValue('category', Categories[1])
+        }
+    }, [Categories])
 
     useEffect(() => {
 
@@ -110,7 +117,7 @@ export default function AddProduct() {
             <div className=' p-24'>
 
                 <div className=' flex justify-center items-center flex-col gap-6'>
-                    <span className='txtdash'> image Item</span>
+                    <span className='txtdash'> image Product</span>
                     <input id='image' name='image' type="file" accept="image/*" onChange={(event) => formik.setFieldValue('image', event?.currentTarget?.files?.[0])} className='border border-black rounded-lg' required />
                     {formik.errors.image && formik.touched.image ? (
                         <div
@@ -120,8 +127,8 @@ export default function AddProduct() {
                             {formik.errors.image}
                         </div>
                     ) : null}
-                    <span className='txtdash'> title Item</span>
-                    <input id='title' name='title' value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg' type="text" placeholder='Enter Name item' />
+                    <span className='txtdash'> title Product</span>
+                    <input id='title' name='title' value={formik.values.title} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg' type="text" placeholder='Enter title Product' />
                     {formik.errors.title && formik.touched.title ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -130,8 +137,8 @@ export default function AddProduct() {
                             {formik.errors.title}
                         </div>
                     ) : null}
-                    <span className='txtdash'> Price Item</span>
-                    <input id='price' name='price' value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter Price item' />
+                    <span className='txtdash'> Price Product</span>
+                    <input id='price' name='price' value={formik.values.price} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter Price Product' />
                     {formik.errors.price && formik.touched.price ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -140,8 +147,8 @@ export default function AddProduct() {
                             {formik.errors.price}
                         </div>
                     ) : null}
-                    <span className='txtdash'> Stock Item</span>
-                    <input id='stock' name='stock' value={formik.values.stock} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter stock item' />
+                    <span className='txtdash'> Stock Product</span>
+                    <input id='stock' name='stock' value={formik.values.stock} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter stock Product' />
                     {formik.errors.stock && formik.touched.stock ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -150,9 +157,9 @@ export default function AddProduct() {
                             {formik.errors.stock}
                         </div>
                     ) : null}
-                    <span className='txtdash'> DisPercentage Item</span>
-                    <input id='DisPercentage' name='DisPercentage' value={formik.values.DisPercentage} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter Discount Percentage item' />
-                    {formik.errors.price && formik.touched.price ? (
+                    <span className='txtdash'> Discount Percentage Item</span>
+                    <input id='DisPercentage' name='DisPercentage' value={formik.values.DisPercentage} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' type="number" placeholder='Enter Discount Percentage Product %' />
+                    {formik.errors.DisPercentage && formik.touched.DisPercentage ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
                             role="alert"
@@ -160,8 +167,8 @@ export default function AddProduct() {
                             {formik.errors.DisPercentage}
                         </div>
                     ) : null}
-                    <span className='txtdash'> description Item</span>
-                    <textarea id='description' name='description' value={formik.values.description} onChange={formik.handleChange} onBlur={formik.handleBlur} className='pt-2 pl-2 border border-black rounded-lg text-left w-64 h-24 leading-tight resize-none' placeholder='Enter description item'></textarea>
+                    <span className='txtdash'> description Product</span>
+                    <textarea id='description' name='description' value={formik.values.description} onChange={formik.handleChange} onBlur={formik.handleBlur} className='pt-2 pl-2 border border-black rounded-lg text-left w-64 h-24 leading-tight resize-none' placeholder='Enter description Product'></textarea>
                     {formik.errors.description && formik.touched.description ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
@@ -180,7 +187,6 @@ export default function AddProduct() {
                         })}
 
                     </select>
-                    {/* <input id='category' name='category' value={formik.values.category} onChange={formik.handleChange} onBlur={formik.handleBlur} className=' pl-4 border border-black rounded-lg text-center' placeholder='Enter Your Category' /> */}
                     {formik.errors.category && formik.touched.category ? (
                         <div
                             className="p-4 mb-2 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"

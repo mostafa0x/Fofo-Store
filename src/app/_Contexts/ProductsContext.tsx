@@ -51,11 +51,6 @@ export default function ProductsContextProvider({ children }: any) {
 
     useEffect(() => {
         if (ProdutcsByCategory) {
-
-
-            ProdutcsByCategory?.map((product => product.PriceAfterDis = product.price && product.DisPercentage
-                ? (product.price - (product.price * (product.DisPercentage / 100)))
-                : product.price))
             setPageCategoryLoading(false)
         }
     }, [ProdutcsByCategory])
@@ -63,10 +58,6 @@ export default function ProductsContextProvider({ children }: any) {
 
     useEffect(() => {
         if (ProductByID) {
-
-            ProductByID.PriceAfterDis = ProductByID.price && ProductByID.DisPercentage
-                ? (ProductByID.price - (ProductByID.price * (ProductByID.DisPercentage / 100)))
-                : ProductByID.price
             setPageCategoryLoading(false)
         }
     }, [ProductByID])

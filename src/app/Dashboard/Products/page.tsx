@@ -2,6 +2,7 @@
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import useProducts from '@/app/_Hooks/useProducts'
 import axios from 'axios';
+import Link from 'next/link';
 import React, { useContext, useEffect, useState } from 'react'
 import toast from 'react-hot-toast';
 
@@ -48,7 +49,8 @@ export default function Products() {
         <div className="p-24">
             <div className='flex justify-between pb-4 gap-4'>
                 <h1 className='font-bold text-2xl'>Products</h1>
-                <button className='btn btn-ghost bg-green-600 text-white'>Add Product</button>
+                <Link href={"/Dashboard/AddProduct"}><button className='btn btn-ghost bg-green-600 text-white'>Add Product</button>
+                </Link>
             </div>
             {UserScrollY > 55 ? <div className="fixed bottom-[100px] right-10">
                 <i onClick={() => window.scroll(0, 0)} className="btn  btn-circle pt-[4.5px]  items-center text-center fa-solid fa-circle-up text-4xl cursor-pointer"></i>
@@ -74,7 +76,7 @@ export default function Products() {
                                 </h2>
                                 <p>{product?.description?.split(` `).slice(0, 2).join(` `)}</p>
                                 <div className="card-actions justify-between">
-                                    <div className="font-semibold">{product?.PriceAfterDis} EPG</div>
+                                    <div className="font-semibold">{product?.priceAfterDis} EPG</div>
                                     <div className="badge badge-outline">{product?.category?.name}</div>
                                 </div>
                             </div>
