@@ -12,21 +12,16 @@ import { CartContext } from '@/app/_Contexts/CartContext'
 import useCart from '@/app/_Hooks/useCart'
 import { useSession } from 'next-auth/react'
 import { ProductsContext } from '@/app/_Contexts/ProductsContext'
+import useProductByID from '@/app/_Hooks/useProductByID'
 
 
 
 export default function ProductID() {
-    function GetProductByID() {
-        return axios.get(`http://localhost:3001/Product/${Params?.id}`, { headers }).then((product) => {
-            setProductByID(product.data.Product)
-            return product
 
-        })
-    }
     const { TV, setTV } = useContext(MainContext)
     const { setMyCart, AddProductToCart } = useContext(CartContext)
     const Session = useSession()
-    const { data, isError, error, isLoading, refetch }: HooksTypes = useQuery({ queryKey: ['ProdcutByID'], queryFn: GetProductByID })
+    const { isError, error, isLoading, refetch }: HooksTypes = useProductByID()
     const HookCart = useCart()
     const { headers } = useContext(UserContext)
     const Params = useParams()
@@ -46,6 +41,14 @@ export default function ProductID() {
         arrows: false
     };
     const Router = useRouter()
+
+    useEffect(() => {
+
+        return () => {
+            setProductByID(null)
+        }
+    }, [])
+
 
     useEffect(() => {
 

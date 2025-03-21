@@ -40,7 +40,6 @@ export default function AddProduct() {
         formData.append("description", formvalues.description)
         formData.append("price", formvalues.price)
         formData.append("category", JSON.stringify(formvalues.category))
-        // formData.append("image", formvalues.image)
         formData.append("stock", formvalues.stock)
         formData.append("DisPercentage", formvalues.DisPercentage)
         Array.from(formvalues.image).forEach((file: any) => {
@@ -60,8 +59,6 @@ export default function AddProduct() {
             setApiError(err.response.data.message)
             toast.error(err.response.data.message)
             setisLoading(false);
-
-
         }
 
     }
@@ -90,16 +87,13 @@ export default function AddProduct() {
 
     }, [])
     useEffect(() => {
-
         if (Categories.length > 0) {
             formik.setFieldValue('category', Categories[1])
         }
     }, [Categories])
 
     useEffect(() => {
-
         SelectedCategory && formik.setFieldValue('category', SelectedCategory)
-
     }, [SelectedCategory])
 
 
