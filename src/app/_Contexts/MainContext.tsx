@@ -7,7 +7,9 @@ export const MainContext = createContext<MainContextTypes>({
   SearchTXT: null,
   setSearchTXT: () => { [] },
   TV: -1,
-  setTV: () => { }
+  setTV: () => { },
+  EditMode: null,
+  setEditMode: () => null
 });
 
 
@@ -16,8 +18,9 @@ export default function MainContextProvider({
 }: any) {
   const [SearchTXT, setSearchTXT] = useState<string | null>(null)
   const [TV, setTV] = useState<number>(-1)
+  const [EditMode, setEditMode] = useState<number | null>(null)
 
 
-  return <MainContext.Provider value={{ SearchTXT, setSearchTXT, TV, setTV }}>{children}</MainContext.Provider>
+  return <MainContext.Provider value={{ SearchTXT, setSearchTXT, TV, setTV, EditMode, setEditMode }}>{children}</MainContext.Provider>
 
 }

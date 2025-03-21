@@ -1,5 +1,6 @@
 "use client";
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
+import useProductByID from '@/app/_Hooks/useProductByID';
 import useProducts from '@/app/_Hooks/useProducts';
 import { useQueries, useQuery } from '@tanstack/react-query';
 import axios from 'axios';
@@ -9,10 +10,9 @@ import toast from 'react-hot-toast';
 
 
 export default function ProductsInfo() {
-    let { isLoading, isError, error } = useQuery({ queryKey: ['ProdcutByID'],q })
-    let { Products, setProducts } = useContext(ProductsContext)
+    let { isLoading, isError, error } = useProductByID()
+    let { ProductByID } = useContext(ProductsContext)
     let { id } = useParams();
-    const [ProductByID, setProductByID] = useState([])
 
 
 
@@ -37,7 +37,7 @@ export default function ProductsInfo() {
 
     return (
 
-        ProductByID ? <div className='p-24'>{ProductByID[0].name}</div> : null
+        ProductByID ? <div className='p-24'>{ProductByID?.title}</div> : null
 
 
 
