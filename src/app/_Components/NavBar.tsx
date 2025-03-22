@@ -91,7 +91,7 @@ export default function NavBar() {
     }
 
     return (
-        <div className="navbar  bg-white fixed top-0 z-[1] pl-10 pr-10 pt-5">
+        <div className="navbar  bg-white fixed top-0 z-[55] pl-10 pr-10 pt-5">
             <div className="flex-1">
                 <div className=' flex gap-6'>
                     <Link href={"/"}> <i className="btn btn-ghost text-xl">Fofo Store</i></Link>

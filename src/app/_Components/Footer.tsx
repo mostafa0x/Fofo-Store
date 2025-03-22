@@ -3,7 +3,7 @@ import React from 'react';
 export default function Footer() {
     return (
         <div id="app">
-            <footer className="bg-gray-800 py-4">
+            <footer className="bg-gray-800 py-4 z-[54]">
                 <div className="max-w-screen-xl mx-auto px-2">
                     <div className="flex justify-between">
                         <div className='text-white'>
