@@ -17,13 +17,8 @@ export default function useProducts() {
     async function GetProducts() {
         try {
             const Data: Data = await axios.get("http://localhost:3001/Products", { headers })
-            const New = Data?.data?.Products.map((product) => {
-                product.PriceAfterDis = product.PriceAfterDis = product.price && product.DisPercentage
-                    ? (product.price - (product.price * (product.DisPercentage / 100)))
-                    : product.price
-                return product
-            })
-            setProducts(New);
+
+            setProducts(Data?.data?.Products);
             return Data
         } catch (err: any) {
             console.log(err);

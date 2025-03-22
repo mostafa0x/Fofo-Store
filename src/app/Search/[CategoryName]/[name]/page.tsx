@@ -30,7 +30,7 @@ export default function Search() {
     const Router = useRouter()
 
     useEffect(() => {
-
+        window.scroll(0, 0)
         // will destroy
         return () => {
             setProdutcsByCategory(null)

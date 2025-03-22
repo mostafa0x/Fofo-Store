@@ -9,6 +9,7 @@ import { signOut, useSession } from 'next-auth/react';
 import { CartContext } from '../_Contexts/CartContext';
 import useCart from '../_Hooks/useCart';
 import { CategoriesContext } from '../_Contexts/CategoriesContext';
+import useCategories from '../_Hooks/useCategories';
 
 
 
@@ -27,6 +28,8 @@ export default function NavBar() {
     const Router = useRouter();
     const Path = usePathname()
     const HookCart = useCart()
+    const HookCategories = useCategories()
+
 
 
 

@@ -3,13 +3,11 @@ import React, { useContext, useRef } from "react";
 import toast from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import { MainContext } from "../_Contexts/MainContext";
-import useCategories from "../_Hooks/useCategories";
 
 export default function Login() {
     const Session = useSession();
     const { TV, setTV } = useContext(MainContext);
     const Btn_Login = useRef<HTMLButtonElement>(null);
-    const { } = useCategories()
 
     function Log_in() {
         if (TV === -1) {
