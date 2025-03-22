@@ -63,39 +63,40 @@ export default function ProductsFillter() {
                     </h1>
                 </div>
             ) : (
-                <div className='grid grid-cols-4 gap-4'>
+                <div className='grid grid-cols-4 gap-6'>
                     {ProdutcsByCategory?.map((product: TypeProducts, index: number) => {
                         return (
-                            <div key={index} className="w-full max-w-sm bg-gray-200 border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-all hover:shadow-2xl">
+                            <div key={index} className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg transition-all hover:shadow-2xl">
                                 <div onClick={() => { Router.push(`/Product/${product.id}`) }} className='cursor-pointer'>
                                     <img
                                         src={product?.images?.[0]}
-                                        className="p-4 rounded-t-lg object-cover h-40 w-full transition-all hover:scale-105" // تم تقليص الحجم بشكل معتدل
+                                        className="p-4 rounded-t-lg object-cover h-40 w-full transition-all hover:scale-105"
                                         alt={product.title}
                                     />
                                     <div className="px-5 py-5 text-center">
-                                        <h5 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white"> {/* تم تقليص حجم النص بشكل معتدل */}
+                                        <h5 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white">
                                             {product.title?.split(" ").splice(0, 2).join(" ")}
                                         </h5>
                                     </div>
                                 </div>
 
-                                <div className="px-5 flex justify-between items-center">
-                                    <span className="text-lg font-medium text-gray-900 dark:text-white"> {/* تم تقليص حجم النص بشكل معتدل */}
+                                <div className="px-5 py-3 flex  justify-between items-center">
+                                    <span className="flex-col text-lg font-medium text-gray-900 dark:text-white  items-center">
                                         <i className="fas fa-money-bill-alt mr-2 text-green-700"></i>   {product.priceAfterDis} EGP
-                                        {(product.DisPercentage ?? 0) > 0 && <>
-                                            <span> {product.DisPercentage}Off</span>
-                                            <span className="text-red-600 line-through text-sm">
-                                                {product.price} EGP
-                                            </span>
-                                        </>}
+                                        {(product.DisPercentage ?? 0) > 0 && (
+                                            <div className=" items-center ml-2 text-red-600">
+                                                <span className='flex flex-row items-center  font-semibold text-lg'>{product.DisPercentage}<i className="fas fa-percent mr-1"></i><p className='text-sm'>OFF </p>
+                                                    <p className='line-through opacity-50'> {product.price}EGP</p>
+                                                </span>
+                                            </div>
+                                        )}
                                     </span>
                                     {(product.stock ?? 0) <= 0 ? (
                                         <span className="text-red-600">Out of Stock</span>
                                     ) : (
                                         <button
                                             onClick={() => AddProductToCart(product.id)}
-                                            className={`btn btn-ghost ${TV === (product.id ?? 0) - 10000 ? 'bg-blue-700 hover:bg-blue-900' : 'bg-green-700 hover:bg-green-900'}  transition-all`}
+                                            className={`btn btn-ghost ${TV === (product.id ?? 0) - 10000 ? 'bg-blue-700 hover:bg-blue-900' : 'bg-green-700 hover:bg-green-900'} transition-all`}
                                         >
                                             {TV === (product.id ?? 0) - 10000 ? (
                                                 <div className='flex justify-between items-center' role="status">
@@ -115,6 +116,4 @@ export default function ProductsFillter() {
             )}
         </div>
     );
-
-
 }
