@@ -79,7 +79,7 @@ export default function AddProduct() {
             try {
                 const Docoid: any = ProdcutById?._id
                 formData.append("_id", Docoid)
-                const Data = await axios.patch("http://localhost:3001/admin/product", formData)
+                const Data = await axios.patch("https://fofo-store-back-end.vercel.app/admin/product", formData)
                 setisLoading(false);
                 toast.success(Data.data.message)
                 setEditMode(null)
@@ -93,7 +93,7 @@ export default function AddProduct() {
 
         } else {
             try {
-                const Data = await axios.post("http://localhost:3001/admin/product", formData)
+                const Data = await axios.post("https://fofo-store-back-end.vercel.app/admin/product", formData)
                 setisLoading(false);
                 toast.success(Data.data.message)
                 Router.push("/Dashboard/Products")
@@ -139,7 +139,7 @@ export default function AddProduct() {
 
     async function GetProdcutByID() {
         try {
-            const Data = await axios.get(`http://localhost:3001/Product/${EditMode}`)
+            const Data = await axios.get(`https://fofo-store-back-end.vercel.app/Product/${EditMode}`)
             setProdcutById(Data.data.Product)
             console.log(Data);
         } catch (err) {
