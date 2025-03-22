@@ -16,7 +16,7 @@ type TypeForimk = {
     description: string | undefined
     price: number | undefined,
     category: { name?: string, id?: number, image?: string } | undefined,
-    images?: string | string[]
+    images?: string | string[] | object,
     stock: number | undefined,
     DisPercentage: number | undefined,
 }
@@ -33,8 +33,9 @@ export default function AddProduct() {
     const { TV, setTV, EditMode, setEditMode } = useContext(MainContext)
     const [ProdcutById, setProdcutById] = useState<TypeProducts | null>(null)
 
+
     let Vyup = Yup.object().shape({
-        images: EditMode ? Yup.string() : Yup.string().required("Enter image !"),
+        //  images: EditMode ? Yup.string() : Yup.string().required("Enter image !"),
         title: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
         price: Yup.number().moreThan(9, "Enter number bigger than 9").required("Enter Price !"),
         description: Yup.string().min(8, "min 8 chr").required("Enter description !"),
@@ -43,8 +44,22 @@ export default function AddProduct() {
         DisPercentage: Yup.number().moreThan(-1, "0 or >>").max(100, "Max 100").required("Enter Discount Percentage")
     })
 
+    let formik = useFormik<TypeForimk>({
+        initialValues: {
+            title: "",
+            description: "",
+            price: 0,
+            category: { name: "", id: 0, image: "" },
+            images: [],
+            stock: 0,
+            DisPercentage: 0,
+
+        }, validationSchema: Vyup, onSubmit: handlePostProducts
+    })
+
 
     async function handlePostProducts(formvalues: any) {
+        console.log(typeof formik.values.images);
         setApiError(null)
         setisLoading(true);
         const formData = new FormData();
@@ -62,7 +77,8 @@ export default function AddProduct() {
 
         if (EditMode) {
             try {
-                formData.append("_id", ProdcutById?._id)
+                const Docoid: any = ProdcutById?._id
+                formData.append("_id", Docoid)
                 const Data = await axios.patch("http://localhost:3001/admin/product", formData)
                 setisLoading(false);
                 toast.success(Data.data.message)
@@ -92,18 +108,7 @@ export default function AddProduct() {
 
 
     }
-    let formik = useFormik<TypeForimk>({
-        initialValues: {
-            title: "",
-            description: "",
-            price: 0,
-            category: { name: "", id: 0, image: "" },
-            images: "",
-            stock: 0,
-            DisPercentage: 0,
 
-        }, validationSchema: Vyup, onSubmit: handlePostProducts
-    })
 
     useEffect(() => {
         if (ProdcutById && EditMode) {
@@ -123,14 +128,14 @@ export default function AddProduct() {
             setPageLoading(false)
             console.log(formik.values);
             const Selector = document.getElementById("selector") as HTMLSelectElement
-            if (Selector) {
+            if (Selector && EditMode && ProdcutById) {
                 const CurrIndex = Categories.findIndex((cagetory) => {
-                    return cagetory.name == ProdcutById.category?.name
+                    return cagetory.name == ProdcutById?.category?.name
                 })
-                Selector.selectedIndex = CurrIndex
+                Selector.selectedIndex = CurrIndex - 1
             }
         }
-    }, [ProdcutById, Categories])
+    }, [ProdcutById])
 
     async function GetProdcutByID() {
         try {
@@ -166,13 +171,7 @@ export default function AddProduct() {
         if (Categories.length > 0) {
             formik.setFieldValue('category', Categories[1])
         }
-        const Selector = document.getElementById("selector") as HTMLSelectElement
-        if (Selector && EditMode && ProdcutById) {
-            const CurrIndex = Categories.findIndex((cagetory) => {
-                return cagetory.name == ProdcutById?.category?.name
-            })
-            Selector.selectedIndex = CurrIndex
-        }
+
     }, [Categories])
 
     useEffect(() => {

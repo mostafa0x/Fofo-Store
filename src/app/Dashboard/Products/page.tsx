@@ -29,6 +29,8 @@ export default function Products() {
             setUserScrollY(window.scrollY);
 
         };
+        setEditMode(null)
+
 
 
         window.addEventListener('scroll', handleScroll);
