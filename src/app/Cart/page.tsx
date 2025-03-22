@@ -42,7 +42,7 @@ export default function Cart() {
         return (
             <div className='mt-10 px-16 py-20 bg-gray-100'>
                 <div className='mb-20'>
-                    <div className=' flex-row flex justify-between items-center text-center font-bold'>
+                    <div className='flex-row flex justify-between items-center text-center font-bold'>
                         <h1 className='text-3xl text-gray-600 opacity-75'>My Cart</h1>
                         {MyCart?.MyCart?.length > 0 && (
                             <>
@@ -61,7 +61,7 @@ export default function Cart() {
                     MyCart?.MyCart?.map((product, index: number) => {
                         return <div className='py-8 border-b border-gray-300' key={index}>
                             <div className='flex justify-between items-center'>
-                                <div className='flex items-center gap-4'>
+                                <div className='flex items-center gap-4 w-[350px]'>
                                     <img
                                         className='w-24 h-24 object-cover rounded-lg shadow-md'
                                         src={product?.images?.[0]}
@@ -70,7 +70,7 @@ export default function Cart() {
                                     <h1 className='text-xl font-semibold text-gray-800'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
                                 </div>
 
-                                <div className='flex justify-between items-center w-48'>
+                                <div className='flex items-center gap-4 justify-center'>
                                     <button
                                         onClick={() => RemoveProductFormCart(product?.id)}
                                         className='btn btn-circle bg-red-800 text-white hover:bg-red-600'>

@@ -36,7 +36,7 @@ export default function MainSlider() {
                                 className="w-full h-48 object-fill rounded-lg"
                             />
                             <div className="absolute bottom-0 left-0 p-5 text-white bg-black bg-opacity-50 w-full text-center">
-                                <h2 className="text-lg font-semibold">Various products
+                                <h2 className="text-base font-normal">Various products
                                 </h2>
                             </div>
                         </div>
@@ -48,7 +48,7 @@ export default function MainSlider() {
                                 className="w-full h-48 object-fill rounded-lg"
                             />
                             <div className="absolute bottom-0 left-0 p-5 text-white bg-black bg-opacity-50 w-full text-center">
-                                <h2 className="text-lg font-semibold">Latest products
+                                <h2 className="text-base font-normal">Latest products
                                 </h2>
                             </div>
                         </div>
@@ -74,7 +74,7 @@ export default function MainSlider() {
                                 />
                             </Slider>
                             <div className="absolute bottom-0 left-0  text-white bg-black bg-opacity-50 w-full text-center">
-                                <h2 className="text-xl font-semibold">
+                                <h2 className="text-base font-normal ">
                                     An online marketing platform allows users to buy and sell products and services easily and securely.
                                 </h2>
                             </div>
