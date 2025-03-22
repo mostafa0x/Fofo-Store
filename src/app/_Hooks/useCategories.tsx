@@ -10,7 +10,7 @@ export default function useCategories() {
     async function GetCategories() {
 
         try {
-            const Data = await axios.get("http://localhost:3001/Categories")
+            const Data = await axios.get("https://fofo-store-back-end.vercel.app/Categories")
             setCategories(Data.data.categories)
             return Data
         }

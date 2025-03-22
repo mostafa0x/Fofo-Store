@@ -16,7 +16,7 @@ export default function useProducts() {
 
     async function GetProducts() {
         try {
-            const Data: Data = await axios.get("http://localhost:3001/Products", { headers })
+            const Data: Data = await axios.get("https://fofo-store-back-end.vercel.app/Products", { headers })
 
             setProducts(Data?.data?.Products);
             return Data

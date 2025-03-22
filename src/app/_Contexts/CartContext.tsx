@@ -6,7 +6,7 @@ import { usePathname, useRouter } from 'next/navigation'
 import toast from 'react-hot-toast'
 import axios from 'axios'
 import CartContextTypes from '../_Interfaces/Contexts/CartContext'
-
+import TypeProducts from '../_Interfaces/TypeProducts'
 
 export const CartContext = createContext<CartContextTypes>({
     MyCart: { MyCart: [], Totalprice: 0 },
@@ -17,7 +17,7 @@ export const CartContext = createContext<CartContextTypes>({
 })
 
 export default function CartContextProvider({ children }: any) {
-    const [MyCart, setMyCart] = useState<{ MyCart: string[], Totalprice: number }>({ MyCart: [], Totalprice: 0 })
+    const [MyCart, setMyCart] = useState<{ MyCart: TypeProducts[], Totalprice: number }>({ MyCart: [], Totalprice: 0 })
     const [isLoadingCartIcon, setisLoadingCartIcon] = useState(true)
     const Router = useRouter()
     const Path = usePathname()
@@ -32,7 +32,7 @@ export default function CartContextProvider({ children }: any) {
                 setTV(productID - 10000)
                 const tosatLoading = toast.loading("Waiting...")
                 try {
-                    const Data = await axios.post("http://localhost:3001/Cart", { productID }, { headers })
+                    const Data = await axios.post("https://fofo-store-back-end.vercel.app/Cart", { productID }, { headers })
                     setMyCart(Data.data.Cart)
                     toast.success(Data.data.message)
                     setTV(-1)
@@ -61,7 +61,7 @@ export default function CartContextProvider({ children }: any) {
             setTV(productID - 100000)
             const tosatLoading = toast.loading("Waiting...")
             try {
-                const Data = await axios.patch("http://localhost:3001/Cart", { productID }, { headers })
+                const Data = await axios.patch("https://fofo-store-back-end.vercel.app/Cart", { productID }, { headers })
                 setMyCart(Data.data.Cart)
                 toast.success(Data.data.message)
             } catch (err: any) {
@@ -81,7 +81,7 @@ export default function CartContextProvider({ children }: any) {
             setTV(productID - 1000000)
             const tosatLoading = toast.loading("Waiting...")
             try {
-                const Data = await axios.delete(`http://localhost:3001/Cart/${productID}`, { headers })
+                const Data = await axios.delete(`https://fofo-store-back-end.vercel.app/Cart/${productID}`, { headers })
                 setMyCart(Data.data.Cart)
                 toast.success(Data.data.message)
             } catch (err: any) {
@@ -102,7 +102,7 @@ export default function CartContextProvider({ children }: any) {
             setTV(index)
             const tosatLoading = toast.loading("Waiting...")
             try {
-                const data = await axios.delete(`http://localhost:3001/AllCart`, { headers })
+                const data = await axios.delete(`https://fofo-store-back-end.vercel.app/AllCart`, { headers })
                 console.log(data);
 
                 setMyCart(data.data.Cart)

@@ -18,7 +18,7 @@ export default function useCart() {
     async function GetMyCart() {
 
         if (Session.status === 'authenticated') {
-            return axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
+            return axios.get("https://fofo-store-back-end.vercel.app/Cart", { headers }).then((obj) => {
                 setMyCart(obj?.data?.Cart)
                 setisLoadingCartIcon(false)
                 return obj
@@ -52,20 +52,3 @@ export default function useCart() {
 }
 
 
-// if (Session.status === 'authenticated' && headers !== null) {
-//     return axios.get("http://localhost:3001/Cart", { headers }).then((obj) => {
-//         setMyCart(obj?.data?.Cart)
-//         setisLoadingCartIcon(false)
-//         return obj
-//     }).catch((err) => {
-//         console.log(err);
-//         if (err.status === 401) {
-//             localStorage.setItem("AuthLog", "The session has ended")
-//             signOut({ callbackUrl: "/Login" })
-//         }
-
-//         throw err
-//     })
-// } else {
-//     return null
-// }

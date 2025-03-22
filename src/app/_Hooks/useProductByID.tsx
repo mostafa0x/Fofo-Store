@@ -12,7 +12,7 @@ export default function useProductByID() {
 
     async function GetProductByID() {
         try {
-            const Data = await axios.get(`http://localhost:3001/Product/${id}`)
+            const Data = await axios.get(`https://fofo-store-back-end.vercel.app/Product/${id}`)
             setProductByID(Data.data.Product)
             return Data
         }
