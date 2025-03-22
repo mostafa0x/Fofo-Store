@@ -13,7 +13,7 @@ export default function ProductsFillter() {
     const { data, isError, error, isLoading }: HooksTypes = useProducts()
     const HookCategory = useCategories()
     const { ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading } = useContext(ProductsContext)
-    const { TV } = useContext(MainContext)
+    const { TV, setTV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
     const Router = useRouter();
     const { CategoryName } = useParams()
@@ -22,6 +22,7 @@ export default function ProductsFillter() {
         return () => {
             setProdutcsByCategory(null)
             setPageCategoryLoading(true)
+            setTV(-1)
         }
     }, [])
 
