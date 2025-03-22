@@ -35,7 +35,7 @@ export default function Home() {
   return (
     <>
       <div >
-        <div className="pt-20"><CategoriesBar /></div>
+        {/* <div className="pt-20"><CategoriesBar /></div> */}
         <div className=""> <MainSlider /></div>
         <div className=""> <CategoriesSlider /></div>
 
