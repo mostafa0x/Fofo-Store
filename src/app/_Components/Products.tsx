@@ -54,7 +54,7 @@ export default function Products() {
     }
 
     return (
-        <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4"> {/* تقليص الفجوة بين العناصر */}
             {!Products ? (
                 <div className="col-span-full text-center">
                     <h1 className="text-3xl font-semibold text-red-500">Error!</h1>
@@ -64,7 +64,7 @@ export default function Products() {
                     {Products?.map((product: TypeProducts, index: number) => (
                         <div
                             key={index}
-                            className="w-full max-w-xs bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col"
+                            className="w-full max-w-sm bg-white border border-gray-300 rounded-lg shadow-md hover:shadow-lg transition-all duration-300 flex flex-col"
                         >
                             <div
                                 onClick={() => Router.push(`/Product/${product.id}`)}
@@ -72,21 +72,21 @@ export default function Products() {
                             >
                                 <img
                                     src={product?.images?.[0]}
-                                    className="w-full h-48 object-cover rounded-t-lg transform hover:scale-105 transition-all duration-300"
+                                    className="w-full h-40 object-cover rounded-t-lg transform hover:scale-105 transition-all duration-300"
                                     alt={product.title}
                                 />
                             </div>
 
-                            <div className="px-5 py-4">
-                                <h5 className="text-xl font-semibold text-gray-900 dark:text-white truncate">
+                            <div className="px-4 py-3"> {/* تقليص الحشو */}
+                                <h5 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
                                     {product.title?.split(" ").splice(0, 2).join(" ")}
                                 </h5>
                             </div>
 
-                            <div className="px-5 pb-4 flex flex-col justify-between flex-grow">
+                            <div className="px-4 pb-3 flex flex-col justify-between flex-grow">
                                 {(product?.DisPercentage ?? 0) <= 0 ? (
                                     <div className="flex items-center justify-between">
-                                        <span className="text-2xl font-semibold text-green-700">
+                                        <span className="text-xl font-semibold text-green-700">
                                             <i className="fas fa-money-bill-alt mr-2"></i>
                                             {product?.price} EGP
                                         </span>
@@ -96,7 +96,7 @@ export default function Products() {
                                     </div>
                                 ) : (
                                     <div className="text-xl font-medium text-gray-900 dark:text-white">
-                                        {product?.priceAfterDis ?? 0} EGP
+                                        <i className="fas fa-money-bill-alt mr-2 text-green-700"></i>   {product?.priceAfterDis ?? 0} EGP
                                         {(product?.DisPercentage ?? 0) > 0 && (
                                             <div className="flex items-center mt-1 text-red-500">
                                                 <i className="fas fa-tags mr-1"></i>
@@ -110,7 +110,7 @@ export default function Products() {
                                 )}
                             </div>
 
-                            <div className="px-5 py-4">
+                            <div className="px-4 py-3">
                                 {(product.stock ?? 0) <= 0 ? (
                                     <span className="text-sm text-red-500 font-semibold">Out of Stock</span>
                                 ) : (
@@ -155,6 +155,5 @@ export default function Products() {
                 </>
             )}
         </div>
-
     )
 }

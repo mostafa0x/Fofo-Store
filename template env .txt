@@ -1,0 +1,4 @@
+ ClientID = '' //google
+ ClientKey = '' //google
+ NEXTAUTH_SECRET = ''
+ NEXTAUTH_URL= '' //callback

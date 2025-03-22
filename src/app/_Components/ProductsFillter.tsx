@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import useProducts from '../_Hooks/useProducts'
 import HooksTypes from '../_Interfaces/HooksType'
 import { ProductsContext } from '../_Contexts/ProductsContext'
@@ -7,6 +7,7 @@ import TypeProducts from '../_Interfaces/TypeProducts'
 import { useParams, useRouter } from 'next/navigation'
 import { MainContext } from '../_Contexts/MainContext'
 import { CartContext } from '../_Contexts/CartContext'
+import useCategories from '../_Hooks/useCategories'
 
 export default function ProductsFillter() {
     const { data, isError, error, isLoading }: HooksTypes = useProducts()
@@ -47,6 +48,7 @@ export default function ProductsFillter() {
             <span className="sr-only">Loading...</span>
         </div>
     }
+
     return (
         <div className='mx-5 mt-5'>
             <h1 className='flex flex-row gap-2 py-10 text-2xl text-center'>
@@ -64,28 +66,29 @@ export default function ProductsFillter() {
                 <div className='grid grid-cols-4 gap-4'>
                     {ProdutcsByCategory?.map((product: TypeProducts, index: number) => {
                         return (
-                            <div key={index} className="w-full max-w-xs bg-gray-200 border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-all hover:shadow-2xl">
+                            <div key={index} className="w-full max-w-sm bg-gray-200 border border-gray-200 rounded-lg shadow-lg dark:bg-gray-800 dark:border-gray-700 transition-all hover:shadow-2xl">
                                 <div onClick={() => { Router.push(`/Product/${product.id}`) }} className='cursor-pointer'>
                                     <img
                                         src={product?.images?.[0]}
-                                        className="p-4 rounded-t-lg object-cover h-48 w-full transition-all hover:scale-105"
+                                        className="p-4 rounded-t-lg object-cover h-40 w-full transition-all hover:scale-105" // تم تقليص الحجم بشكل معتدل
                                         alt={product.title}
                                     />
                                     <div className="px-5 py-5 text-center">
-                                        <h5 className="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">
+                                        <h5 className="text-lg font-semibold tracking-tight text-gray-900 dark:text-white"> {/* تم تقليص حجم النص بشكل معتدل */}
                                             {product.title?.split(" ").splice(0, 2).join(" ")}
                                         </h5>
                                     </div>
                                 </div>
 
                                 <div className="px-5 flex justify-between items-center">
-                                    <span className="text-xl font-medium text-gray-900 dark:text-white">
-                                        {product.priceAfterDis} EGP
-                                        {(product.DisPercentage ?? 0) > 0 && (
+                                    <span className="text-lg font-medium text-gray-900 dark:text-white"> {/* تم تقليص حجم النص بشكل معتدل */}
+                                        <i className="fas fa-money-bill-alt mr-2 text-green-700"></i>   {product.priceAfterDis} EGP
+                                        {(product.DisPercentage ?? 0) > 0 && <>
+                                            <span> {product.DisPercentage}Off</span>
                                             <span className="text-red-600 line-through text-sm">
                                                 {product.price} EGP
                                             </span>
-                                        )}
+                                        </>}
                                     </span>
                                     {(product.stock ?? 0) <= 0 ? (
                                         <span className="text-red-600">Out of Stock</span>
@@ -112,4 +115,6 @@ export default function ProductsFillter() {
             )}
         </div>
     );
+
+
 }
