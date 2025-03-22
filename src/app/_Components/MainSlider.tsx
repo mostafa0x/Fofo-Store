@@ -20,7 +20,7 @@ export default function MainSlider() {
 
 
     return (
-        <div className="bg-gray-100 py-18">
+        <div className="bg-gray-100 mt-24">
             <h1 className="text-center text-3xl font-semibold text-gray-800 mb-8">
                 Explore Our Best Products
             </h1>

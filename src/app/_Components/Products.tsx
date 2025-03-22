@@ -66,7 +66,6 @@ export default function Products() {
                             key={index}
                             className="w-full max-w-xs bg-white border border-gray-300 rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 flex flex-col"
                         >
-                            {/* Image Section */}
                             <div
                                 onClick={() => Router.push(`/Product/${product.id}`)}
                                 className="cursor-pointer"
@@ -78,16 +77,13 @@ export default function Products() {
                                 />
                             </div>
 
-                            {/* Title Section */}
                             <div className="px-5 py-4">
                                 <h5 className="text-xl font-semibold text-gray-900 dark:text-white truncate">
                                     {product.title?.split(" ").splice(0, 2).join(" ")}
                                 </h5>
                             </div>
 
-                            {/* Price & Discount Section */}
                             <div className="px-5 pb-4 flex flex-col justify-between flex-grow">
-                                {/* عرض السعر بدون خصم */}
                                 {(product?.DisPercentage ?? 0) <= 0 ? (
                                     <div className="flex items-center justify-between">
                                         <span className="text-2xl font-semibold text-green-700">
@@ -114,7 +110,6 @@ export default function Products() {
                                 )}
                             </div>
 
-                            {/* Stock and Button */}
                             <div className="px-5 py-4">
                                 {(product.stock ?? 0) <= 0 ? (
                                     <span className="text-sm text-red-500 font-semibold">Out of Stock</span>

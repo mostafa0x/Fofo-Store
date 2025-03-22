@@ -27,7 +27,7 @@ export default function CategoriesSlider() {
             </h1>
 
             <div className="flex justify-center">
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 w-full px-4 sm:px-8 lg:px-24">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 w-full px-48 sm:px-8 lg:pl-48">
                     {Categories?.slice(1).map((Category: CategoryType, index: number) => (
                         <div
                             key={index}
