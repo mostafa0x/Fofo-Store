@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import useProducts from '../_Hooks/useProducts'
 import HooksTypes from '../_Interfaces/HooksType'
 import { ProductsContext } from '../_Contexts/ProductsContext'
@@ -7,11 +7,9 @@ import TypeProducts from '../_Interfaces/TypeProducts'
 import { useParams, useRouter } from 'next/navigation'
 import { MainContext } from '../_Contexts/MainContext'
 import { CartContext } from '../_Contexts/CartContext'
-import useCategories from '../_Hooks/useCategories'
 
 export default function ProductsFillter() {
     const { data, isError, error, isLoading }: HooksTypes = useProducts()
-    const HookCategory = useCategories()
     const { ProdutcsByCategory, setProdutcsByCategory, PageCategoryLoading, setPageCategoryLoading } = useContext(ProductsContext)
     const { TV, setTV } = useContext(MainContext)
     const { AddProductToCart } = useContext(CartContext)
