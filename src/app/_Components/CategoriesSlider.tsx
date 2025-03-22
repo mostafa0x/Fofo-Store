@@ -1,15 +1,15 @@
-'use client'
-import React, { useContext } from 'react'
+'use client';
+import React, { useContext } from 'react';
 import { CategoriesContext } from '../_Contexts/CategoriesContext';
 import CategoryType from '../_Interfaces/CategoryType';
 import useCategories from '../_Hooks/useCategories';
 import Link from 'next/link';
 
 export default function CategoriesSlider() {
-    const { Categories } = useContext(CategoriesContext)
-    const { isLoading, isError, error } = useCategories()
+    const { Categories } = useContext(CategoriesContext);
+    const { isLoading, isError, error } = useCategories();
 
-    var settings = {
+    const settings = {
         dots: false,
         infinite: false,
         speed: 500,
@@ -19,20 +19,36 @@ export default function CategoriesSlider() {
         autoplay: false,
         arrows: false,
     };
-    return (<div>
-        <h1 className=' p-5 pl-24 font-semibold text-2xl'>Shop by categories</h1>
-        <div className='z-[0] px-24 pt-4 pb-6 flex justify-between gap-4 '>
 
-            {Categories?.slice(1).map((Category: CategoryType, index: number) => {
-                return <div key={index} className=' bg-white border border-black border-opacity-25 p-3 pl-10 pr-10  text-black items-center text-center cursor-pointer rounded-2xl'>
-                    <Link href={`/Category/${Category.name}`}>
-                        <img src={Category.image} alt={Category.name} />
-                        <h1 className=' font-semibold'>{Category.name}</h1>
-                    </Link>
+    return (
+        <div className="bg-gray-50 py-8">
+            <h1 className="text-center text-3xl font-semibold text-gray-800 mb-6">
+                Shop by Categories
+            </h1>
+
+            <div className="flex justify-center">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-6 w-full px-4 sm:px-8 lg:px-24">
+                    {Categories?.slice(1).map((Category: CategoryType, index: number) => (
+                        <div
+                            key={index}
+                            className="group relative bg-white border border-gray-200 p-4 rounded-2xl shadow-lg transition-all duration-300 transform hover:scale-105 hover:shadow-xl hover:bg-gray-100 cursor-pointer"
+                        >
+                            <Link href={`/Category/${Category.name}`}>
+                                <img
+                                    src={Category.image}
+                                    alt={Category.name}
+                                    className="w-full h-40 object-cover rounded-md transition-transform duration-500 group-hover:scale-110"
+                                />
+                                <h2 className="mt-4 text-xl font-medium text-gray-800 group-hover:text-blue-600 transition-all duration-200">
+                                    {Category.name}
+                                </h2>
+                            </Link>
+
+                            <div className="absolute inset-0 bg-black bg-opacity-30 group-hover:bg-opacity-0 transition-all duration-300 rounded-xl"></div>
+                        </div>
+                    ))}
                 </div>
-            })}
-        </div></div>
-
-
-    )
+            </div>
+        </div>
+    );
 }
