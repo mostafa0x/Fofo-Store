@@ -13,14 +13,14 @@ export default function Footer() {
                         <div>
                             <div className="text-left">
                                 <h1 className='text-white text-2xl'>Contact us</h1>
-                                <h4 className='text-orange-500 text-lg'>(+20) 01012957788</h4>
+                                <h4 className='text-orange-500 text-lg'>(+20) 01157072073</h4>
                                 <span className='text-gray-400'>Follow us</span>
                             </div>
 
                             <div className='text-3xl flex gap-2 pt-4'>
-                                <i className="fa-brands fa-facebook hover:text-yellow-300" />
-                                <i className="fa-brands fa-instagram hover:text-yellow-300" />
-                                <i className="fa-brands fa-whatsapp hover:text-yellow-300" />
+                                <a href='https://www.facebook.com/profile.php?id=100080751632307' target='_blank' className="fa-brands fa-facebook cursor-pointer hover:text-yellow-300" />
+                                <a href='https://www.instagram.com/mostafa_0x/' target='_blank' className="fa-brands fa-instagram hover:text-yellow-300" />
+
                             </div>
                         </div>
                     </div>

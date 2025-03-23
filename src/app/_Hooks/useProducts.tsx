@@ -4,7 +4,6 @@ import axios from 'axios';
 import { useContext } from 'react';
 import { ProductsContext } from '../_Contexts/ProductsContext';
 import { UserContext } from '../_Contexts/UserContext';
-import { MainContext } from '../_Contexts/MainContext';
 import { signOut } from 'next-auth/react';
 import TypeProducts from '../_Interfaces/TypeProducts';
 type Data = { data: { Products: TypeProducts[] } }

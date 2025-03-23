@@ -2,11 +2,9 @@
 import { MainContext } from '@/app/_Contexts/MainContext';
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import useProducts from '@/app/_Hooks/useProducts'
-import axios from 'axios';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react'
-import toast from 'react-hot-toast';
 
 export default function Products() {
     let { isLoading, isError, error } = useProducts();

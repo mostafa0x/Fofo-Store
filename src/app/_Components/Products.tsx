@@ -13,12 +13,11 @@ import { CartContext } from '../_Contexts/CartContext'
 
 
 export default function Products() {
-    const { data, isError, error, isLoading, refetch }: HooksTypes = useProducts()
+    const { isError, error, isLoading }: HooksTypes = useProducts()
     const { Products, PageProduct, setPageProduct } = useContext(ProductsContext)
     const Router = useRouter();
-    const { TV, setTV } = useContext(MainContext)
-    const { headers, UserToken } = useContext(UserContext)
-    const { MyCart, setMyCart, AddProductToCart } = useContext(CartContext)
+    const { TV } = useContext(MainContext)
+    const { AddProductToCart } = useContext(CartContext)
 
     useEffect(() => {
 

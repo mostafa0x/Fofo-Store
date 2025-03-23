@@ -3,9 +3,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import useCart from '../_Hooks/useCart'
 import { UserContext } from '../_Contexts/UserContext'
 import { CartContext } from '../_Contexts/CartContext'
-import TypeProducts from '../_Interfaces/TypeProducts'
 import HooksTypes from '../_Interfaces/HooksType'
-import { useSession } from 'next-auth/react'
 import { MainContext } from '../_Contexts/MainContext'
 
 export default function Cart() {
@@ -13,8 +11,7 @@ export default function Cart() {
     const { headers } = useContext(UserContext)
     const { MyCart, AddProductToCart, RemoveProductFormCart, DeleteProductFromCart, DeleteAllCart } = useContext(CartContext)
     const { TV } = useContext(MainContext)
-    const Session = useSession()
-    const DeleteCart = useRef(null)
+
 
     useEffect(() => {
         refetch()

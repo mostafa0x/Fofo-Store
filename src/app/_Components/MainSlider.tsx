@@ -1,10 +1,8 @@
 'use client';
-import React, { useContext, useEffect } from 'react';
-import { CategoriesContext } from '../_Contexts/CategoriesContext';
+import React from 'react';
 import Slider from 'react-slick';
 
 export default function MainSlider() {
-    const { Categories } = useContext(CategoriesContext);
 
     const settings = {
         dots: true,

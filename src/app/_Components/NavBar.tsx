@@ -15,8 +15,8 @@ import useCategories from '../_Hooks/useCategories';
 
 
 export default function NavBar() {
-    const { data: session, status } = useSession()
-    const { UserToken, setUserToken, isUserLoading } = useContext(UserContext)
+    const { data: session } = useSession()
+    const { UserToken, isUserLoading } = useContext(UserContext)
     const { SearchTXT, setSearchTXT, TV, setTV } = useContext(MainContext)
     const { LoadingIconOptions, Categories, CurrentCategory, setCurrentCategory } = useContext(CategoriesContext)
     const { isLoadingCartIcon } = useContext(CartContext);

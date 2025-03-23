@@ -29,7 +29,7 @@ export default function AddProduct() {
     const { Categories } = useContext(CategoriesContext);
     let Router = useRouter();
     const [SelectedCategory, setSelectedCategory] = useState<any | null>(null);
-    const { TV, setTV, EditMode, setEditMode } = useContext(MainContext);
+    const { setTV, EditMode, setEditMode } = useContext(MainContext);
     const [ProdcutById, setProdcutById] = useState<TypeProducts | null>(null);
 
     let Vyup = Yup.object().shape({

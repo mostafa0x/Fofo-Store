@@ -7,7 +7,7 @@ import Link from 'next/link';
 
 export default function CategoriesSlider() {
     const { Categories } = useContext(CategoriesContext);
-    const { isLoading, isError, error } = useCategories();
+    const { } = useCategories();
 
     const settings = {
         dots: false,

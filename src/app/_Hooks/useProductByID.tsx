@@ -2,7 +2,7 @@
 import { useQuery } from '@tanstack/react-query'
 import axios from 'axios'
 import { useParams } from 'next/navigation'
-import React, { useContext } from 'react'
+import { useContext } from 'react'
 import { ProductsContext } from '../_Contexts/ProductsContext'
 
 
