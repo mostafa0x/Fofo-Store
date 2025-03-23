@@ -30,7 +30,7 @@
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "@types/react-slick": "^0.23.13",
-    "daisyui": "^4.12.23",
+    "daisyui": "^5.0.9",
     "eslint": "^9",
     "eslint-config-next": "15.1.6",
     "postcss": "^8",

@@ -1,6 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@plugin "daisyui";
 
 :root {
   --background: #ffffff;
@@ -9,8 +10,15 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #121212;
+    --foreground: #fff;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #121212;
+    color: #fff;
   }
 }
 
@@ -23,4 +31,8 @@ body {
 .txtdash {
   padding-top: 5px;
   font-size: x-large;
+}
+
+@media (max-width: 768px) {
+  /* تغيير تصميم عناصر معينة على الهواتف */
 }
