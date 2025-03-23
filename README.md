@@ -36,4 +36,4 @@ Welcome to the **E-Commerce Marketing** project! This platform allows users to b
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/e-commerce-project.git
+   git clone https://github.com/mostafa0x/Fofo-Store.git
