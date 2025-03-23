@@ -9,16 +9,7 @@ export default function CategoriesSlider() {
     const { Categories } = useContext(CategoriesContext);
     const { } = useCategories();
 
-    const settings = {
-        dots: false,
-        infinite: false,
-        speed: 500,
-        slidesToShow: 6,
-        slidesToScroll: 6,
-        autoplaySpeed: 1500,
-        autoplay: false,
-        arrows: false,
-    };
+
 
     return (
         <div className="bg-gray-50 py-8">

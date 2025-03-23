@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import React, { useContext, useEffect, useState } from 'react'
 
 export default function Products() {
-    let { isLoading, isError, error } = useProducts();
+    const { isLoading, isError, error } = useProducts();
     const [UserScrollY, setUserScrollY] = useState(0)
     const { Products } = useContext(ProductsContext)
     const { setEditMode } = useContext(MainContext)

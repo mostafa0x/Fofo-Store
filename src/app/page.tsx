@@ -9,7 +9,7 @@ import Products from "./_Components/Products";
 
 
 export default function Home() {
-  let { setSearchTXT } = useContext(MainContext);
+  const { setSearchTXT } = useContext(MainContext);
 
   useEffect(() => {
     window.scroll(0, 0)

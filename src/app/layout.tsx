@@ -19,11 +19,6 @@ import CategoriesContextProvider from "./_Contexts/CategoriesContext";
 
 
 
-const metadata: Metadata = {
-  title: "Fofo Store",
-  description: "Shoping",
-};
-
 export default function RootLayout({
   children,
 }: Readonly<{

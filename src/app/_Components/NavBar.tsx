@@ -23,8 +23,8 @@ export default function NavBar() {
     const { MyCart } = useContext(CartContext)
     const [MaxSelectChrs, setMaxSelectChrs] = useState<number>(58)
     const [MaxInputChrs, setMaxInputChrs] = useState<number>(700)
-    let Op = useRef<HTMLSelectElement | null>(null);
-    let SearchBar = useRef<HTMLInputElement | null>(null);
+    const Op = useRef<HTMLSelectElement | null>(null);
+    const SearchBar = useRef<HTMLInputElement | null>(null);
     const Router = useRouter();
     const Path = usePathname()
     const HookCart = useCart()

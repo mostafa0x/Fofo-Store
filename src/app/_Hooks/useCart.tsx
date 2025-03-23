@@ -1,7 +1,7 @@
 'use client'
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
-import React, { useContext } from 'react'
+import  { useContext } from 'react'
 import { UserContext } from '../_Contexts/UserContext';
 import { CartContext } from '../_Contexts/CartContext';
 import { signOut, useSession } from 'next-auth/react';

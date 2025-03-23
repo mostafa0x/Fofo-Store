@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useFormik } from "formik";
 import axios from "axios";
 import * as Yup from "yup";
@@ -27,12 +27,12 @@ export default function AddProduct() {
     const [PageLoading, setPageLoading] = useState(true);
     const { } = useCategories();
     const { Categories } = useContext(CategoriesContext);
-    let Router = useRouter();
+    const Router = useRouter();
     const [SelectedCategory, setSelectedCategory] = useState<any | null>(null);
     const { setTV, EditMode, setEditMode } = useContext(MainContext);
     const [ProdcutById, setProdcutById] = useState<TypeProducts | null>(null);
 
-    let Vyup = Yup.object().shape({
+    const Vyup = Yup.object().shape({
         title: Yup.string().min(4, "min 4 chr").required("Enter Name !"),
         price: Yup.number().moreThan(9, "Enter number bigger than 9").required("Enter Price !"),
         description: Yup.string().min(8, "min 8 chr").required("Enter description !"),
@@ -41,7 +41,7 @@ export default function AddProduct() {
         DisPercentage: Yup.number().moreThan(-1, "0 or >>").max(100, "Max 100").required("Enter Discount Percentage")
     });
 
-    let formik = useFormik<TypeForimk>({
+    const formik = useFormik<TypeForimk>({
         initialValues: {
             title: "",
             description: "",

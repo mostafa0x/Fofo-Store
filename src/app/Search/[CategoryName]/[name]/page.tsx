@@ -1,7 +1,7 @@
 "use client"
 import { MainContext } from '@/app/_Contexts/MainContext';
 import { useParams, useRouter } from 'next/navigation';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { ProductsContext } from '@/app/_Contexts/ProductsContext';
 import TypeProducts from '@/app/_Interfaces/TypeProducts';
 import useProducts from '@/app/_Hooks/useProducts';
@@ -16,7 +16,7 @@ export default function Search() {
     const { TV, setTV } = useContext(MainContext);
     const { AddProductToCart } = useContext(CartContext)
     const { ProdutcsByCategory, PageCategoryLoading, PageProduct, setProdutcsByCategory, setPageCategoryLoading } = useContext(ProductsContext)
-    let { name } = useParams<Parms>();
+    const { name } = useParams<Parms>();
     const { } = useProducts()
     const Router = useRouter()
 

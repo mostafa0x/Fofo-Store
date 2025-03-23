@@ -1,6 +1,6 @@
 "use client"
 import { useQueryClient } from '@tanstack/react-query'
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import Slider from 'react-slick';
 import { MainContext } from '@/app/_Contexts/MainContext'
 import { CartContext } from '@/app/_Contexts/CartContext'
@@ -14,7 +14,7 @@ export default function ProductID() {
     const { isError, error, isLoading }: any = useProductByID()
     const { ProductByID, setProductByID } = useContext(ProductsContext)
     const Query = useQueryClient()
-    let settingsSlick = {
+    const settingsSlick = {
         dots: true,
         infinite: true,
         speed: 500,

@@ -1,6 +1,5 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
-require('dot-env')
 
 declare module "next-auth" {
     interface Session {
@@ -39,6 +38,6 @@ export const handler = NextAuth({
     }
 });
 
-export { handler as GET, handler as POST };
+export default handler;
 
 

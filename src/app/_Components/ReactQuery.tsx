@@ -2,7 +2,7 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import React from 'react'
-let Query = new QueryClient();
+const Query = new QueryClient();
 export default function RreactQuery({
     children,
 }: Readonly<{
