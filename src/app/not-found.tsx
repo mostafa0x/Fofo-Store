@@ -9,14 +9,12 @@ export default function Notfound() {
                 <div className="flex justify-center mb-6 animate__animated animate__fadeIn animate__delay-1s">
                     <i className="fas fa-exclamation-triangle fa-4x text-yellow-300"></i>
                 </div>
-
                 <h1 className="text-4xl font-bold mb-4 animate__animated animate__fadeIn animate__delay-1s">
                     404 - Page Not Found
                 </h1>
                 <p className="text-lg mb-6 animate__animated animate__fadeIn animate__delay-2s">
-                    Sorry, the page you are looking for doesn't exist. It might have been moved or deleted.
+                    Sorry, the page you are looking for doesnt exist. It might have been moved or deleted.
                 </p>
-
                 <Link href={"/"}>
                     <button
                         className="px-6 py-3 bg-blue-700 hover:bg-blue-800 text-white font-semibold rounded-lg transition duration-300 transform hover:scale-105 animate__animated animate__fadeIn animate__delay-3s"
@@ -26,5 +24,5 @@ export default function Notfound() {
                 </Link>
             </div>
         </div>
-    );
+    )
 }

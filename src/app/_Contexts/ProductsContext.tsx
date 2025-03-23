@@ -11,7 +11,7 @@ type Parms = {
 
 export const ProductsContext = createContext<ProductsContextTypes>({
     Products: null,
-    setProducts: () => { [] },
+    setProducts: () => null,
     ProdutcsByCategory: null,
     setProdutcsByCategory: () => null,
     PageCategoryLoading: true, setPageCategoryLoading: () => null,

@@ -1,5 +1,5 @@
 "use client"
-import React, { useContext, useEffect, useRef } from 'react'
+import React, { useContext, useEffect } from 'react'
 import useCart from '../_Hooks/useCart'
 import { UserContext } from '../_Contexts/UserContext'
 import { CartContext } from '../_Contexts/CartContext'

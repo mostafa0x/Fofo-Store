@@ -6,9 +6,6 @@ import { ProductsContext } from '../_Contexts/ProductsContext'
 import TypeProducts from '../_Interfaces/TypeProducts'
 import { useRouter } from 'next/navigation'
 import { MainContext } from '../_Contexts/MainContext'
-import { UserContext } from '../_Contexts/UserContext'
-import axios from 'axios'
-import toast from 'react-hot-toast'
 import { CartContext } from '../_Contexts/CartContext'
 
 

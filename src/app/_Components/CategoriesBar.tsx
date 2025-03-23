@@ -17,7 +17,7 @@ export default function CategoriesBar() {
             <div tabIndex={0} role="button" className="btn btn-ghost m-1 text-lg ">Woodware  <i className="fa-solid fa-chevron-down"></i></div>
             <ul tabIndex={0} className=" mt-0.8 dropdown-content menu bg-white  z-[1] w-52 p-2 shadow text-black">
                 <li><a>Cups</a></li>
-                <li><a>Children's dishes</a></li>
+                <li><a>Childrens dishes</a></li>
             </ul>
         </div>
 

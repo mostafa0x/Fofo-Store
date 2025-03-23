@@ -11,15 +11,15 @@ export const UserContext = createContext<UserContextType>({
     setUserToken: () => { },
     isUserLoading: true,
     setisUserLoading: () => { },
-    headers: { Authorization: localStorage.getItem("UserToken") },
+    headers: { Authorization: null },
     setheaders: () => { }
 });
 
 export default function UserContextProvider({ children }: any) {
     const [UserToken, setUserToken] = useState<string | null>(null)
     const [isUserLoading, setisUserLoading] = useState(true)
-    const [headers, setheaders] = useState({
-        Authorization: localStorage.getItem("UserToken"),
+    const [headers, setheaders] = useState<{ Authorization: string | null }>({
+        Authorization: null
     });
     const Path = usePathname();
     const Router = useRouter()

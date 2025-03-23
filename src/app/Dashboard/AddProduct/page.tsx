@@ -9,6 +9,7 @@ import useCategories from "@/app/_Hooks/useCategories";
 import { CategoriesContext } from "@/app/_Contexts/CategoriesContext";
 import { MainContext } from "@/app/_Contexts/MainContext";
 import TypeProducts from "@/app/_Interfaces/TypeProducts";
+import CategoryType from "@/app/_Interfaces/CategoryType";
 
 type TypeForimk = {
     id?: number | undefined;
@@ -28,7 +29,7 @@ export default function AddProduct() {
     const { } = useCategories();
     const { Categories } = useContext(CategoriesContext);
     const Router = useRouter();
-    const [SelectedCategory, setSelectedCategory] = useState<any | null>(null);
+    const [SelectedCategory, setSelectedCategory] = useState<CategoryType | null | undefined>(null);
     const { setTV, EditMode, setEditMode } = useContext(MainContext);
     const [ProdcutById, setProdcutById] = useState<TypeProducts | null>(null);
 
@@ -162,7 +163,7 @@ export default function AddProduct() {
     }, [Categories]);
 
     useEffect(() => {
-        SelectedCategory && formik.setFieldValue("category", SelectedCategory);
+        formik.setFieldValue("category", SelectedCategory);
     }, [SelectedCategory]);
 
     if (PageLoading) {
@@ -286,7 +287,7 @@ export default function AddProduct() {
                     })}
                 </select>
                 {formik.errors.category && formik.touched.category ? (
-                    <div className="text-sm text-red-600">{formik.errors.category}</div>
+                    <div className="text-sm text-red-600">{formik?.errors?.category}</div>
                 ) : null}
 
                 <div className="text-center">

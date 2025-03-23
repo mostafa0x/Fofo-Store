@@ -1,11 +1,10 @@
 "use client";
-import React, { createContext, useEffect, useState } from 'react'
+import React, { createContext, useState } from 'react'
 import MainContextTypes from '../_Interfaces/Contexts/MainContextType';
-import TypeProducts from '../_Interfaces/TypeProducts';
 
 export const MainContext = createContext<MainContextTypes>({
   SearchTXT: null,
-  setSearchTXT: () => { [] },
+  setSearchTXT: () => null,
   TV: -1,
   setTV: () => { },
   EditMode: null,

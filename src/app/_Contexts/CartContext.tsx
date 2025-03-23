@@ -21,7 +21,7 @@ export default function CartContextProvider({ children }: any) {
     const [isLoadingCartIcon, setisLoadingCartIcon] = useState(true)
     const Router = useRouter()
     const Path = usePathname()
-    const { UserToken, headers } = useContext(UserContext)
+    const { headers } = useContext(UserContext)
     const { TV, setTV } = useContext(MainContext)
 
 

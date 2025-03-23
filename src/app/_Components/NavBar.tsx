@@ -28,7 +28,7 @@ export default function NavBar() {
     const Router = useRouter();
     const Path = usePathname()
     const HookCart = useCart()
-    const HookCategories = useCategories()
+    const { } = useCategories()
 
 
 

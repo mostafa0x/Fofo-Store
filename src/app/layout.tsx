@@ -1,5 +1,4 @@
 "use client"
-import type { Metadata } from "next";
 import "./globals.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import NavBar from "./_Components/NavBar";
