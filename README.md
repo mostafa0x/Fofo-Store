@@ -1,36 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🌐 E-Commerce Marketing Project - Online Store
 
-## Getting Started
+Welcome to the **E-Commerce Marketing** project! This platform allows users to browse products by categories, search for products, add products to the shopping cart, adjust quantities, or remove items from the cart. Users can also register and log in via Google.
 
-First, run the development server:
+## 🔧 Main Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Browse Products by Category**: Easily browse products within various categories. 🏷️
+- **Advanced Product Search**: Search for products with ease using keywords. 🔍
+- **Shopping Cart Management**: 🛒
+  - Add products to the cart ➕
+  - Increase or decrease quantities 🔼🔽
+  - Remove products or clear the entire cart ❌
+- **Dashboard**: 📊
+  - Add new products to the store ➕
+  - Edit or delete existing products ✏️🗑️
+- **Google Sign-In**: Users can register and log in via Google for easy access. 🔑
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🎨 Technology Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Frontend**:
+  - **React** ⚛️
+  - **Next.js** 🚀 (for server-side rendering)
+  - **TailwindCSS** 💨 (for styling)
+  - **React Query** ⚡ (for data fetching and caching)
+  - **TypeScript** 📝 (for type safety)
+- **Backend**:
+  - **Node.js** 🖥️
+  - **Express.js** 💻
+  - **MongoDB** 🗃️ (for database)
+- **Validation**:
+  - **Yup** 🛠️ (for schema validation)
+- **Authentication**:
+  - Google OAuth 2.0 🔐
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Installation Guide
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/mostafa0x/Fofo-Store.git
