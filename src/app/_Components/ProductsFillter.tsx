@@ -50,9 +50,11 @@ export default function ProductsFillter() {
 
     return (
         <div className='mx-5 mt-5'>
-            <h1 className='flex flex-row gap-2 py-10 text-2xl text-center'>
+            <h1 className='flex flex-col sm:flex-row gap-2 py-10 text-2xl text-center'>
                 <i className="fas fa-filter text-blue-500"></i>
-                <span className='flex flex-row '>Sort by  <p className='font-semibold text-blue-600'>{CategoryName}</p>  category</span>
+                <span className='flex flex-row justify-center sm:justify-start'>
+                    Sort by <p className='font-semibold text-blue-600'>{CategoryName}</p> category
+                </span>
             </h1>
 
             {ProdutcsByCategory?.length === 0 ? (
@@ -62,7 +64,8 @@ export default function ProductsFillter() {
                     </h1>
                 </div>
             ) : (
-                <div className='grid grid-cols-4 gap-6'>
+                // استخدام grid لتوزيع العناصر بشكل مرن
+                <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6'>
                     {ProdutcsByCategory?.map((product: TypeProducts, index: number) => {
                         return (
                             <div key={index} className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow-lg transition-all hover:shadow-2xl">
@@ -79,24 +82,28 @@ export default function ProductsFillter() {
                                     </div>
                                 </div>
 
-                                <div className="px-5 py-3 flex  justify-between items-center">
-                                    <span className="flex-col text-lg font-medium text-gray-900 dark:text-white  items-center">
-                                        <i className="fas fa-money-bill-alt mr-2 text-green-700"></i>   {product.priceAfterDis} EGP
+                                <div className="px-5 py-3 flex justify-between items-center">
+                                    <span className="flex-col text-lg font-medium text-gray-900 dark:text-white items-center">
+                                        <i className="fas fa-money-bill-alt mr-2 text-green-700"></i> {product.priceAfterDis} EGP
                                         {(product.DisPercentage ?? 0) > 0 && (
-                                            <div className=" items-center ml-2 text-red-600">
-                                                <span className='flex flex-row items-center  font-semibold text-lg'>{product.DisPercentage}<i className="fas fa-percent mr-1"></i><p className='text-sm'>OFF </p>
-                                                    <p className='line-through opacity-50'> {product.price}EGP</p>
+                                            <div className="items-center ml-2 text-red-600">
+                                                <span className='flex flex-row items-center font-semibold text-lg'>
+                                                    {product.DisPercentage}
+                                                    <i className="fas fa-percent mr-1"></i>
+                                                    <p className='text-sm'>OFF</p>
+                                                    <p className='line-through opacity-50'>{product.price} EGP</p>
                                                 </span>
                                             </div>
                                         )}
                                     </span>
+
+                                    {/* التحقق من توفر المنتج */}
                                     {(product.stock ?? 0) <= 0 ? (
                                         <span className="text-red-600">Out of Stock</span>
                                     ) : (
                                         <button
                                             onClick={() => AddProductToCart(product.id)}
-                                            className={`btn btn-ghost ${TV === (product.id ?? 0) - 10000 ? 'bg-blue-700 hover:bg-blue-900' : 'bg-green-700 hover:bg-green-900'} transition-all`}
-                                        >
+                                            className={`btn btn-ghost ${TV === (product.id ?? 0) - 10000 ? 'bg-blue-700 hover:bg-blue-900' : 'bg-green-700 hover:bg-green-900'} transition-all`}>
                                             {TV === (product.id ?? 0) - 10000 ? (
                                                 <div className='flex justify-between items-center' role="status">
                                                     <i className="fas fa-spinner animate-spin text-white"></i>

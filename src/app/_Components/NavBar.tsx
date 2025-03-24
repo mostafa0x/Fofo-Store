@@ -57,9 +57,9 @@ export default function NavBar() {
 
     }, [Path]);
 
-    // useEffect(() => {
-    //     HookCart.refetch()
-    // }, [session])
+    useEffect(() => {
+        HookCart.refetch()
+    }, [session])
 
     function LogOut() {
         if (TV === -1) {
