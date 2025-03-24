@@ -74,7 +74,7 @@ export default function ProductID() {
             </div>
 
             <div className="w-full md:w-1/2 lg:w-2/3 px-4">
-                <h1 className="text-3xl font-semibold text-gray-900 hover:text-blue-600 transition-all">
+                <h1 className="text-3xl font-semibold text-gray-400 hover:text-blue-600 transition-all">
                     {ProductByID?.title}
                 </h1>
                 <p className="text-gray-700 font-light mt-4 text-sm">
