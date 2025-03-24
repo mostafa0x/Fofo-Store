@@ -37,62 +37,68 @@ export default function Cart() {
         </div>
     } else if (!data?.message) {
         return (
-            <div className='mt-10 px-16 py-20 bg-gray-100'>
-                <div className='mb-20'>
-                    <div className='flex-row flex justify-between items-center text-center font-bold'>
-                        <h1 className='text-3xl text-gray-600 opacity-75'>My Cart</h1>
+            <div className='mt-10 px-6 sm:px-10 md:px-16 py-8 sm:py-16 md:py-20 bg-gray-100'>
+                <div className='mb-12'>
+                    <div className='flex flex-col md:flex-row justify-between items-center text-center md:text-left font-bold'>
+                        <h1 className='text-3xl text-gray-600 opacity-75 mb-4 md:mb-0'>My Cart</h1>
                         {MyCart?.MyCart?.length > 0 && (
-                            <>
+                            <div className='flex flex-col md:flex-row items-center gap-4'>
                                 <h1 className='text-2xl text-gray-700'>Total Price: {MyCart?.Totalprice} EGP</h1>
                                 <button
                                     onClick={() => DeleteAllCart(-11)}
                                     className='btn btn-ghost text-xl bg-red-700 text-white font-semibold hover:bg-red-600 transition-colors'>
                                     {TV === -11 ? <i className="fas fa-spinner fa-spin text-2xl"></i> : "Clear Cart"}
                                 </button>
-                            </>
+                            </div>
                         )}
                     </div>
                 </div>
 
-                {MyCart?.MyCart?.length > 0 ?
-                    MyCart?.MyCart?.map((product, index: number) => {
-                        return <div className='py-8 border-b border-gray-300' key={index}>
-                            <div className='flex justify-between items-center'>
-                                <div className='flex items-center gap-4 w-[350px]'>
-                                    <img
-                                        className='w-24 h-24 object-cover rounded-lg shadow-md'
-                                        src={product?.images?.[0]}
-                                        alt={product.title?.split(" ").splice(0, 2).join(" ")}
-                                    />
-                                    <h1 className='text-xl font-semibold text-gray-800'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
-                                </div>
+                {MyCart?.MyCart?.length > 0 ? (
+                    MyCart?.MyCart?.map((product, index) => {
+                        return (
+                            <div className='py-8 border-b border-gray-300' key={index}>
+                                <div className='flex flex-col sm:flex-row justify-between items-center gap-6'>
+                                    <div className='flex items-center gap-4 w-full sm:w-[350px]'>
+                                        <img
+                                            className='w-24 h-24 object-cover rounded-lg shadow-md'
+                                            src={product?.images?.[0]}
+                                            alt={product.title?.split(" ").splice(0, 2).join(" ")}
+                                        />
+                                        <h1 className='text-xl font-semibold text-gray-800'>{product.title?.split(" ").splice(0, 2).join(" ")}</h1>
+                                    </div>
 
-                                <div className='flex items-center gap-4 justify-center'>
+                                    <div className='flex items-center gap-4 justify-center'>
+                                        <button
+                                            onClick={() => RemoveProductFormCart(product?.id)}
+                                            className='btn btn-circle bg-red-800 text-white hover:bg-red-600'>
+                                            {TV === (product?.id ?? 0) - 100000 ? <i className="fas fa-spinner fa-spin text-2xl"></i> : <i className="fas fa-minus text-2xl"></i>}
+                                        </button>
+                                        <h1 className='font-bold text-lg'>{product.count}</h1>
+                                        <button
+                                            onClick={() => AddProductToCart(product?.id)}
+                                            className='btn btn-circle bg-green-600 text-white hover:bg-green-500'>
+                                            {TV === (product?.id ?? 0) - 10000 ? <i className="fas fa-spinner fa-spin text-2xl"></i> : <i className="fas fa-plus text-2xl"></i>}
+                                        </button>
+                                    </div>
+
+                                    <h1 className='text-xl font-semibold text-gray-800'>{`Price: ${product.priceAfterDis} EGP`}</h1>
+
                                     <button
-                                        onClick={() => RemoveProductFormCart(product?.id)}
-                                        className='btn btn-circle bg-red-800 text-white hover:bg-red-600'>
-                                        {TV === (product?.id ?? 0) - 100000 ? <i className="fas fa-spinner fa-spin text-2xl"></i> : <i className="fas fa-minus text-2xl"></i>}
-                                    </button>
-                                    <h1 className='font-bold text-lg'>{product.count}</h1>
-                                    <button
-                                        onClick={() => AddProductToCart(product?.id)}
-                                        className='btn btn-circle bg-green-600 text-white hover:bg-green-500'>
-                                        {TV === (product?.id ?? 0) - 10000 ? <i className="fas fa-spinner fa-spin text-2xl"></i> : <i className="fas fa-plus text-2xl"></i>}
+                                        onClick={() => DeleteProductFromCart(product?.id)}
+                                        className='btn btn-ghost text-3xl text-red-600 hover:text-red-800'>
+                                        {TV === (product.id ?? 0) - 1000000 ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-trash text-red-600"></i>}
                                     </button>
                                 </div>
-
-                                <h1 className='text-xl font-semibold text-gray-800'>{`Price: ${product.priceAfterDis} EGP`}</h1>
-
-                                <button
-                                    onClick={() => DeleteProductFromCart(product?.id)}
-                                    className='btn btn-ghost text-3xl text-red-600 hover:text-red-800'>
-                                    {TV === (product.id ?? 0) - 1000000 ? <i className="fas fa-spinner fa-spin"></i> : <i className="fas fa-trash text-red-600"></i>}
-                                </button>
                             </div>
-                        </div>
+                        );
                     })
-                    : <div className='flex justify-center text-3xl text-gray-500 opacity-55'><h1>Your cart is empty</h1></div>}
+                ) : (
+                    <div className='flex justify-center text-3xl text-gray-500 opacity-55'>
+                        <h1>Your cart is empty</h1>
+                    </div>
+                )}
             </div>
-        )
+        );
     }
 }
