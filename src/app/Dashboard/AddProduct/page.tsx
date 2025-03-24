@@ -77,7 +77,6 @@ export default function AddProduct() {
                 const Docoid: any = ProdcutById?._id;
                 formData.append("_id", Docoid);
                 const Data = await axios.patch("https://fofo-store-back-end.vercel.app/admin/product", formData);
-                setisLoading(false);
                 toast.success(Data.data.message);
                 setEditMode(null);
                 Router.push("/Dashboard/Products");
@@ -85,19 +84,22 @@ export default function AddProduct() {
                 console.log(err);
                 setApiError(err.response.data.message);
                 toast.error(err.response.data.message);
+            } finally {
                 setisLoading(false);
+
             }
         } else {
             try {
                 const Data = await axios.post("https://fofo-store-back-end.vercel.app/admin/product", formData);
-                setisLoading(false);
                 toast.success(Data.data.message);
                 Router.push("/Dashboard/Products");
             } catch (err: any) {
                 console.log(err);
                 setApiError(err.response.data.message);
                 toast.error(err.response.data.message);
+            } finally {
                 setisLoading(false);
+
             }
         }
     }
@@ -292,7 +294,8 @@ export default function AddProduct() {
 
                 <div className="text-center">
                     {isLoading ? (
-                        <div className="text-3xl text-gray-500">
+                        <div className="text-3xl text-black ">
+                            <h1>Loading</h1>
                             <i className="fa-duotone fa-spinner fa-spin"></i>
                         </div>
                     ) : (
