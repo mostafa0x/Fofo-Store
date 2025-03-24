@@ -11,7 +11,7 @@ body {
 /* النمط في الدارك مود */
 @media (prefers-color-scheme: dark) {
   body {
-    color: rgb(19, 15, 240);
+    color: rgb(255, 255, 255);
     background-color: #121212; /* خلفية داكنة */
   }
 }

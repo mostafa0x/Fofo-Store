@@ -73,8 +73,8 @@ export default function Products() {
                                 />
                             </div>
 
-                            <div className="px-4 py-3"> {/* تقليص الحشو */}
-                                <h5 className="text-lg font-semibold text-gray-900 dark:text-white truncate">
+                            <div className="px-4 py-3">
+                                <h5 className="text-lg font-semibold text-gray-900 dark:text-black truncate">
                                     {product.title?.split(" ").splice(0, 2).join(" ")}
                                 </h5>
                             </div>
