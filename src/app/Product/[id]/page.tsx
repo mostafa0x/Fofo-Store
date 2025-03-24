@@ -50,7 +50,6 @@ export default function ProductID() {
 
     return (
         <div className="flex flex-col md:flex-row justify-center items-start mt-16 mx-10 pt-20">
-            {/* Image Section */}
             <div className="w-full md:w-1/2 lg:w-1/3 pr-4 mb-8 md:mb-0">
                 {(ProductByID?.images?.length ?? 0) > 1 ? (
                     <Slider {...settingsSlick}>
@@ -74,7 +73,6 @@ export default function ProductID() {
                 )}
             </div>
 
-            {/* Details Section */}
             <div className="w-full md:w-1/2 lg:w-2/3 px-4">
                 <h1 className="text-3xl font-semibold text-gray-900 hover:text-blue-600 transition-all">
                     {ProductByID?.title}
@@ -83,7 +81,6 @@ export default function ProductID() {
                     {ProductByID?.description}
                 </p>
 
-                {/* Stock and Price Section */}
                 <div className="flex justify-between items-center mt-6">
                     <span className="text-gray-500">Stock: {ProductByID?.stock}</span>
                     <p className="text-2xl text-green-600 font-bold">{ProductByID?.priceAfterDis} EGP</p>
@@ -101,7 +98,6 @@ export default function ProductID() {
                     )}
                 </div>
 
-                {/* Add to Cart Button */}
                 <div className="mt-6">
                     {(ProductByID?.stock ?? 0) <= 0 ? (
                         <button disabled className="w-full py-2 bg-gray-500 text-white rounded-lg shadow-md cursor-not-allowed">
