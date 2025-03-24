@@ -40,6 +40,7 @@ export default function NavBar() {
                     return category.name == CurrentCategory.name
                 })
                 Selector.current.selectedIndex = IndexCategory
+                SetCategory(Selector.current.value)
             }
         }
     }, [LoadingIconOptions])
@@ -74,8 +75,6 @@ export default function NavBar() {
             toast.error("Enter Text to Search bar")
         } else {
             setSearchTXT(SecTXT)
-            console.log(CurrentCategory?.name);
-
             if (typeof CurrentCategory === 'undefined') {
                 return Router.push(`/Search/All/${SecTXT}`)
             }
